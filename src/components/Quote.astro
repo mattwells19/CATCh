@@ -1,0 +1,18 @@
+---
+interface Props {
+  author: string;
+  imgSrc: string;
+}
+
+const { author, imgSrc } = Astro.props;
+---
+
+<div class="flex gap-4 items-start flex-col lg:flex-row">
+  <img src={imgSrc} alt={author} class="w-52 lg:w-1/3" />
+  <div class="w-32">
+    <blockquote>
+      <slot />
+    </blockquote>
+    <h3 class="mt-2 text-red-500 font-medium">{author}</h3>
+  </div>
+</div>

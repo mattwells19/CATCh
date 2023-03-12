@@ -1,15 +1,211 @@
 ---
+import "../styles/home.css";
+import UpcomingShowCard from "../components/UpcomingShowCard";
+import Quote from "../components/Quote.astro";
+import FooterSection from "../components/FooterSection.astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="Join us at CATCh for Charlotte's best improv comedy shows & improv classes. $10 shows most Friday and Saturday nights!"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Improv Shows & Classes in Charlotte | CATCh</title>
+  </head>
+  <body>
+    <header class="w-full shadow-lg sticky top-0 bg-white p-4 z-50">
+      <div class="flex gap-16 items-center">
+        <a href="/">
+          <img
+            src="https://catch.theater/CATCh-full-big-nobg.png"
+            class="w-64 -translate-y-2"
+            alt="CATCh - Comedy Arts Theater of Charlotte"
+          />
+        </a>
+        <ul class="flex gap-12 items-center font-light">
+          <li>SHOWS</li>
+          <li>CATCh A Class!</li>
+          <li>Business Services</li>
+          <li>Theater Info</li>
+        </ul>
+      </div>
+    </header>
+    <main class="max-w-7xl m-auto flex flex-col gap-24 py-4 px-14">
+      <section class="flex gap-4 mt-24 flex-col md:flex-row">
+        <div class="w-full md:w-1/3">
+          <h2 class="text-violet-600 text-3xl">Be Bold<br />Say Yes.®</h2>
+          <h3 class="text-red-400 text-lg mt-6">CATCh an improv class!</h3>
+          <p class="my-3 font-light">
+            Whether you get up in front of an audience, a board meeting, or the
+            local PTA, improv classes are the exciting and hilarious way to
+            develop poise, build confidence, and learn teamwork / communication
+            skills that are in high demand.
+          </p>
+          <p class="my-3 font-light">
+            Sign up today for the most fun you've ever had in a personal
+            development class!
+          </p>
+          <h3 class="text-red-400 text-lg mt-6">
+            Register for our next class:
+          </h3>
+          <p>Thursdays at 7:00pm starting Feb 16</p>
+          <a
+            href="#"
+            class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
+          >
+            Learn More
+          </a>
+        </div>
+        <div class="w-full md:w-2/3 aspect-video">
+          <div class="w-full h-full relative overflow-hidden">
+            <img
+              alt="The yellow light for the theater lights."
+              class="absolute -right-4 w-2/6 z-0 slider-lights-on opacity-0"
+              src="https://catch.theater/images/home/slider/lights-on.png"
+            />
+            <img
+              alt="Theater lights shining down on the actor."
+              class="absolute -right-4 w-2/6 z-0 slider-lights-off"
+              src="https://catch.theater/images/home/slider/lights-off.png"
+            />
+            <img
+              alt="An actor with their arms wide basking in the theater lights towards the audience."
+              class="z-10 absolute bottom-0 left-1/2 -translate-x-1/2 w-3/5 slider-arms-wide opacity-0"
+              src="https://catch.theater/images/home/slider/arms-wide.png"
+            />
+            <img
+              alt="An crowded audience."
+              class="absolute bottom-0 w-full z-0 slider-audience"
+              src="https://catch.theater/images/home/slider/audience.png"
+            />
+          </div>
+        </div>
+      </section>
+      <section>
+        <ol class="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
+          <li>
+            <UpcomingShowCard
+              date={new Date()}
+              title="Take One! The Gospel Truth"
+              description="Take One! The Gospel Truth HILARIOUS ONE-WOMAN SHOW Written and Performed by Gabby Moore Life! What is it REALLY all about? Gabby thinks she knows!"
+              ticketsLink="#"
+            />
+          </li>
+          <li>
+            <UpcomingShowCard
+              date={new Date()}
+              title="Take One! The Gospel Truth"
+              description="Take One! The Gospel Truth HILARIOUS ONE-WOMAN SHOW Written and Performed by Gabby Moore Life! What is it REALLY all about? Gabby thinks she knows! Take One! The Gospel Truth HILARIOUS ONE-WOMAN SHOW Written and Performed by Gabby Moore Life! What is it REALLY all about? Gabby thinks she knows!"
+              ticketsLink="#"
+            />
+          </li>
+          <li>
+            <UpcomingShowCard
+              date={new Date()}
+              title="Take One! The Gospel Truth"
+              description="Take One! The Gospel Truth HILARIOUS ONE-WOMAN SHOW Written and Performed by Gabby Moore Life! What is it REALLY all about? Gabby thinks she knows!"
+              ticketsLink="#"
+            />
+          </li>
+          <li>
+            <UpcomingShowCard
+              date={new Date()}
+              title="Take One! The Gospel Truth"
+              description="Take One! The Gospel Truth HILARIOUS ONE-WOMAN SHOW Written and Performed by Gabby Moore Life! What is it REALLY all about? Gabby thinks she knows!"
+              ticketsLink="#"
+            />
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer class="mt-36 px-14 m-auto max-w-7xl">
+      <div class="flex justify-evenly gap-12 w-fit flex-col md:flex-row">
+        <FooterSection title="Founders">
+          <ul class="flex flex-row gap-8 md:flex-col justify-between">
+            <li>
+              <Quote
+                imgSrc="https://catch.theater/cockpit/storage/uploads/2021/07/16/60f1920bdfec6tongue.jpeg"
+                author="Abigail Head"
+              >
+                If laughter is the best medicine, then a community that laughs
+                together is a healthy one.
+              </Quote>
+            </li>
+            <li>
+              <Quote
+                imgSrc="https://catch.theater/cockpit/storage/uploads/2022/05/16/62825c2679ec3headshot.jpg"
+                author="Kevin Shimko"
+              >
+                I wanted to build a place that comedy artists could call their
+                own. That's what CATCh is for me. A home.
+              </Quote>
+            </li>
+          </ul>
+        </FooterSection>
+        <FooterSection title="Contacts">
+          <a href="https://maps.google.com?q=Comedy Arts Theater of Charlotte"
+            >4128 South Blvd.<br />Suite A3<br />Charlotte, NC 28209</a
+          >
+          <dl class="mt-5">
+            <dt>Email:</dt>
+            <dd class="pl-4 text-red-400">
+              <a href="mailto:info@CATCh.theater">info@CATCh.theater</a>
+            </dd>
+            <dt>Phone:</dt>
+            <dd class="pl-4 text-red-400">
+              <a href="tel:(980) 522-8241">
+                (980) 5-CATCh-1
+                <br />
+                (980) 522-8241
+              </a>
+            </dd>
+          </dl>
+        </FooterSection>
+        <FooterSection title="Subscribe to our mailing list">
+          <p>
+            Keep informed on upcoming shows, classes, & workshops! We won't send
+            you stupid stuff like "partner offers" or other spam.
+          </p>
+          <form class="flex flex-col gap-4 pt-4">
+            <label>
+              Email Address <span class="text-red-600">*</span>
+              <input
+                type="email"
+                required
+                class="block border rounded px-2 py-1 border-slate-400"
+              />
+            </label>
+            <label>
+              First Name
+              <input
+                type="text"
+                class="block border rounded px-2 py-1 border-slate-400"
+              />
+            </label>
+            <label>
+              Last Name
+              <input
+                type="text"
+                class="block border rounded px-2 py-1 border-slate-400"
+              />
+            </label>
+            <button
+              type="submit"
+              class="px-3 py-2 bg-indigo-400 text-white uppercase rounded w-fit transition-colors hover:bg-indigo-500 focus:bg-indigo-500"
+              >Subscribe</button
+            >
+          </form>
+        </FooterSection>
+      </div>
+      <p class="text-gray-400 text-center my-16">
+        © The Comedy Arts Theater of Charlotte, LLC 2017 and beyond. All Rights
+        Reserved.
+      </p>
+    </footer>
+  </body>
 </html>
