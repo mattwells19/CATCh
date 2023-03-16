@@ -15,6 +15,9 @@ import NavItem from "./components/NavItem.astro";
   navForm?.addEventListener("click", (e) => {
     e.stopPropagation();
   });
+  contentContainer?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
 
   // unhide the content for the checked value and make sure everything else is hidden
   navForm?.addEventListener("change", (e) => {
@@ -63,7 +66,7 @@ import NavItem from "./components/NavItem.astro";
   <nav class="flex gap-16 items-center">
     <a href="/">
       <img
-        src="https://catch.theater/CATCh-full-big-nobg.png"
+        src="/images/CATCh-full-big-nobg.webp"
         class="w-64 -translate-y-2"
         alt="CATCh - Comedy Arts Theater of Charlotte"
       />
