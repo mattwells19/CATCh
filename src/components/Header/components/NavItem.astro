@@ -1,0 +1,15 @@
+---
+type Props = { value: "Shows" | "Classes" | "Services" | "Info" };
+const { value } = Astro.props;
+---
+
+<label class="relative">
+  <slot />
+  <input
+    type="radio"
+    name="nav"
+    id={value}
+    value={value}
+    class="appearance-none absolute inset-0 cursor-pointer -bottom-1 checked:border-b-2 border-violet-400"
+  />
+</label>

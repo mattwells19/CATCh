@@ -1,0 +1,30 @@
+---
+import HeaderLink from "../components/HeaderLink.astro";
+import HeaderSection from "../components/HeaderSection.astro";
+---
+
+<div class="grid grid-cols-2 justify-items-center gap-5">
+  <HeaderSection title="For Organizations">
+    <ul class="list-inside list-disc flex flex-col gap-3">
+      <li>
+        <HeaderLink href="#">Corporate Training</HeaderLink>
+      </li>
+      <li>
+        <HeaderLink href="#">Videos</HeaderLink>
+      </li>
+      <li>
+        <HeaderLink href="#">Emcees</HeaderLink>
+      </li>
+    </ul>
+  </HeaderSection>
+  <HeaderSection title="For Individuals">
+    <ul class="list-inside list-disc flex flex-col gap-3">
+      <li>
+        <HeaderLink href="#">Audition Taping</HeaderLink>
+      </li>
+      <li>
+        <HeaderLink href="#">Creativity Coaching</HeaderLink>
+      </li>
+    </ul>
+  </HeaderSection>
+</div>

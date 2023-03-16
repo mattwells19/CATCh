@@ -1,0 +1,98 @@
+---
+import Shows from "./views/Shows.astro";
+import Classes from "./views/Classes.astro";
+import Services from "./views/Services.astro";
+import NavItem from "./components/NavItem.astro";
+---
+
+<script>
+  const radioOptions = ["Shows", "Classes", "Services", "Info"] as const;
+
+  const contentContainer = document.getElementById("content-container");
+  const navForm = document.getElementById("nav-form") as HTMLFormElement | null;
+
+  // prevent selecting an option from bubbling to the document.body click handler
+  navForm?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // unhide the content for the checked value and make sure everything else is hidden
+  navForm?.addEventListener("change", (e) => {
+    if (
+      contentContainer &&
+      !contentContainer.className.includes(" px-12 py-8")
+    ) {
+      contentContainer.className += " px-12 py-8";
+    }
+
+    const checkedRadioValue = (
+      document.querySelector(
+        "input[name='nav']:checked"
+      ) as HTMLInputElement | null
+    )?.value;
+
+    radioOptions.forEach((option) => {
+      const optionContent = document.getElementById(`${option}-content`);
+
+      if (option === checkedRadioValue) {
+        optionContent?.removeAttribute("hidden");
+      } else {
+        optionContent?.setAttribute("hidden", "");
+      }
+    });
+  });
+
+  // if clicking away from the nav reset the form and rid all content
+  document.body.addEventListener("click", () => {
+    navForm?.reset();
+    if (contentContainer) {
+      contentContainer.className = contentContainer.className.replace(
+        " px-12 py-8",
+        ""
+      );
+    }
+
+    radioOptions.forEach((option) => {
+      const optionContent = document.getElementById(`${option}-content`);
+      optionContent?.setAttribute("hidden", "");
+    });
+  });
+</script>
+
+<header id="nav-header" class="w-full shadow-lg sticky top-0 bg-white p-4 z-50">
+  <nav class="flex gap-16 items-center">
+    <a href="/">
+      <img
+        src="https://catch.theater/CATCh-full-big-nobg.png"
+        class="w-64 -translate-y-2"
+        alt="CATCh - Comedy Arts Theater of Charlotte"
+      />
+    </a>
+    <form id="nav-form" class="flex gap-12 items-center font-light">
+      <NavItem value="Shows">SHOWS</NavItem>
+      <NavItem value="Classes">CATCh A Class!</NavItem>
+      <NavItem value="Services">Business Services</NavItem>
+      <NavItem value="Info">Theater Info</NavItem>
+    </form>
+  </nav>
+  <div
+    id="content-container"
+    class="absolute w-full top-full left-0 bg-slate-600 text-slate-300 shadow-xl z-10"
+  >
+    <div id="Shows-content" class="max-w-7xl m-auto" hidden>
+      <Shows />
+    </div>
+    <div id="Classes-content" class="max-w-7xl m-auto" hidden>
+      <Classes />
+    </div>
+    <div id="Services-content" class="max-w-7xl m-auto" hidden>
+      <Services />
+    </div>
+  </div>
+</header>
+<!-- <div
+    classList={{ "px-12 py-8": content() !== null }}
+  class="absolute inset-0 h-screen"
+  classList={{ "-z-10": content() === null, "z-[2]": content() !== null }}
+  onClick={[setContent, null]}
+> -->

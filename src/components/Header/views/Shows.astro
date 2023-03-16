@@ -1,0 +1,67 @@
+---
+import HeaderSection from "../components/HeaderSection.astro";
+import HeaderLink from "../components/HeaderLink.astro";
+
+const teams = [
+  "Improv Game Night",
+  "SOS Improv",
+  "Situationship",
+  "The Fungibles",
+  "Therapy Adjacent",
+  "Third Place Brenda",
+];
+---
+
+<div class="grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-8">
+  <HeaderSection title="Next Show">
+    <div class="w-36 aspect-video bg-blue-300 my-2">img</div>
+    <p>
+      Whether you get up in front of an audience, a board meeting, or the local
+      PTA, improv classes are the exciting and hilarious way to develop poise,
+      build confidence, and learn teamwork / communication skills that are in
+      high demand.
+    </p>
+    <a
+      href="#"
+      class="block w-fit text-sm mt-4 px-4 py-2 uppercase bg-white text-black rounded-full"
+    >
+      Get Tickets
+    </a>
+  </HeaderSection>
+  <HeaderSection title="Performances">
+    <ul class="flex flex-col gap-3 my-3 list-disc list-inside">
+      <li>
+        <HeaderLink href="#">Come see a show</HeaderLink>
+      </li>
+      <li>
+        <HeaderLink href="#">Check out our videos</HeaderLink>
+      </li>
+    </ul>
+    <h3 class="uppercase border-b border-b-slate-400 mt-8 text-slate-50">
+      More Info
+    </h3>
+    <ul class="flex flex-col gap-3 my-3 list-disc list-inside">
+      <li>
+        <HeaderLink href="#">Our Performers</HeaderLink>
+      </li>
+      <li>
+        <HeaderLink href="#">Frequently Asked Questions</HeaderLink>
+      </li>
+    </ul>
+  </HeaderSection>
+  <HeaderSection title="Teams">
+    <p class="my-3">
+      Learn more about the different teams you can see at CATCh, from house
+      teams to independent regulars!
+    </p>
+    <ul class="grid grid-cols-2 gap-3 list-disc list-inside">
+      {
+        teams.map((team) => (
+          <li>
+            <HeaderLink href="#">{team}</HeaderLink>
+          </li>
+        ))
+      }
+    </ul>
+  </HeaderSection>
+</div>
