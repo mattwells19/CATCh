@@ -3,6 +3,13 @@ import Shows from "./views/Shows.astro";
 import Classes from "./views/Classes.astro";
 import Services from "./views/Services.astro";
 import NavItem from "./components/NavItem.astro";
+import type { UpcomingShowCardProps } from "../../storyblok/UpcomingShowCard.astro";
+
+type Props = {
+  nextShow: UpcomingShowCardProps;
+};
+
+const { nextShow } = Astro.props;
 ---
 
 <script>
@@ -83,7 +90,7 @@ import NavItem from "./components/NavItem.astro";
     class="absolute w-full top-full left-0 bg-slate-600 text-slate-300 shadow-xl z-10"
   >
     <div id="Shows-content" class="max-w-7xl m-auto" hidden>
-      <Shows />
+      <Shows nextShow={nextShow} />
     </div>
     <div id="Classes-content" class="max-w-7xl m-auto" hidden>
       <Classes />

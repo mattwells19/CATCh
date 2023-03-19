@@ -1,0 +1,83 @@
+---
+import Quote from "./components/Quote.astro";
+import FooterSection from "./components/FooterSection.astro";
+---
+
+<footer class="mt-36 px-14 m-auto max-w-7xl">
+  <div class="flex justify-evenly gap-12 w-fit flex-col md:flex-row">
+    <FooterSection title="Founders">
+      <ul class="flex flex-row gap-8 md:flex-col justify-between">
+        <li>
+          <Quote imgSrc="/images/Abby.webp" author="Abigail Head">
+            If laughter is the best medicine, then a community that laughs
+            together is a healthy one.
+          </Quote>
+        </li>
+        <li>
+          <Quote imgSrc="/images/Kevin.webp" author="Kevin Shimko">
+            I wanted to build a place that comedy artists could call their own.
+            That's what CATCh is for me. A home.
+          </Quote>
+        </li>
+      </ul>
+    </FooterSection>
+    <FooterSection title="Contacts">
+      <a href="https://maps.google.com?q=Comedy Arts Theater of Charlotte"
+        >4128 South Blvd.<br />Suite A3<br />Charlotte, NC 28209</a
+      >
+      <dl class="mt-5">
+        <dt>Email:</dt>
+        <dd class="pl-4 text-red-400">
+          <a href="mailto:info@CATCh.theater">info@CATCh.theater</a>
+        </dd>
+        <dt>Phone:</dt>
+        <dd class="pl-4 text-red-400">
+          <a href="tel:(980) 522-8241">
+            (980) 5-CATCh-1
+            <br />
+            (980) 522-8241
+          </a>
+        </dd>
+      </dl>
+    </FooterSection>
+    <FooterSection title="Subscribe to our mailing list">
+      <p>
+        Keep informed on upcoming shows, classes, & workshops! We won't send you
+        stupid stuff like "partner offers" or other spam.
+      </p>
+      <form class="flex flex-col gap-4 pt-4">
+        <label>
+          Email Address <span class="text-red-600">*</span>
+          <input
+            type="email"
+            required
+            class="block border rounded px-2 py-1 border-slate-400"
+          />
+        </label>
+        <label>
+          First Name
+          <input
+            type="text"
+            class="block border rounded px-2 py-1 border-slate-400"
+          />
+        </label>
+        <label>
+          Last Name
+          <input
+            type="text"
+            class="block border rounded px-2 py-1 border-slate-400"
+          />
+        </label>
+        <button
+          type="submit"
+          class="px-3 py-2 bg-indigo-400 text-white uppercase rounded w-fit transition-colors hover:bg-indigo-500 focus:bg-indigo-500"
+          >Subscribe</button
+        >
+      </form>
+    </FooterSection>
+  </div>
+  <p class="text-gray-400 text-center my-16">
+    © The Comedy Arts Theater of Charlotte, LLC 2017 and beyond. All Rights
+    Reserved.
+  </p>
+</footer>

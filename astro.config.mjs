@@ -1,9 +1,28 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
+import storyblok from "@storyblok/astro";
+import { loadEnv } from "vite";
 
-import solidJs from "@astrojs/solid-js";
+const env = loadEnv("", process.cwd(), "STORYBLOK");
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), solidJs()],
+  // TODO: consider SSR vs static
+  // output: "server",
+  integrations: [
+    tailwind(),
+    storyblok({
+      accessToken: env.STORYBLOK_TOKEN,
+      bridge: false,
+      components: {
+        // Add your components here
+        UpcomingShowsList: "storyblok/UpcomingShowsList",
+        UpcomingShowCard: "storyblok/UpcomingShowCard",
+      },
+      apiOptions: {
+        // Choose your Storyblok space region
+        region: "us", // optional,  or 'eu' (default)
+      },
+    }),
+  ],
 });
