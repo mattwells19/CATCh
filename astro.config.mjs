@@ -18,6 +18,8 @@ export default defineConfig({
         // Add your components here
         UpcomingShowsList: "storyblok/UpcomingShowsList",
         UpcomingShowCard: "storyblok/UpcomingShowCard",
+        CalloutCardList: "storyblok/CalloutCardList",
+        CalloutCard: "storyblok/CalloutCard",
       },
       apiOptions: {
         // Choose your Storyblok space region

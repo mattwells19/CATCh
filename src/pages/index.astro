@@ -5,19 +5,24 @@ import Footer from "../components/Footer/Footer.astro";
 import { useStoryblokApi } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import type { UpcomingShowCardProps } from "../storyblok/UpcomingShowCard.astro";
-import { isAfter } from "date-fns";
+import type { CalloutCardProps } from "../storyblok/CalloutCard.astro";
 
 const storyblokApi = useStoryblokApi();
+const storyblokVersion = import.meta.env.DEV ? "draft" : "published";
 
-const { data } = await storyblokApi.get("cdn/stories/upcoming-shows", {
-  version: import.meta.env.DEV ? "draft" : "published",
+const upcomingShowsPromise = storyblokApi.get("cdn/stories/upcoming-shows", {
+  version: storyblokVersion,
+});
+const calloutsPromise = storyblokApi.get("cdn/stories/callouts", {
+  version: storyblokVersion,
 });
 
-const content = data.story.content as { shows: Array<UpcomingShowCardProps> };
+const [{ data: upcomingShowsData }, { data: calloutsData }] = await Promise.all([upcomingShowsPromise, calloutsPromise])
 
-const upcomingShows = content.shows
-  .filter((show) => isAfter(new Date(show.date), Date.now()))
-  .sort();
+const upcomingShowsContent = upcomingShowsData.story.content as { shows: Array<UpcomingShowCardProps> };
+const upcomingShows = upcomingShowsContent.shows.sort();
+
+const calloutsContent = calloutsData.story.content as { callouts: Array<CalloutCardProps> };
 ---
 
 <html lang="en">
@@ -88,9 +93,14 @@ const upcomingShows = content.shows
       <section id="upcoming-shows">
         <StoryblokComponent
           blok={{
-            ...content,
+            ...upcomingShowsContent,
             shows: upcomingShows,
           }}
+        />
+      </section>
+      <section id="callout-cards">
+        <StoryblokComponent
+          blok={calloutsContent}
         />
       </section>
     </main>
