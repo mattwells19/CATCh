@@ -6,7 +6,7 @@ const props = Astro.props;
 
 <section
   class={`max-w-sm w-full ${props.class ?? ""}`}
-  class:list={props.classList}
+  class:list={props["class:list"]}
 >
   <h2
     class="uppercase font-semibold border-b border-b-slate-400 text-slate-50 mb-3"

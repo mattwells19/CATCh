@@ -3,10 +3,10 @@ import Shows from "./views/Shows.astro";
 import Classes from "./views/Classes.astro";
 import Services from "./views/Services.astro";
 import NavItem from "./components/NavItem.astro";
-import type { UpcomingShowCardProps } from "../../storyblok/UpcomingShowCard.astro";
+import type { Show } from "~/api/getShows";
 
 type Props = {
-  nextShow: UpcomingShowCardProps;
+  nextShow: Show;
 };
 
 const { nextShow } = Astro.props;
@@ -37,7 +37,7 @@ const { nextShow } = Astro.props;
 
     const checkedRadioValue = (
       document.querySelector(
-        "input[name='nav']:checked"
+        "input[name='nav']:checked",
       ) as HTMLInputElement | null
     )?.value;
 
@@ -58,7 +58,7 @@ const { nextShow } = Astro.props;
     if (contentContainer) {
       contentContainer.className = contentContainer.className.replace(
         " px-12 py-8",
-        ""
+        "",
       );
     }
 
@@ -100,9 +100,3 @@ const { nextShow } = Astro.props;
     </div>
   </div>
 </header>
-<!-- <div
-    classList={{ "px-12 py-8": content() !== null }}
-  class="absolute inset-0 h-screen"
-  classList={{ "-z-10": content() === null, "z-[2]": content() !== null }}
-  onClick={[setContent, null]}
-> -->

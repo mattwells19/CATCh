@@ -1,0 +1,25 @@
+---
+import type { Class } from "~/api/getClasses";
+import ClassCard from "./ClassCard.astro";
+
+type Props = {
+  upcomingClasses: Array<Class>;
+};
+
+const { upcomingClasses } = Astro.props;
+---
+
+<ol class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+  {
+    upcomingClasses.map((classSession) => (
+      <li>
+        <ClassCard
+          date={classSession.event_start}
+          imageUrl={classSession.image}
+          ticketsLink={classSession.listing_url}
+          title={classSession.listing_title}
+        />
+      </li>
+    ))
+  }
+</ol>

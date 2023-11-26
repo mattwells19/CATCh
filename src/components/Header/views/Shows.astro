@@ -1,10 +1,11 @@
 ---
 import HeaderSection from "../components/HeaderSection.astro";
 import HeaderLink from "../components/HeaderLink.astro";
-import type { UpcomingShowCardProps } from "../../../storyblok/UpcomingShowCard.astro";
+import type { Show } from "~/api/getShows";
+import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
 type Props = {
-  nextShow: UpcomingShowCardProps;
+  nextShow: Show;
 };
 
 const { nextShow } = Astro.props;
@@ -21,23 +22,12 @@ const teams = [
 
 <div class="grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-8">
   <HeaderSection title="Next Show">
-    <div>
-      <img
-        src={nextShow.thumbnail.filename}
-        alt={nextShow.thumbnail.alt}
-        class="w-5/6 m-auto"
-      />
-    </div>
-    <p class="mt-3 h-48 text-ellipsis overflow-hidden">
-      {nextShow.description}
-    </p>
-    <a
-      href={nextShow.ticketsLink.url}
-      target={nextShow.ticketsLink.target}
-      class="block w-fit text-sm mt-4 px-4 py-2 uppercase bg-white text-black rounded-full"
-    >
-      Get Tickets
-    </a>
+    <UpcomingShowCard
+      date={nextShow.event_start}
+      imageUrl={nextShow.image}
+      ticketsLink={nextShow.listing_url}
+      title={nextShow.listing_title}
+    />
   </HeaderSection>
   <HeaderSection title="Performances">
     <ul class="flex flex-col gap-3 my-3 list-disc list-inside">

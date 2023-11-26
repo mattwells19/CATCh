@@ -1,28 +1,27 @@
 ---
-import "../styles/home.css";
-import Header from "../components/Header/Header.astro";
-import Footer from "../components/Footer/Footer.astro";
-import { useStoryblokApi } from "@storyblok/astro";
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-import type { UpcomingShowCardProps } from "../storyblok/UpcomingShowCard.astro";
-import type { CalloutCardProps } from "../storyblok/CalloutCard.astro";
+import { getUnixTime, addMonths, format } from "date-fns";
+import { getShows } from "~/api/getShows";
+import { getClasses } from "~/api/getClasses";
+import { formatClassTime } from "~/utils/formatClassTime";
+import "~/styles/home.css";
+import Header from "~/components/Header/Header.astro";
+import Footer from "~/components/Footer/Footer.astro";
+import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
+import ClassesList from "~/components/ClassesList.astro";
 
-const storyblokApi = useStoryblokApi();
-const storyblokVersion = import.meta.env.DEV ? "draft" : "published";
-
-const upcomingShowsPromise = storyblokApi.get("cdn/stories/upcoming-shows", {
-  version: storyblokVersion,
+const upcomingShows = await getShows({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 1)),
 });
-const calloutsPromise = storyblokApi.get("cdn/stories/callouts", {
-  version: storyblokVersion,
+const upcomingClasses = await getClasses({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 1)),
 });
 
-const [{ data: upcomingShowsData }, { data: calloutsData }] = await Promise.all([upcomingShowsPromise, calloutsPromise])
-
-const upcomingShowsContent = upcomingShowsData.story.content as { shows: Array<UpcomingShowCardProps> };
-const upcomingShows = upcomingShowsContent.shows.sort();
-
-const calloutsContent = calloutsData.story.content as { callouts: Array<CalloutCardProps> };
+const nextClass = upcomingClasses.length > 0 ? upcomingClasses[0] : null;
+const nextClassStartTime = nextClass
+  ? formatClassTime(new Date(nextClass.event_start))
+  : null;
 ---
 
 <html lang="en">
@@ -57,13 +56,20 @@ const calloutsContent = calloutsData.story.content as { callouts: Array<CalloutC
           <h3 class="text-red-400 text-lg mt-6">
             Register for our next class:
           </h3>
-          <p>Thursdays at 7:00pm starting Feb 16</p>
-          <a
-            href="#"
-            class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
-          >
-            Learn More
-          </a>
+          {
+            nextClass ? (
+              <>
+                <p>{nextClassStartTime}</p>
+                <a
+                  href={nextClass.listing_url}
+                  target="_blank"
+                  class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
+                >
+                  Learn More
+                </a>
+              </>
+            ) : null
+          }
         </div>
         <div class="w-full md:w-2/3 aspect-video">
           <div class="w-full h-full relative overflow-hidden">
@@ -91,19 +97,27 @@ const calloutsContent = calloutsData.story.content as { callouts: Array<CalloutC
         </div>
       </section>
       <section id="upcoming-shows">
-        <StoryblokComponent
-          blok={{
-            ...upcomingShowsContent,
-            shows: upcomingShows,
-          }}
-        />
+        <h2
+          class="text-transparent text-3xl font-medium w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
+        >
+          Discover Charlotte's Best Comedy
+        </h2>
+        <div class="mb-4 mt-2">
+          <span>Improv, stand-up, and more!</span>
+           &bull;
+          <span>Shows most weekends, starting at $10 per person.</span>
+        </div>
+        <UpcomingShowsList upcomingShows={upcomingShows} />
       </section>
-      <section id="callout-cards">
-        <StoryblokComponent
-          blok={calloutsContent}
-        />
+      <section id="upcoming-classes">
+        <h2
+          class="text-transparent text-3xl font-medium mb-4 w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
+        >
+          CATCh a class!
+        </h2>
+        <ClassesList upcomingClasses={upcomingClasses} />
       </section>
+      <Footer />
     </main>
-    <Footer />
   </body>
 </html>

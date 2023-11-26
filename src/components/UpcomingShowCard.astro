@@ -1,0 +1,29 @@
+---
+import { format } from "date-fns";
+
+type Props = {
+  title: string;
+  date: string;
+  imageUrl: string;
+  ticketsLink: string;
+};
+
+const { date, imageUrl, ticketsLink, title } = Astro.props;
+const showDate = new Date(date);
+---
+
+<a
+  href={ticketsLink}
+  target="_blank"
+  class="block rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+>
+  <p
+    class="bg-violet-500 text-center py-2 text-white text-lg border-b-4 border-pink-300"
+  >
+    {format(showDate, "E, LLL do")}
+    {` at `}
+    {format(showDate, "h:mm a")}
+  </p>
+  <img src={imageUrl} alt={title} class="w-full" />
+  <p class="text-right bg-red-100 p-2 text-red-700 uppercase">Get Tickets</p>
+</a>
