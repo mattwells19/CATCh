@@ -1,6 +1,8 @@
 ---
 import Quote from "./components/Quote.astro";
 import FooterSection from "./components/FooterSection.astro";
+import AbbyHeadshot from "~/images/Abby.webp";
+import KevinHeadshot from "~/images/Kevin.webp";
 ---
 
 <footer class="mt-24 lg:px-14 m-auto max-w-7xl">
@@ -8,13 +10,13 @@ import FooterSection from "./components/FooterSection.astro";
     <FooterSection title="Founders">
       <ul class="flex flex-row gap-8 md:flex-col justify-between">
         <li>
-          <Quote imgSrc="/images/Abby.webp" author="Abigail Head">
+          <Quote imgSrc={AbbyHeadshot} author="Abigail Head">
             If laughter is the best medicine, then a community that laughs
             together is a healthy one.
           </Quote>
         </li>
         <li>
-          <Quote imgSrc="/images/Kevin.webp" author="Kevin Shimko">
+          <Quote imgSrc={KevinHeadshot} author="Kevin Shimko">
             I wanted to build a place that comedy artists could call their own.
             That's what CATCh is for me. A home.
           </Quote>

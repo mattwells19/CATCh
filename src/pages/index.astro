@@ -8,6 +8,7 @@ import Header from "~/components/Header/Header.astro";
 import Footer from "~/components/Footer/Footer.astro";
 import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
 import ClassesList from "~/components/ClassesList.astro";
+import StageAnimation from "~/components/StageAnimation.astro";
 
 const upcomingShows = await getShows({
   from: getUnixTime(new Date()),
@@ -74,28 +75,7 @@ const nextClassStartTime = nextClass
           }
         </div>
         <div class="w-full md:w-2/3 aspect-video">
-          <div class="w-full h-full relative overflow-hidden">
-            <img
-              alt="The yellow light for the theater lights."
-              class="absolute -right-4 w-2/6 z-0 slider-lights-on opacity-0"
-              src="/images/slider/lights-on.webp"
-            />
-            <img
-              alt="Theater lights shining down on the actor."
-              class="absolute -right-4 w-2/6 z-0 slider-lights-off"
-              src="/images/slider/lights-off.webp"
-            />
-            <img
-              alt="An actor with their arms wide basking in the theater lights towards the audience."
-              class="z-[1] absolute bottom-0 left-1/2 -translate-x-1/2 w-3/5 slider-arms-wide opacity-0"
-              src="/images/slider/arms-wide.webp"
-            />
-            <img
-              alt="An crowded audience."
-              class="absolute bottom-0 w-full z-0 slider-audience"
-              src="/images/slider/audience.webp"
-            />
-          </div>
+          <StageAnimation />
         </div>
       </section>
       <section id="upcoming-shows">
