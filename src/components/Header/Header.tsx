@@ -16,9 +16,20 @@ import { Services } from "./views/Services.tsx";
 
 const NavMenuContent = ({ children }: PropsWithChildren): ReactElement => {
   return (
-    <NavigationMenuContent className="absolute w-full top-full left-0 bg-slate-600 text-slate-300 shadow-xl z-10 px-12 py-8">
-      <div className="max-w-7xl m-auto">{children}</div>
+    <NavigationMenuContent className="max-w-7xl m-auto px-12 py-8">
+      {children}
     </NavigationMenuContent>
+  );
+};
+
+const NavItemTrigger = ({
+  children,
+  className = "",
+}: PropsWithChildren<{ className?: string }>): ReactElement => {
+  return (
+    <NavigationMenuTrigger className={`${className} px-5 py-3`.trim()}>
+      {children}
+    </NavigationMenuTrigger>
   );
 };
 
@@ -39,43 +50,35 @@ export const Header = ({ nextShow }: { nextShow: Show }): ReactElement => {
             alt="CATCh - Comedy Arts Theater of Charlotte"
           />
         </a>
-        <NavigationMenuList className="gap-2 items-center font-light lg:flex">
+        <NavigationMenuList className="items-center font-light lg:flex">
           <NavigationMenuItem value="Shows">
-            <NavigationMenuTrigger className="uppercase px-4 py-3">
-              Shows
-            </NavigationMenuTrigger>
+            <NavItemTrigger className="uppercase">Shows</NavItemTrigger>
             <NavMenuContent>
               <Shows nextShow={nextShow} />
             </NavMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem value="Classes">
-            <NavigationMenuTrigger className="px-4 py-3">
-              CATCh A Class!
-            </NavigationMenuTrigger>
+            <NavItemTrigger>CATCh A Class!</NavItemTrigger>
             <NavMenuContent>
               <Classes />
             </NavMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem value="Services">
-            <NavigationMenuTrigger className="px-4 py-3">
-              Business Services
-            </NavigationMenuTrigger>
+            <NavItemTrigger>Business Services</NavItemTrigger>
             <NavMenuContent>
               <Services />
             </NavMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem value="Info">
-            <NavigationMenuTrigger className="px-4 py-3">
-              Theater Info
-            </NavigationMenuTrigger>
+            <NavItemTrigger>Theater Info</NavItemTrigger>
           </NavigationMenuItem>
 
-          <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all" />
+          <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all data-[state=visible]:animate-[fadeIn] data-[state=hidden]:animate-[fadeOut]" />
         </NavigationMenuList>
-        <NavigationMenuViewport />
+        <NavigationMenuViewport className="absolute top-full left-0 w-full bg-slate-600 text-slate-300 shadow-xl h-[var(--radix-navigation-menu-viewport-height)] overflow-hidden transition-[height] duration-300" />
       </NavigationMenu>
     </header>
   );
