@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
 
 // import { loadEnv } from "vite";
@@ -6,7 +7,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: consider SSR vs static
-  // output: "server",
   integrations: [tailwind()],
+  output: "server",
+  adapter: vercel(),
 });
