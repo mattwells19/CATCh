@@ -1,6 +1,7 @@
 import type { PropsWithChildren, ReactElement } from "react";
 import type { Show } from "~/api/getShows";
-import Logo from "~/images/CATCh-full-big-nobg.webp";
+import FullLogo from "~/images/CATCh-full-big-nobg.webp";
+import DotLogo from "~/images/laughing-dot.png";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -27,7 +28,9 @@ const NavItemTrigger = ({
   className = "",
 }: PropsWithChildren<{ className?: string }>): ReactElement => {
   return (
-    <NavigationMenuTrigger className={`${className} px-5 py-3`.trim()}>
+    <NavigationMenuTrigger
+      className={`${className} px-5 py-3 whitespace-nowrap`.trim()}
+    >
       {children}
     </NavigationMenuTrigger>
   );
@@ -35,22 +38,24 @@ const NavItemTrigger = ({
 
 export const Header = ({ nextShow }: { nextShow: Show }): ReactElement => {
   return (
-    <header
-      id="nav-header"
-      className="w-full shadow-lg sticky top-0 bg-white p-4 z-50"
-    >
+    <header className="w-full shadow-lg sticky top-0 bg-white z-50">
       <NavigationMenu
         skipDelayDuration={500}
-        className="flex gap-16 items-center"
+        className="flex gap-16 items-center overflow-x-auto p-4"
       >
-        <a href="/">
+        <a href="/" className="inline-flex">
           <img
-            src={Logo.src}
-            className="w-64 -translate-y-2"
+            src={FullLogo.src}
+            className="w-64 -translate-y-2 lg:block hidden"
+            alt="CATCh - Comedy Arts Theater of Charlotte"
+          />
+          <img
+            src={DotLogo.src}
+            className="w-24 lg:hidden"
             alt="CATCh - Comedy Arts Theater of Charlotte"
           />
         </a>
-        <NavigationMenuList className="items-center font-light lg:flex">
+        <NavigationMenuList className="flex items-center font-light">
           <NavigationMenuItem value="Shows">
             <NavItemTrigger className="uppercase">Shows</NavItemTrigger>
             <NavMenuContent>
@@ -76,7 +81,7 @@ export const Header = ({ nextShow }: { nextShow: Show }): ReactElement => {
             <NavItemTrigger>Theater Info</NavItemTrigger>
           </NavigationMenuItem>
 
-          <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all data-[state=visible]:animate-[fadeIn] data-[state=hidden]:animate-[fadeOut]" />
+          <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all" />
         </NavigationMenuList>
         <NavigationMenuViewport className="absolute top-full left-0 w-full bg-slate-600 text-slate-300 shadow-xl h-[var(--radix-navigation-menu-viewport-height)] overflow-hidden transition-[height] duration-300" />
       </NavigationMenu>
