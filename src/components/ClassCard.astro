@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { formatClassTime } from "~/utils/formatClassTime";
 
 type Props = {
@@ -23,6 +24,6 @@ const classMeetingTime = formatClassTime(new Date(date));
   >
     {classMeetingTime}
   </p>
-  <img src={imageUrl} alt={title} class="w-full" />
+  <Image src={imageUrl} alt={title} width="576" height="324" class="w-full" />
   <p class="text-right bg-red-100 p-2 text-red-700 uppercase">Register</p>
 </a>
