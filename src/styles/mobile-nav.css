@@ -1,0 +1,54 @@
+/* styles.css */
+.AccordionContent {
+  overflow: hidden;
+}
+.AccordionContent[data-state="open"] {
+  animation: slideDown 500ms ease-out;
+}
+.AccordionContent[data-state="closed"] {
+  animation: slideUp 500ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* styles.css */
+.DrawerContent[data-state="open"] {
+  animation: slideLeft 500ms ease-out;
+}
+.DrawerContent[data-state="closed"] {
+  animation: slideRight 500ms ease-out;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
