@@ -24,6 +24,7 @@ export const Shows = ({ nextShow }: { nextShow: Show }): ReactElement => {
           target="_blank"
           className="block rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
         >
+          <span className="sr-only">{nextShow.listing_title}</span>
           <p className="bg-violet-500 text-center py-2 text-white border-b-4 border-pink-300">
             {format(nextShowDate, "E, LLL do")}
             {` at `}
