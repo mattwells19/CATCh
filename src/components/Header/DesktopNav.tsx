@@ -10,11 +10,14 @@ import {
 } from "@radix-ui/react-navigation-menu";
 
 import type { Show } from "~/api/getShows";
+import type { StaffMember } from "~/api/getStaffMembers.ts";
+import type { Team } from "~/api/getTeams.ts";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 
 import { Shows } from "./views/Shows.tsx";
 import { Classes } from "./views/Classes.tsx";
 import { Services } from "./views/Services.tsx";
+import { TheaterInfo } from "./views/TheaterInfo.tsx";
 
 const NavMenuContent = ({ children }: PropsWithChildren): ReactElement => {
   return (
@@ -37,7 +40,15 @@ const NavItemTrigger = ({
   );
 };
 
-export const DesktopNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
+export const DesktopNav = ({
+  nextShow,
+  staffMembers,
+  teams,
+}: {
+  nextShow: Show;
+  staffMembers: Array<StaffMember>;
+  teams: Array<Team>;
+}): ReactElement => {
   return (
     <NavigationMenu
       skipDelayDuration={500}
@@ -54,7 +65,7 @@ export const DesktopNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
         <NavigationMenuItem value="Shows">
           <NavItemTrigger className="uppercase">Shows</NavItemTrigger>
           <NavMenuContent>
-            <Shows nextShow={nextShow} />
+            <Shows nextShow={nextShow} teams={teams} />
           </NavMenuContent>
         </NavigationMenuItem>
 
@@ -74,6 +85,9 @@ export const DesktopNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
 
         <NavigationMenuItem value="Info">
           <NavItemTrigger>Theater Info</NavItemTrigger>
+          <NavMenuContent>
+            <TheaterInfo staffMembers={staffMembers} />
+          </NavMenuContent>
         </NavigationMenuItem>
 
         <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all" />

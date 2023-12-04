@@ -13,7 +13,7 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
   image: {
-    domains: ["tlt-events.s3.amazonaws.com"],
+    domains: ["tlt-events.s3.amazonaws.com", "catch.theater"],
     remotePatterns: [{ protocol: "https" }],
   },
 });

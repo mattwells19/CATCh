@@ -1,19 +1,17 @@
 import type { ReactElement } from "react";
 import { format } from "date-fns";
 import type { Show } from "~/api/getShows";
+import type { Team } from "~/api/getTeams.ts";
 import { HeaderSection } from "../components/HeaderSection.tsx";
-import { HeaderLink } from "../components/HeaderLink.tsx";
+import { LinkList, LinkListItem } from "../components/LinkList.tsx";
 
-const teams = [
-  "Improv Game Night",
-  "SOS Improv",
-  "Situationship",
-  "The Fungibles",
-  "Therapy Adjacent",
-  "Third Place Brenda",
-];
-
-export const Shows = ({ nextShow }: { nextShow: Show }): ReactElement => {
+export const Shows = ({
+  nextShow,
+  teams,
+}: {
+  nextShow: Show;
+  teams: Array<Team>;
+}): ReactElement => {
   const nextShowDate = new Date(nextShow.event_start);
 
   return (
@@ -41,38 +39,30 @@ export const Shows = ({ nextShow }: { nextShow: Show }): ReactElement => {
         </a>
       </HeaderSection>
       <HeaderSection title="Performances">
-        <ul className="flex flex-col gap-3 my-3 list-disc list-inside">
-          <li>
-            <HeaderLink href="#">Come see a show</HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href="#">Check out our videos</HeaderLink>
-          </li>
-        </ul>
-        <h3 className="uppercase border-b border-b-slate-400 mt-8 text-slate-50">
+        <LinkList>
+          <LinkListItem href="#">Come see a show</LinkListItem>
+          <LinkListItem href="#">Check out our videos</LinkListItem>
+        </LinkList>
+        <h3 className="uppercase border-b border-b-slate-400 mt-8 mb-3 text-slate-50">
           More Info
         </h3>
-        <ul className="flex flex-col gap-3 my-3 list-disc list-inside">
-          <li>
-            <HeaderLink href="#">Our Performers</HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href="#">Frequently Asked Questions</HeaderLink>
-          </li>
-        </ul>
+        <LinkList>
+          <LinkListItem href="#">Our Performers</LinkListItem>
+          <LinkListItem href="#">Frequently Asked Questions</LinkListItem>
+        </LinkList>
       </HeaderSection>
       <HeaderSection title="Teams">
         <p className="my-3">
           Learn more about the different teams you can see at CATCh, from house
           teams to independent regulars!
         </p>
-        <ul className="grid grid-cols-2 gap-3 list-disc list-inside">
+        <LinkList columns={2}>
           {teams.map((team) => (
-            <li key={team}>
-              <HeaderLink href="#">{team}</HeaderLink>
-            </li>
+            <LinkListItem key={team.slug} href={`/teams/${team.slug}`}>
+              {team.name}
+            </LinkListItem>
           ))}
-        </ul>
+        </LinkList>
       </HeaderSection>
     </div>
   );

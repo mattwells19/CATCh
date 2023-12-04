@@ -18,12 +18,15 @@ import {
 } from "@radix-ui/react-accordion";
 
 import type { Show } from "~/api/getShows";
+import type { Team } from "~/api/getTeams.ts";
+import type { StaffMember } from "~/api/getStaffMembers.ts";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 import { Icon } from "../Icon.tsx";
 
 import { Shows } from "./views/Shows.tsx";
 import { Classes } from "./views/Classes.tsx";
 import { Services } from "./views/Services.tsx";
+import { TheaterInfo } from "./views/TheaterInfo.tsx";
 
 import "~/styles/mobile-nav.css";
 
@@ -70,7 +73,15 @@ const AccordionSectionContent = forwardRef<
   );
 });
 
-export const MobileNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
+export const MobileNav = ({
+  nextShow,
+  staffMembers,
+  teams,
+}: {
+  nextShow: Show;
+  staffMembers: Array<StaffMember>;
+  teams: Array<Team>;
+}): ReactElement => {
   return (
     <nav className="flex justify-between items-center px-2">
       <a href="/" className="shrink-0" aria-label="Home">
@@ -98,7 +109,7 @@ export const MobileNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
               <AccordionSectionItem value="Shows">
                 <AccordionSectionTrigger>Shows</AccordionSectionTrigger>
                 <AccordionSectionContent>
-                  <Shows nextShow={nextShow} />
+                  <Shows nextShow={nextShow} teams={teams} />
                 </AccordionSectionContent>
               </AccordionSectionItem>
 
@@ -122,7 +133,9 @@ export const MobileNav = ({ nextShow }: { nextShow: Show }): ReactElement => {
 
               <AccordionSectionItem value="Info">
                 <AccordionSectionTrigger>Theater Info</AccordionSectionTrigger>
-                <AccordionSectionContent>info</AccordionSectionContent>
+                <AccordionSectionContent>
+                  <TheaterInfo staffMembers={staffMembers} />
+                </AccordionSectionContent>
               </AccordionSectionItem>
             </Accordion>
           </DialogContent>

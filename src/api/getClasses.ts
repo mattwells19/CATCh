@@ -23,14 +23,22 @@ export interface Class {
   custom_button_text: string | null;
 }
 
-export async function getClasses({ from, to }: { from: number; to: number }): Promise<Array<Class>> {
+export async function getClasses({
+  from,
+  to,
+}: {
+  from: number;
+  to: number;
+}): Promise<Array<Class>> {
   const upcomingClasses: Array<Class> = await fetch(
     `https://www.ticketleap.events/api/organization-listing/catch-u/range?start=${from}&end=${to}`,
   )
     .then((res) => res.json())
     .then((data) => data.listings);
 
-  const sortedClasses = [...upcomingClasses].sort((a, b) => Date.parse(a.event_start) - Date.parse(b.event_start));
+  const sortedClasses = [...upcomingClasses].sort(
+    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
+  );
 
   return sortedClasses.map((classSession) => ({
     ...classSession,

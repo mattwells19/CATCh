@@ -3,10 +3,7 @@ export const HeaderLink = ({
   ...props
 }: JSX.IntrinsicElements["a"]) => {
   return (
-    <a
-      {...props}
-      className="text-violet-200 hover:underline focus:underline whitespace-nowrap"
-    >
+    <a {...props} className="text-violet-200 hover:underline focus:underline">
       {children}
     </a>
   );

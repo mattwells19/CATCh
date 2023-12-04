@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { HeaderLink } from "../components/HeaderLink.tsx";
 import { HeaderSection } from "../components/HeaderSection.tsx";
+import { LinkList, LinkListItem } from "../components/LinkList.tsx";
 
 export const Classes = (): ReactElement => {
   return (
@@ -21,48 +22,30 @@ export const Classes = (): ReactElement => {
           For those who wish to — and can commit to — practice & perform improv
           for the stage as an artist.
         </p>
-        <ul className="list-inside list-disc flex flex-col gap-3">
-          <li>
-            <HeaderLink href="#">PT 1: Discovering the Scene</HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href="#">
-              PT 2: Improv Stagecraft & Techniques
-            </HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href="#">PT 3: True to Form</HeaderLink>
-          </li>
-        </ul>
+        <LinkList>
+          <LinkListItem href="#">PT 1: Discovering the Scene</LinkListItem>
+          <LinkListItem href="#">
+            PT 2: Improv Stagecraft & Techniques
+          </LinkListItem>
+          <LinkListItem href="#">PT 3: True to Form</LinkListItem>
+        </LinkList>
       </HeaderSection>
       <div className="flex flex-col gap-12 w-full items-center">
         <HeaderSection title="Other Classes">
-          <ul className="list-inside list-disc flex flex-col gap-3">
-            <li>
-              <HeaderLink href="#">Stand-up Comedy</HeaderLink>
-            </li>
-            <li>
-              <HeaderLink href="#">
-                Comedy Writing for TV, Stage, & Film
-              </HeaderLink>
-            </li>
-            <li>
-              <HeaderLink href="#">IMPROVe Your Acting</HeaderLink>
-            </li>
-          </ul>
+          <LinkList>
+            <LinkListItem href="#">Stand-up Comedy</LinkListItem>
+            <LinkListItem href="#">
+              Comedy Writing for TV, Stage, & Film
+            </LinkListItem>
+            <LinkListItem href="#">IMPROVe Your Acting</LinkListItem>
+          </LinkList>
         </HeaderSection>
         <HeaderSection title="More Information">
-          <ul className="list-inside list-disc flex flex-col gap-3">
-            <li>
-              <HeaderLink href="#">Class Policies</HeaderLink>
-            </li>
-            <li>
-              <HeaderLink href="#">Classes FAQ</HeaderLink>
-            </li>
-            <li>
-              <HeaderLink href="#">Workstudy Program</HeaderLink>
-            </li>
-          </ul>
+          <LinkList>
+            <LinkListItem href="#">Class Policies</LinkListItem>
+            <LinkListItem href="#">Classes FAQ</LinkListItem>
+            <LinkListItem href="#">Workstudy Program</LinkListItem>
+          </LinkList>
         </HeaderSection>
       </div>
     </div>

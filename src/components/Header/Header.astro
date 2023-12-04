@@ -1,20 +1,43 @@
 ---
-import type { Show } from "~/api/getShows";
+import { addMonths, getUnixTime } from "date-fns";
+import { getShows } from "~/api/getShows";
+import { getStaffMembers } from "~/api/getStaffMembers.ts";
+import { getTeams } from "~/api/getTeams";
 import { DesktopNav } from "./DesktopNav.tsx";
 import { MobileNav } from "./MobileNav.tsx";
 
-type Props = {
-  nextShow: Show;
-};
+const showsPromise = getShows({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 1)),
+});
+const staffMembersPromise = getStaffMembers();
+const teamsPromise = getTeams();
 
-const { nextShow } = Astro.props;
+const [upcomingShows, staffMembers, teams] = await Promise.all([
+  showsPromise,
+  staffMembersPromise,
+  teamsPromise,
+]);
+
+// TODO: handle no upcoming shows case
+const nextShow = upcomingShows[0];
 ---
 
 <header class="w-full shadow-lg sticky top-0 bg-white z-50">
   <div class="hidden lg:block">
-    <DesktopNav client:media="(min-width: 1024px)" nextShow={nextShow} />
+    <DesktopNav
+      client:visible
+      nextShow={nextShow}
+      staffMembers={staffMembers}
+      teams={teams}
+    />
   </div>
   <div class="block lg:hidden overflow-hidden">
-    <MobileNav client:media="(max-width: 1024px)" nextShow={nextShow} />
+    <MobileNav
+      client:visible
+      nextShow={nextShow}
+      staffMembers={staffMembers}
+      teams={teams}
+    />
   </div>
 </header>

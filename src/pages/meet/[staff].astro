@@ -1,0 +1,42 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { getStaffMember } from "~/api/getStaffMembers";
+import { Image } from "astro:assets";
+
+const { staff: staffSlug } = Astro.params;
+if (!staffSlug) return Astro.redirect("/");
+
+const staffMember = await getStaffMember(staffSlug);
+if (!staffMember) return Astro.redirect("/");
+---
+
+<RootLayout>
+  <div class="absolute left-0 top-0 w-full h-72 bg-slate-600 bg-opacity-10">
+  </div>
+  <div class="relative">
+    <div
+      class="rounded-full w-64 aspect-square overflow-hidden m-auto flex justify-center"
+    >
+      <Image
+        src={staffMember.headshot.path}
+        alt={`${staffMember.name}'s headshot.'`}
+        width="350"
+        height="350"
+        class="object-cover"
+      />
+    </div>
+    <div class="mt-4 mb-8">
+      <h1
+        class="text-transparent text-3xl font-bold w-fit m-auto bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
+      >
+        {staffMember.name}
+      </h1>
+      <p class="text-center mt-2">{staffMember.pronouns}</p>
+      <p class="text-center font-medium">{staffMember.title}</p>
+    </div>
+    <div
+      class="max-w-screen-md m-auto flex flex-col gap-3 [&_a]:text-violet-600 [&_a:hover]:underline"
+      set:html={staffMember.bio}
+    />
+  </div>
+</RootLayout>

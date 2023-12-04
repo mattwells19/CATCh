@@ -3,20 +3,24 @@ import { getUnixTime, addMonths } from "date-fns";
 import { getShows } from "~/api/getShows";
 import { getClasses } from "~/api/getClasses";
 import { formatClassTime } from "~/utils/formatClassTime";
-import Header from "~/components/Header/Header.astro";
-import Footer from "~/components/Footer/Footer.astro";
 import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
 import ClassesList from "~/components/ClassesList.astro";
 import StageAnimation from "~/components/StageAnimation.astro";
+import RootLayout from "../layouts/RootLayout.astro";
 
-const upcomingShows = await getShows({
+const upcomingShowsPromise = getShows({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });
-const upcomingClasses = await getClasses({
+const upcomingClassesPromise = getClasses({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });
+
+const [upcomingShows, upcomingClasses] = await Promise.all([
+  upcomingShowsPromise,
+  upcomingClassesPromise,
+]);
 
 const nextClass = upcomingClasses.length > 0 ? upcomingClasses[0] : null;
 const nextClassStartTime = nextClass
@@ -24,81 +28,60 @@ const nextClassStartTime = nextClass
   : null;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Join us at CATCh for Charlotte's best improv comedy shows & improv classes. $10 shows most Friday and Saturday nights!"
-    />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Improv Shows & Classes in Charlotte | CATCh</title>
-  </head>
-  <body>
-    <Header nextShow={upcomingShows[0]} />
-    <main
-      class="max-w-7xl m-auto flex flex-col gap-24 py-2 px-6 lg:py-4 lg:px-14"
+<RootLayout layoutClass="flex flex-col gap-24">
+  <section class="flex gap-4 mt-24 flex-col md:flex-row">
+    <div class="w-full md:w-1/3">
+      <h2 class="text-violet-600 text-3xl">Be Bold<br />Say Yes.®</h2>
+      <h3 class="text-red-400 text-lg mt-6">CATCh an improv class!</h3>
+      <p class="my-3 font-light">
+        Whether you get up in front of an audience, a board meeting, or the
+        local PTA, improv classes are the exciting and hilarious way to develop
+        poise, build confidence, and learn teamwork / communication skills that
+        are in high demand.
+      </p>
+      <p class="my-3 font-light">
+        Sign up today for the most fun you've ever had in a personal development
+        class!
+      </p>
+      <h3 class="text-red-400 text-lg mt-6">Register for our next class:</h3>
+      {
+        nextClass ? (
+          <>
+            <p>{nextClassStartTime}</p>
+            <a
+              href={nextClass.listing_url}
+              target="_blank"
+              class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
+            >
+              Learn More
+            </a>
+          </>
+        ) : null
+      }
+    </div>
+    <div class="w-full md:w-2/3 aspect-video">
+      <StageAnimation />
+    </div>
+  </section>
+  <section id="upcoming-shows">
+    <h2
+      class="text-transparent text-3xl font-medium w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
     >
-      <section class="flex gap-4 mt-24 flex-col md:flex-row">
-        <div class="w-full md:w-1/3">
-          <h2 class="text-violet-600 text-3xl">Be Bold<br />Say Yes.®</h2>
-          <h3 class="text-red-400 text-lg mt-6">CATCh an improv class!</h3>
-          <p class="my-3 font-light">
-            Whether you get up in front of an audience, a board meeting, or the
-            local PTA, improv classes are the exciting and hilarious way to
-            develop poise, build confidence, and learn teamwork / communication
-            skills that are in high demand.
-          </p>
-          <p class="my-3 font-light">
-            Sign up today for the most fun you've ever had in a personal
-            development class!
-          </p>
-          <h3 class="text-red-400 text-lg mt-6">
-            Register for our next class:
-          </h3>
-          {
-            nextClass ? (
-              <>
-                <p>{nextClassStartTime}</p>
-                <a
-                  href={nextClass.listing_url}
-                  target="_blank"
-                  class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
-                >
-                  Learn More
-                </a>
-              </>
-            ) : null
-          }
-        </div>
-        <div class="w-full md:w-2/3 aspect-video">
-          <StageAnimation />
-        </div>
-      </section>
-      <section id="upcoming-shows">
-        <h2
-          class="text-transparent text-3xl font-medium w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
-        >
-          Discover Charlotte's Best Comedy
-        </h2>
-        <div class="mb-4 mt-2">
-          <span>Improv, stand-up, and more!</span>
-           &bull;
-          <span>Shows most weekends, starting at $10 per person.</span>
-        </div>
-        <UpcomingShowsList upcomingShows={upcomingShows} />
-      </section>
-      <section id="upcoming-classes">
-        <h2
-          class="text-transparent text-3xl font-medium mb-4 w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
-        >
-          CATCh a class!
-        </h2>
-        <ClassesList upcomingClasses={upcomingClasses} />
-      </section>
-      <Footer />
-    </main>
-  </body>
-</html>
+      Discover Charlotte's Best Comedy
+    </h2>
+    <div class="mb-4 mt-2">
+      <span>Improv, stand-up, and more!</span>
+       &bull;
+      <span>Shows most weekends, starting at $10 per person.</span>
+    </div>
+    <UpcomingShowsList upcomingShows={upcomingShows} />
+  </section>
+  <section id="upcoming-classes">
+    <h2
+      class="text-transparent text-3xl font-medium mb-4 w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
+    >
+      CATCh a class!
+    </h2>
+    <ClassesList upcomingClasses={upcomingClasses} />
+  </section>
+</RootLayout>

@@ -1,0 +1,17 @@
+---
+type Props = {
+  href: string;
+  title: string;
+  description: string;
+};
+
+const { href, title, description } = Astro.props;
+---
+
+<a
+  href={href}
+  class="grid rounded shadow-lg hover:shadow-xl transition-shadow text-white h-full p-8 bg-gradient-to-br from-violet-600 to-indigo-400 content-start gap-4"
+>
+  <h4 class="text-lg font-bold text-center">{title}</h4>
+  <p class="text-ellipsis">{description}</p>
+</a>
