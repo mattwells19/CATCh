@@ -1,6 +1,8 @@
 import type { CockpitImage, WYSIWYGString } from "./api.types";
+import { getCollectionEntries } from "./utils";
 
 export interface Team {
+  _id: string;
   name: string;
   slug: string;
   active: boolean;
@@ -20,13 +22,7 @@ export interface Team {
 }
 
 export async function getTeams(): Promise<Array<Team>> {
-  const teamEntries: Array<Team> = await fetch(
-    `https://catch.theater/cockpit/api/collections/get/teams?token=${
-      import.meta.env.COCK_TOKEN
-    }`,
-  )
-    .then((collection) => collection.json())
-    .then((collection) => collection.entries);
+  const teamEntries = await getCollectionEntries<Team>("teams");
 
   return teamEntries
     .filter((team) => team.active)
@@ -49,7 +45,5 @@ export async function getTeams(): Promise<Array<Team>> {
 export async function getTeam(teamSlug: string): Promise<Team | null> {
   const teams = await getTeams();
 
-  const teamSlugMap = new Map(teams.map((team) => [team.slug, team]));
-
-  return teamSlugMap.get(teamSlug) ?? null;
+  return teams.find((team) => team.slug === teamSlug) ?? null;
 }

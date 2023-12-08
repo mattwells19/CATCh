@@ -1,0 +1,22 @@
+---
+import { Image, type RemoteImageProps } from "astro:assets";
+
+type Props = {
+  src: RemoteImageProps["src"];
+  name: string;
+};
+
+const { name, src } = Astro.props;
+---
+
+<div
+  class="rounded-full w-64 aspect-square overflow-hidden m-auto flex justify-center"
+>
+  <Image
+    src={src}
+    alt={`${name}'s headshot.'`}
+    width="350"
+    height="350"
+    class="object-cover"
+  />
+</div>

@@ -1,4 +1,5 @@
 import type { CockpitImage, WYSIWYGString } from "./api.types";
+import { getCollectionEntries } from "./utils";
 
 export interface StaffMember {
   name: string;
@@ -19,13 +20,7 @@ export interface StaffMember {
 }
 
 export async function getStaffMembers(): Promise<Array<StaffMember>> {
-  const staffEntries: Array<StaffMember> = await fetch(
-    `https://catch.theater/cockpit/api/collections/get/staff?token=${
-      import.meta.env.COCK_TOKEN
-    }`,
-  )
-    .then((collection) => collection.json())
-    .then((collection) => collection.entries);
+  const staffEntries = await getCollectionEntries<StaffMember>("staff");
 
   return staffEntries.map((staffEntry) => ({
     ...staffEntry,
