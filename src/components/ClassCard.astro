@@ -25,6 +25,20 @@ const classMeetingTime = formatClassTime(new Date(date));
   >
     {classMeetingTime}
   </p>
-  <Image src={imageUrl} alt={title} width="576" height="324" class="w-full" />
+  {
+    imageUrl ? (
+      <Image
+        src={imageUrl}
+        alt={title}
+        width="576"
+        height="324"
+        class="w-full"
+      />
+    ) : (
+      <div class="w-full h-[324px] grid place-items-center bg-gradient-to-br from-violet-600 to-indigo-400">
+        <p class="text-3xl text-white font-bold">{title}</p>
+      </div>
+    )
+  }
   <p class="text-right bg-red-100 p-2 text-red-700 uppercase">Register</p>
 </a>

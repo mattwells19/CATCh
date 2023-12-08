@@ -42,7 +42,7 @@ export async function getClasses({
 
   return sortedClasses.map((classSession) => ({
     ...classSession,
-    image: `https:${classSession.image}`,
+    image: classSession.image ? `https:${classSession.image}` : null,
     listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
   }));
 }
