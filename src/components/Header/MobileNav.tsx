@@ -17,9 +17,7 @@ import {
   type AccordionContentProps,
 } from "@radix-ui/react-accordion";
 
-import type { Show } from "~/api/getShows";
-import type { Team } from "~/api/getTeams.ts";
-import type { StaffMember } from "~/api/getStaffMembers.ts";
+import type { NavProps } from "./Header.astro";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 import { Icon } from "../Icon.tsx";
 
@@ -77,11 +75,8 @@ export const MobileNav = ({
   nextShow,
   staffMembers,
   teams,
-}: {
-  nextShow: Show;
-  staffMembers: Array<StaffMember>;
-  teams: Array<Team>;
-}): ReactElement => {
+  classes,
+}: NavProps): ReactElement => {
   return (
     <nav className="flex justify-between items-center px-2">
       <a href="/" className="shrink-0" aria-label="Home">
@@ -118,7 +113,7 @@ export const MobileNav = ({
                   CATCh a Class!
                 </AccordionSectionTrigger>
                 <AccordionSectionContent>
-                  <Classes />
+                  <Classes classes={classes} />
                 </AccordionSectionContent>
               </AccordionSectionItem>
 

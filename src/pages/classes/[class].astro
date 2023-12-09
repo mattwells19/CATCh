@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import { addMonths, getUnixTime } from "date-fns";
+import { getClassListings } from "~/api/getClassListings";
+import { getClass } from "~/api/getClasses";
+import RootLayout from "~/layouts/RootLayout.astro";
+import { formatClassTime } from "~/utils/formatClassTime";
+
+const { class: classSlug } = Astro.params;
+if (!classSlug) return Astro.redirect("/");
+
+const classEntry = await getClass(classSlug);
+if (!classEntry) return Astro.redirect("/");
+
+const classListings = await getClassListings({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 3)),
+});
+
+const classEntryListings = classListings.filter(
+  (classListing) => classListing.listing_title === classEntry.class,
+);
+---
+
+<RootLayout layoutClass="flex flex-col gap-8">
+  <div class="text-center flex flex-col gap-4 bg-violet-600 bg-opacity-10 p-8">
+    <h1 class="text-gradient text-5xl font-bold m-auto">{classEntry.class}</h1>
+    {
+      classEntry.trackNum ? (
+        <p class="text-xl font-medium">
+          Course {classEntry.trackNum}: {classEntry.category}
+        </p>
+      ) : null
+    }
+    <p class="max-w-screen-md m-auto">
+      {classEntry.shortDesc}
+    </p>
+  </div>
+  <section class="flex gap-8 items-start flex-col lg:flex-row lg:gap-4">
+    <Image
+      src={classEntry.image.path}
+      alt={classEntry.image.meta?.title ?? `${classEntry.class}'s image.'`}
+      width={600}
+      height={337}
+      class="flex-shrink-0 mx-auto"
+    />
+    <div class="flex flex-col gap-4">
+      <h2 class="font-bold">{classEntry.descTagline}</h2>
+      <ul class="list-disc list-inside">
+        <li class="font-medium">&dollar;{classEntry.price}</li>
+        <li class="font-medium">
+          Meets on the same night, once a week for {classEntry.length}.
+        </li>
+        {
+          classEntry.hasShow ? (
+            <li class="font-medium">
+              This class will culminate in a live student showcase. Ensure you
+              can make all the scheduled classes and the show before
+              registering.
+            </li>
+          ) : null
+        }
+      </ul>
+      <div
+        class="flex flex-col gap-3 [&_a]:text-violet-600 [&_a:hover]:underline"
+        set:html={classEntry.description}
+      />
+    </div>
+  </section>
+  <section>
+    <h2 class="text-xl font-bold mb-4">Upcoming Offerings</h2>
+    {
+      classEntryListings.length > 0 ? (
+        <ul class="flex gap-2">
+          {classEntryListings.map((classListing) => (
+            <li class="rounded-md shadow-md p-4">
+              <a href={classListing.listing_url} class="group">
+                <p>{formatClassTime(new Date(classListing.event_start))}</p>
+                <p class="font-bold text-violet-500 mt-3 group-hover:underline">
+                  Register Now
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Nothing posted yet. Check back soon!</p>
+      )
+    }
+  </section>
+</RootLayout>

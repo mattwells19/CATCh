@@ -1,10 +1,18 @@
 ---
 import { addMonths, getUnixTime } from "date-fns";
-import { getShows } from "~/api/getShows";
-import { getStaffMembers } from "~/api/getStaffMembers.ts";
-import { getTeams } from "~/api/getTeams";
+import { getShows, type Show } from "~/api/getShows";
+import { getStaffMembers, type StaffMember } from "~/api/getStaffMembers.ts";
+import { getTeams, type Team } from "~/api/getTeams";
 import { DesktopNav } from "./DesktopNav.tsx";
 import { MobileNav } from "./MobileNav.tsx";
+import { getClasses, type Class } from "~/api/getClasses";
+
+export type NavProps = {
+  nextShow: Show;
+  staffMembers: Array<StaffMember>;
+  teams: Array<Team>;
+  classes: Array<Class>;
+};
 
 const showsPromise = getShows({
   from: getUnixTime(new Date()),
@@ -12,12 +20,16 @@ const showsPromise = getShows({
 });
 const staffMembersPromise = getStaffMembers();
 const teamsPromise = getTeams();
+const classesPromise = getClasses();
 
-const [upcomingShows, staffMembers, teams] = await Promise.all([
+const [upcomingShows, staffMembers, teams, classes] = await Promise.all([
   showsPromise,
   staffMembersPromise,
   teamsPromise,
+  classesPromise,
 ]);
+
+// console.log(classes);
 
 // TODO: handle no upcoming shows case
 const nextShow = upcomingShows[0];
@@ -30,6 +42,7 @@ const nextShow = upcomingShows[0];
       nextShow={nextShow}
       staffMembers={staffMembers}
       teams={teams}
+      classes={classes}
     />
   </div>
   <div class="block lg:hidden overflow-hidden">
@@ -38,6 +51,7 @@ const nextShow = upcomingShows[0];
       nextShow={nextShow}
       staffMembers={staffMembers}
       teams={teams}
+      classes={classes}
     />
   </div>
 </header>

@@ -1,7 +1,7 @@
 ---
 import { getUnixTime, addMonths } from "date-fns";
 import { getShows } from "~/api/getShows";
-import { getClasses } from "~/api/getClasses";
+import { getClassListings } from "~/api/getClassListings";
 import { formatClassTime } from "~/utils/formatClassTime";
 import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
 import ClassesList from "~/components/ClassesList.astro";
@@ -12,7 +12,7 @@ const upcomingShowsPromise = getShows({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });
-const upcomingClassesPromise = getClasses({
+const upcomingClassesPromise = getClassListings({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });

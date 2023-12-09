@@ -1,9 +1,9 @@
 ---
-import type { Class } from "~/api/getClasses";
+import type { ClassListing } from "~/api/getClassListings";
 import ClassCard from "./ClassCard.astro";
 
 type Props = {
-  upcomingClasses: Array<Class>;
+  upcomingClasses: Array<ClassListing>;
 };
 
 const { upcomingClasses } = Astro.props;

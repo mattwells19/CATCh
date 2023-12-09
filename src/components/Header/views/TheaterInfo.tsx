@@ -16,9 +16,9 @@ export const TheaterInfo = ({
             <LinkListItem
               key={staffMember.slug}
               href={`/meet/${staffMember.slug}`}
+              subText={staffMember.title}
             >
               {staffMember.name}
-              <p className="pl-[22px]">{staffMember.title}</p>
             </LinkListItem>
           ))}
         </LinkList>

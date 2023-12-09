@@ -9,9 +9,7 @@ import {
   NavigationMenuIndicator,
 } from "@radix-ui/react-navigation-menu";
 
-import type { Show } from "~/api/getShows";
-import type { StaffMember } from "~/api/getStaffMembers.ts";
-import type { Team } from "~/api/getTeams.ts";
+import type { NavProps } from "./Header.astro";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 
 import { Shows } from "./views/Shows.tsx";
@@ -44,11 +42,8 @@ export const DesktopNav = ({
   nextShow,
   staffMembers,
   teams,
-}: {
-  nextShow: Show;
-  staffMembers: Array<StaffMember>;
-  teams: Array<Team>;
-}): ReactElement => {
+  classes,
+}: NavProps): ReactElement => {
   return (
     <NavigationMenu
       skipDelayDuration={500}
@@ -72,7 +67,7 @@ export const DesktopNav = ({
         <NavigationMenuItem value="Classes">
           <NavItemTrigger>CATCh A Class!</NavItemTrigger>
           <NavMenuContent>
-            <Classes />
+            <Classes classes={classes} />
           </NavMenuContent>
         </NavigationMenuItem>
 
