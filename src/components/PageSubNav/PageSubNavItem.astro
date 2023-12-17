@@ -1,0 +1,17 @@
+---
+type Props = {
+  href: string;
+};
+
+const { href } = Astro.props;
+
+const isCurrentPage = Astro.url.pathname === href;
+---
+
+<a
+  aria-current={isCurrentPage ? "page" : undefined}
+  href={href}
+  class="rounded py-1 px-3 aria-[current='page']:bg-violet-200 hover:bg-violet-100 transition-colors cursor-pointer whitespace-nowrap"
+>
+  <slot />
+</a>

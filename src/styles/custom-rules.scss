@@ -1,0 +1,27 @@
+.text-gradient {
+  @apply py-1 text-transparent w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text;
+}
+
+.wysiwyg {
+  @apply flex flex-col gap-3;
+
+  :global(a) {
+    @apply text-violet-600;
+
+    &:hover {
+      @apply underline;
+    }
+  }
+
+  :global(h2) {
+    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+  }
+
+  :global(h3) {
+    @apply text-lg font-semibold;
+  }
+
+  :global(ul) {
+    @apply list-disc pl-6;
+  }
+}

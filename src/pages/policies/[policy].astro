@@ -1,0 +1,43 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { getPolicies } from "~/api/getPolicies";
+import PageSubNavList from "~/components/PageSubNav/PageSubNavList.astro";
+import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
+
+const { policy: policySlug } = Astro.params;
+if (!policySlug) return Astro.redirect("/");
+
+const allPolicies = await getPolicies();
+
+const policy = allPolicies.find((p) => p.slug === policySlug);
+if (!policy) return Astro.redirect("/");
+---
+
+<RootLayout layoutClass="flex flex-col gap-6 justify-center">
+  <PageSubNavList>
+    {
+      allPolicies.map((policyEntry) => (
+        <PageSubNavItem href={`/policies/${policyEntry.slug}`}>
+          {policyEntry.name}
+        </PageSubNavItem>
+      ))
+    }
+  </PageSubNavList>
+
+  <div class="flex flex-col gap-6 max-w-screen-md m-auto">
+    <h1 class="text-gradient text-3xl font-bold m-auto">{policy.name}</h1>
+    <p class="self-center">{policy.subhead}</p>
+
+    {
+      policy.note ? (
+        <p class="bg-violet-200 p-3 rounded border border-violet-600">
+          {policy.note}
+        </p>
+      ) : null
+    }
+
+    <div class="wysiwyg" set:html={policy.policy} />
+
+    <p>Last updated: {policy.date}</p>
+  </div>
+</RootLayout>

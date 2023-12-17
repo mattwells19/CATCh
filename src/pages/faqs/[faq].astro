@@ -1,0 +1,42 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { getFaqs } from "~/api/getFaqs";
+import PageSubNavList from "~/components/PageSubNav/PageSubNavList.astro";
+import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
+
+const { faq: faqSlug } = Astro.params;
+if (!faqSlug) return Astro.redirect("/");
+
+const allFaqs = await getFaqs();
+
+const faq = allFaqs.find((f) => f.slug === faqSlug);
+if (!faq) return Astro.redirect("/");
+---
+
+<RootLayout layoutClass="flex flex-col gap-6 justify-center">
+  <PageSubNavList>
+    {
+      allFaqs.map((faqEntry) => (
+        <PageSubNavItem href={`/faqs/${faqEntry.slug}`}>
+          {faqEntry.name}
+        </PageSubNavItem>
+      ))
+    }
+  </PageSubNavList>
+
+  <div class="flex flex-col gap-6 max-w-screen-md m-auto">
+    <h1 class="text-gradient text-3xl font-bold m-auto">{faq.name}</h1>
+    <p class="self-center">{faq.description}</p>
+
+    {
+      faq.faqs.map((entry) => (
+        <details>
+          <summary class="text-lg font-semibold cursor-pointer">
+            {entry.question}
+          </summary>
+          <div class="wysiwyg pt-2 pl-6" set:html={entry.answer} />
+        </details>
+      ))
+    }
+  </div>
+</RootLayout>

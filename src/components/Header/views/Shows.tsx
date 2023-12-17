@@ -48,7 +48,9 @@ export const Shows = ({
         </h3>
         <LinkList>
           <LinkListItem href="#">Our Performers</LinkListItem>
-          <LinkListItem href="#">Frequently Asked Questions</LinkListItem>
+          <LinkListItem href="/faqs/show-faq">
+            Frequently Asked Questions
+          </LinkListItem>
         </LinkList>
       </HeaderSection>
       <HeaderSection title="Teams">

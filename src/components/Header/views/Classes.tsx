@@ -66,7 +66,7 @@ export const Classes = ({
         </p>
         <LinkList>
           {separatedClasses.ptClasses
-            .sort((a, b) => a.trackNum - b.trackNum)
+            .sort((a, b) => (a.trackNum ?? 0) - (b.trackNum ?? 0))
             .map((ptClass) => (
               <LinkListItem
                 key={ptClass._id}
@@ -93,8 +93,12 @@ export const Classes = ({
         </HeaderSection>
         <HeaderSection title="More Information">
           <LinkList>
-            <LinkListItem href="#">Class Policies</LinkListItem>
-            <LinkListItem href="#">Classes FAQ</LinkListItem>
+            <LinkListItem href="/policies/class-policies">
+              Class Policies
+            </LinkListItem>
+            <LinkListItem href="/faqs/improv-class-faq">
+              Classes FAQ
+            </LinkListItem>
             <LinkListItem href="#">Workstudy Program</LinkListItem>
           </LinkList>
         </HeaderSection>

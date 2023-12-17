@@ -1,3 +1,0 @@
-.text-gradient {
-  @apply py-1 text-transparent w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text;
-}
