@@ -23,14 +23,22 @@ export interface Show {
   custom_button_text: string | null;
 }
 
-export async function getShows({ from, to }: { from: number; to: number }): Promise<Array<Show>> {
+export async function getShows({
+  from,
+  to,
+}: {
+  from: number;
+  to: number;
+}): Promise<Array<Show>> {
   const upcomingShows: Array<Show> = await fetch(
     `https://www.ticketleap.events/api/organization-listing/catch/range?start=${from}&end=${to}`,
   )
     .then((res) => res.json())
     .then((data) => data.listings);
 
-  const sortedUpcomingShows = [...upcomingShows].sort((a, b) => Date.parse(a.event_start) - Date.parse(b.event_start));
+  const sortedUpcomingShows = [...upcomingShows].sort(
+    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
+  );
 
   return sortedUpcomingShows.map((show) => ({
     ...show,

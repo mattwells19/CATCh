@@ -1,0 +1,65 @@
+---
+import format from "date-fns/format";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import type { Show } from "~/api/getShows";
+import CoralButtonLink from "./CoralButtonLink.astro";
+import CastLaughingBackground from "../images/CastLaughingBackground.png";
+
+type Props = {
+  nextShow: Show;
+};
+
+const { nextShow } = Astro.props;
+
+const showDateFormatted = (() => {
+  const showTime = new Date(nextShow.event_start);
+
+  const dayOfTheWeek = format(showTime, "EEEE");
+  const time = format(showTime, "h:mm a");
+  const day = format(showTime, "LLL d");
+
+  return `${dayOfTheWeek}, ${day} at ${time}`;
+})();
+---
+
+<section
+  class="relative flex flex-col-reverse items-center lg:flex lg:flex-row lg:justify-between bg-shapes"
+>
+  <div class="flex flex-col gap-8 pt-8 lg:pt-0">
+    <div
+      class="flex items-center gap-2 border-b-2 border-purple-700 w-fit mr-auto py-4"
+    >
+      <Icon name="calendar" />
+
+      <p class="text-primary-purple font-semibold">
+        {showDateFormatted}
+      </p>
+    </div>
+
+    <h1 class="text-primary-purple text-6xl font-bold font-serif">
+      {nextShow.listing_title}
+    </h1>
+
+    <p class="text-black text-xl">Show details</p>
+
+    <CoralButtonLink href={nextShow.listing_url}>
+      <Icon name="ticket" />Get Tickets
+    </CoralButtonLink>
+  </div>
+
+  <Image
+    src={nextShow.image}
+    alt={nextShow.listing_title}
+    width="650"
+    height="366"
+  />
+
+  <Image
+    src={CastLaughingBackground}
+    width="1598"
+    height="847"
+    alt="Cast members laughing"
+    class="absolute -z-10 top-2/3 left-1/3"
+  />
+</section>

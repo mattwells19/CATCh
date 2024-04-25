@@ -2,18 +2,21 @@ import { defineConfig } from "astro/config";
 import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
 
-// import { loadEnv } from "vite";
-// const env = loadEnv("", process.cwd(), "STORYBLOK");
-
 import react from "@astrojs/react";
+
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), react()],
+  integrations: [tailwind(), react(), icon()],
   output: "server",
   adapter: vercel(),
   image: {
     domains: ["tlt-events.s3.amazonaws.com", "catch.theater"],
-    remotePatterns: [{ protocol: "https" }],
+    remotePatterns: [
+      {
+        protocol: "https",
+      },
+    ],
   },
 });

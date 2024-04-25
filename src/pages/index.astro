@@ -2,11 +2,10 @@
 import { getUnixTime, addMonths } from "date-fns";
 import { getShows } from "~/api/getShows";
 import { getClassListings } from "~/api/getClassListings";
-import { formatClassTime } from "~/utils/formatClassTime";
 import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
 import ClassesList from "~/components/ClassesList.astro";
-import StageAnimation from "~/components/StageAnimation.astro";
 import RootLayout from "../layouts/RootLayout.astro";
+import NextShowCallout from "~/components/NextShowCallout.astro";
 
 const upcomingShowsPromise = getShows({
   from: getUnixTime(new Date()),
@@ -22,47 +21,11 @@ const [upcomingShows, upcomingClasses] = await Promise.all([
   upcomingClassesPromise,
 ]);
 
-const nextClass = upcomingClasses.length > 0 ? upcomingClasses[0] : null;
-const nextClassStartTime = nextClass
-  ? formatClassTime(new Date(nextClass.event_start))
-  : null;
+const nextShow = upcomingShows.length > 0 ? upcomingShows[0] : null;
 ---
 
 <RootLayout layoutClass="flex flex-col gap-24">
-  <section class="flex gap-4 mt-24 flex-col md:flex-row">
-    <div class="w-full md:w-1/3">
-      <h2 class="text-violet-600 text-3xl">Be Bold<br />Say Yes.®</h2>
-      <h3 class="text-red-400 text-lg mt-6">CATCh an improv class!</h3>
-      <p class="my-3 font-light">
-        Whether you get up in front of an audience, a board meeting, or the
-        local PTA, improv classes are the exciting and hilarious way to develop
-        poise, build confidence, and learn teamwork / communication skills that
-        are in high demand.
-      </p>
-      <p class="my-3 font-light">
-        Sign up today for the most fun you've ever had in a personal development
-        class!
-      </p>
-      <h3 class="text-red-400 text-lg mt-6">Register for our next class:</h3>
-      {
-        nextClass ? (
-          <>
-            <p>{nextClassStartTime}</p>
-            <a
-              href={nextClass.listing_url}
-              target="_blank"
-              class="block border-2 border-violet-600 uppercase py-3 px-6 w-fit rounded-full text-violet-600 my-6 ml-auto text-sm font-semibold"
-            >
-              Learn More
-            </a>
-          </>
-        ) : null
-      }
-    </div>
-    <div class="w-full md:w-2/3 aspect-video">
-      <StageAnimation />
-    </div>
-  </section>
+  {nextShow ? <NextShowCallout nextShow={nextShow} /> : null}
   <section id="upcoming-shows">
     <h2
       class="text-transparent text-3xl font-medium w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
@@ -71,7 +34,7 @@ const nextClassStartTime = nextClass
     </h2>
     <div class="mb-4 mt-2">
       <span>Improv, stand-up, and more!</span>
-       &bull;
+      &bull;
       <span>Shows most weekends, starting at $10 per person.</span>
     </div>
     <UpcomingShowsList upcomingShows={upcomingShows} />

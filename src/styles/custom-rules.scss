@@ -1,3 +1,31 @@
+:root {
+  --peach: #fff9f3;
+  --primary-purple: #440067;
+  --coral: #f0594f;
+  --yellow: #f2b63f;
+  --black: #262626;
+}
+
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+  font-family: Fraunces;
+  src: url("/fonts/Fraunces/Fraunces-Italic-VariableFont_SOFT,WONK,opsz,wght.ttf")
+    format("truetype");
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Fraunces;
+  src: url("/fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf")
+    format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background: var(--peach);
+}
+
 .text-gradient {
   @apply py-1 text-transparent w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text;
 }
