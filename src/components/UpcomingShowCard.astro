@@ -1,31 +1,58 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import { format } from "date-fns";
+import type { Show } from "~/api/getShows";
+import CoralButtonLink from "./CoralButtonLink.astro";
 
 type Props = {
-  title: string;
-  date: string;
-  imageUrl: string;
-  ticketsLink: string;
+  show: Show;
 };
 
-const { date, imageUrl, ticketsLink, title } = Astro.props;
-const showDate = new Date(date);
+const { show } = Astro.props;
+
+const showDateFormatted = (() => {
+  const showTime = new Date(show.event_start);
+
+  const dayOfTheWeek = format(showTime, "EEEE");
+  const time = format(showTime, "h:mm a");
+  const day = format(showTime, "LLL d");
+
+  return `${dayOfTheWeek}, ${day} at ${time}`;
+})();
 ---
 
-<a
-  href={ticketsLink}
-  target="_blank"
-  class="block rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+<div
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px]"
 >
-  <span class="sr-only">{title}</span>
-  <p
-    class="bg-violet-500 text-center py-2 text-white text-lg border-b-4 border-pink-300"
-  >
-    {format(showDate, "E, LLL do")}
-    {` at `}
-    {format(showDate, "h:mm a")}
+  <span class="sr-only">{show.listing_title}</span>
+  <Image
+    src={show.image}
+    alt={show.listing_title}
+    width="295"
+    height="165"
+    class="w-full"
+  />
+
+  <div class="flex flex-col gap-4 px-2 text-lg">
+    <div
+      class="flex items-center gap-2 border-b-2 border-[#9470DC] w-fit mr-auto py-4"
+    >
+      <Icon name="calendar" />
+
+      <p class="text-primary-purple font-serif font-semibold">
+        {showDateFormatted}
+      </p>
+    </div>
+
+    <p>Show details</p>
+  </div>
+
+  <p class="font-bold px-2">
+    ${show.min_price}
   </p>
-  <Image src={imageUrl} alt={title} width="576" height="324" class="w-full" />
-  <p class="text-right bg-red-100 p-2 text-red-700 uppercase">Get Tickets</p>
-</a>
+
+  <CoralButtonLink href={show.listing_url} class="w-full min-w-full">
+    <Icon name="ticket" />Get Tickets
+  </CoralButtonLink>
+</div>

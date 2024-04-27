@@ -1,11 +1,16 @@
 ---
 import { getUnixTime, addMonths } from "date-fns";
+import { Icon } from "astro-icon/components";
+
 import { getShows } from "~/api/getShows";
 import { getClassListings } from "~/api/getClassListings";
-import UpcomingShowsList from "~/components/UpcomingShowsList.astro";
-import ClassesList from "~/components/ClassesList.astro";
+
 import RootLayout from "../layouts/RootLayout.astro";
+
+import ClassesList from "~/components/ClassesList.astro";
 import NextShowCallout from "~/components/NextShowCallout.astro";
+import CardList from "~/components/CardList.astro";
+import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
 const upcomingShowsPromise = getShows({
   from: getUnixTime(new Date()),
@@ -21,23 +26,46 @@ const [upcomingShows, upcomingClasses] = await Promise.all([
   upcomingClassesPromise,
 ]);
 
-const nextShow = upcomingShows.length > 0 ? upcomingShows[0] : null;
+const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
 ---
 
-<RootLayout layoutClass="flex flex-col gap-24">
-  {nextShow ? <NextShowCallout nextShow={nextShow} /> : null}
-  <section id="upcoming-shows">
-    <h2
-      class="text-transparent text-3xl font-medium w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
-    >
-      Discover Charlotte's Best Comedy
+<style lang="scss">
+  // the purple blob behind the show section
+  #upcoming-shows::after {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-color: var(--primary-purple);
+    clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
+    transform: scaleX(-1);
+  }
+</style>
+
+<RootLayout layoutClass="flex flex-col gap-24 overflow-x-hidden">
+  <NextShowCallout nextShow={nextShow} />
+  <section
+    id="upcoming-shows"
+    class="relative pt-4 w-full overflow-y-visible pb-4"
+  >
+    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-peach my-8 px-4">
+      Upcoming shows
     </h2>
-    <div class="mb-4 mt-2">
-      <span>Improv, stand-up, and more!</span>
-      &bull;
-      <span>Shows most weekends, starting at $10 per person.</span>
-    </div>
-    <UpcomingShowsList upcomingShows={upcomingShows} />
+    <CardList>
+      {
+        otherShows.map((show) => (
+          <li class="flex-1">
+            <UpcomingShowCard show={show} />
+          </li>
+        ))
+      }
+    </CardList>
+    <a
+      href="/shows"
+      class="text-peach underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto"
+    >
+      See all shows <Icon name="arrow-right" />
+    </a>
   </section>
   <section id="upcoming-classes">
     <h2
