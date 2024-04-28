@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         peach: "var(--peach)",
         "primary-purple": "var(--primary-purple)",
+        "light-purple": "var(--light-purple)",
         coral: "var(--coral)",
         yellow: "var(--yellow)",
         black: "var(--black)",

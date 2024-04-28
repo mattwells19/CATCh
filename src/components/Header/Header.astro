@@ -44,12 +44,6 @@ const nextShow = upcomingShows[0];
     />
   </div>
   <div class="block lg:hidden overflow-hidden">
-    <MobileNav
-      client:visible
-      nextShow={nextShow}
-      staffMembers={staffMembers}
-      teams={teams}
-      classes={classes}
-    />
+    <MobileNav client:visible url={Astro.url} />
   </div>
 </header>

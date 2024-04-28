@@ -1,0 +1,56 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    display: none;
+  }
+  to {
+    transform: translateX(0%);
+    display: block;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0%);
+    display: block;
+  }
+  to {
+    transform: translateX(100%);
+    display: none;
+  }
+}
+
+dialog.drawer {
+  animation: slide-out 150ms ease-in-out;
+
+  &::backdrop {
+    @apply bg-slate-950 bg-opacity-40;
+    animation: fade-out 150ms ease-in-out;
+  }
+
+  &[open] {
+    animation: slide-in 150ms ease-in-out;
+
+    &::backdrop {
+      animation: fade-in 150ms ease-in-out;
+    }
+  }
+}

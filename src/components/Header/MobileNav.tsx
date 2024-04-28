@@ -1,84 +1,32 @@
-import { forwardRef, type ReactElement } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogOverlay,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionItem,
-  AccordionTrigger,
-  type AccordionItemProps,
-  type AccordionTriggerProps,
-  type AccordionContentProps,
-} from "@radix-ui/react-accordion";
+import { useRef, type ReactElement } from "react";
 
-import type { NavProps } from "./Header.astro";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 import { Icon } from "../Icon.tsx";
 
-import { Shows } from "./views/Shows.tsx";
-import { Classes } from "./views/Classes.tsx";
-import { Services } from "./views/Services.tsx";
-import { TheaterInfo } from "./views/TheaterInfo.tsx";
+import { routeCategories, routes } from "./routes.ts";
+import "~/styles/mobile-nav.scss";
 
-import "~/styles/mobile-nav.css";
+export const MobileNav = ({ url }: { url: URL }): ReactElement => {
+  const drawerRef = useRef<HTMLDialogElement | null>(null);
 
-const AccordionSectionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
-  ({ children, ...props }, ref) => {
-    return (
-      <AccordionItem {...props} ref={ref}>
-        {children}
-      </AccordionItem>
-    );
-  },
-);
+  const handleOutsideClick = (
+    e: React.MouseEvent<HTMLDialogElement, MouseEvent>,
+  ) => {
+    const drawerDimensions = e.currentTarget.getBoundingClientRect();
+    if (
+      e.clientX < drawerDimensions.left ||
+      e.clientX > drawerDimensions.right ||
+      e.clientY < drawerDimensions.top ||
+      e.clientY > drawerDimensions.bottom
+    ) {
+      e.currentTarget.close();
+    }
+  };
 
-const AccordionSectionTrigger = forwardRef<
-  HTMLButtonElement,
-  AccordionTriggerProps
->(({ children, ...props }, ref) => {
+  const activePath = url.pathname;
+
   return (
-    <AccordionHeader>
-      <AccordionTrigger
-        className="flex w-full justify-between items-center py-3 px-5 hover:bg-slate-400 hover:bg-opacity-20 focus:bg-slate-400 focus:bg-opacity-20 transition-colors data-[state='open']:rounded-b-none"
-        {...props}
-        ref={ref}
-      >
-        {children}
-        <Icon icon="arrow-down-s" />
-      </AccordionTrigger>
-    </AccordionHeader>
-  );
-});
-
-const AccordionSectionContent = forwardRef<
-  HTMLDivElement,
-  AccordionContentProps
->(({ children, ...props }, ref) => {
-  return (
-    <AccordionContent
-      className="AccordionContent bg-slate-600 text-slate-300 p-4"
-      {...props}
-      ref={ref}
-    >
-      {children}
-    </AccordionContent>
-  );
-});
-
-export const MobileNav = ({
-  nextShow,
-  staffMembers,
-  teams,
-  classes,
-}: NavProps): ReactElement => {
-  return (
-    <nav className="flex justify-between items-center px-2">
+    <nav className="flex justify-between items-center p-2">
       <a href="/" className="shrink-0" aria-label="Home">
         <img
           src={FullLogo.src}
@@ -86,56 +34,69 @@ export const MobileNav = ({
           alt="CATCh - Comedy Arts Theater of Charlotte"
         />
       </a>
-      <Dialog>
-        <DialogTrigger
-          aria-label="Open navigation"
-          title="Open navigation"
-          className="p-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md"
+      <button
+        type="button"
+        onClick={() => drawerRef.current?.showModal()}
+        className="py-2 px-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md flex flex-col items-center text-primary-purple"
+      >
+        <Icon fill="currentColor" icon="menu" />
+        <span className="text-sm font-bold">Menu</span>
+      </button>
+      <dialog
+        ref={drawerRef}
+        onClick={handleOutsideClick}
+        className="drawer m-0 fixed right-0 ml-auto h-screen max-h-none bg-primary-purple overflow-auto"
+      >
+        <button
+          type="button"
+          onClick={() => drawerRef.current?.close()}
+          className="py-2 px-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md m-2 ml-auto text-peach flex flex-col items-center"
         >
-          <Icon icon="menu" />
-        </DialogTrigger>
-        <DialogOverlay className="absolute inset-0 w-screen h-screen bg-black bg-opacity-40 overflow-hidden">
-          <DialogContent className="DrawerContent absolute right-0 top-0 w-screen h-screen bg-white overflow-auto">
-            <DialogClose className="p-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md block w-fit m-4 ml-auto">
-              <Icon icon="close" />
-            </DialogClose>
+          <Icon fill="currentColor" icon="close" height="36" width="36" />
+          <span className="text-sm font-bold -mt-1">Close</span>
+        </button>
 
-            <Accordion type="single" collapsible>
-              <AccordionSectionItem value="Shows">
-                <AccordionSectionTrigger>Shows</AccordionSectionTrigger>
-                <AccordionSectionContent>
-                  <Shows nextShow={nextShow} teams={teams} />
-                </AccordionSectionContent>
-              </AccordionSectionItem>
-
-              <AccordionSectionItem value="Classes">
-                <AccordionSectionTrigger>
-                  CATCh a Class!
-                </AccordionSectionTrigger>
-                <AccordionSectionContent>
-                  <Classes classes={classes} />
-                </AccordionSectionContent>
-              </AccordionSectionItem>
-
-              <AccordionSectionItem value="Services">
-                <AccordionSectionTrigger>
-                  Business Services
-                </AccordionSectionTrigger>
-                <AccordionSectionContent>
-                  <Services />
-                </AccordionSectionContent>
-              </AccordionSectionItem>
-
-              <AccordionSectionItem value="Info">
-                <AccordionSectionTrigger>Theater Info</AccordionSectionTrigger>
-                <AccordionSectionContent>
-                  <TheaterInfo staffMembers={staffMembers} />
-                </AccordionSectionContent>
-              </AccordionSectionItem>
-            </Accordion>
-          </DialogContent>
-        </DialogOverlay>
-      </Dialog>
+        <ul className="flex flex-col gap-8 p-6">
+          <li>
+            <a
+              href="/"
+              aria-current={activePath === "/" ? "page" : undefined}
+              className="block font-serif text-3xl text-peach font-bold aria-[current=page]:text-coral"
+            >
+              Home
+            </a>
+          </li>
+          {routeCategories.map((routeCategory) => (
+            <li key={routeCategory}>
+              <a
+                href={routes[routeCategory][0].path}
+                className="block font-serif text-3xl text-peach font-bold"
+              >
+                {routeCategory}
+              </a>
+              <ul className="p-4 pt-1">
+                {routes[routeCategory].map((route) => (
+                  <li key={route.label}>
+                    <a
+                      href={route.path}
+                      aria-current={
+                        activePath === route.path ? "page" : undefined
+                      }
+                      target={route.isExternal ? "_blank" : undefined}
+                      className="block text-peach border-b-2 border-b-light-purple text-xl py-3 aria-[current=page]:text-coral"
+                    >
+                      {route.label}
+                      {route.isExternal ? (
+                        <span aria-hidden>&nbsp;↗</span>
+                      ) : null}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </dialog>
     </nav>
   );
 };
