@@ -3,6 +3,7 @@ import { useRef, type ReactElement } from "react";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
 import { Icon } from "../Icon.tsx";
 
+import { socialMediaLinkList } from "~/utils/socialMediaLinkList.ts";
 import { routeCategories, routes } from "./routes.ts";
 import "~/styles/mobile-nav.scss";
 
@@ -37,7 +38,7 @@ export const MobileNav = ({ url }: { url: URL }): ReactElement => {
       <button
         type="button"
         onClick={() => drawerRef.current?.showModal()}
-        className="py-2 px-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md flex flex-col items-center text-primary-purple"
+        className="py-2 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md flex flex-col items-center text-primary-purple"
       >
         <Icon fill="currentColor" icon="menu" />
         <span className="text-sm font-bold">Menu</span>
@@ -50,7 +51,7 @@ export const MobileNav = ({ url }: { url: URL }): ReactElement => {
         <button
           type="button"
           onClick={() => drawerRef.current?.close()}
-          className="py-2 px-3 hover:bg-slate-400 hover:bg-opacity-20 rounded-md m-2 ml-auto text-peach flex flex-col items-center"
+          className="py-2 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md m-2 ml-auto text-peach flex flex-col items-center"
         >
           <Icon fill="currentColor" icon="close" height="36" width="36" />
           <span className="text-sm font-bold -mt-1">Close</span>
@@ -93,6 +94,21 @@ export const MobileNav = ({ url }: { url: URL }): ReactElement => {
                   </li>
                 ))}
               </ul>
+            </li>
+          ))}
+        </ul>
+        <ul className="flex justify-evenly m-auto p-6">
+          {socialMediaLinkList.map((socialLink) => (
+            <li key={socialLink.path}>
+              <a href={socialLink.path} target="_blank">
+                <span className="sr-only">{socialLink.label}</span>
+                <Icon
+                  icon={socialLink.remixIcon}
+                  fill="var(--light-purple)"
+                  width="36"
+                  height="36"
+                />
+              </a>
             </li>
           ))}
         </ul>
