@@ -1,6 +1,6 @@
 ---
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
-import { Icon } from "../Icon.tsx";
+import RemixIcon from "../RemixIcon.astro";
 
 import { socialMediaLinkList } from "~/utils/socialMediaLinkList.ts";
 import { routeCategories, routes } from "./routes.ts";
@@ -52,7 +52,7 @@ const activePath = Astro.url.pathname;
     type="button"
     class="py-2 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md flex flex-col items-center text-primary-purple"
   >
-    <Icon fill="currentColor" icon="menu" />
+    <RemixIcon icon="menu" />
     <span class="text-sm font-bold">Menu</span>
   </button>
   <dialog
@@ -64,7 +64,7 @@ const activePath = Astro.url.pathname;
       type="button"
       class="py-2 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md m-2 ml-auto text-peach flex flex-col items-center"
     >
-      <Icon fill="currentColor" icon="close" height="36" width="36" />
+      <RemixIcon icon="close" height="36" width="36" />
       <span class="text-sm font-bold -mt-1">Close</span>
     </button>
 
@@ -116,7 +116,7 @@ const activePath = Astro.url.pathname;
           <li>
             <a href={socialLink.path} target="_blank">
               <span class="sr-only">{socialLink.label}</span>
-              <Icon
+              <RemixIcon
                 icon={socialLink.remixIcon}
                 fill="var(--light-purple)"
                 width="36"
