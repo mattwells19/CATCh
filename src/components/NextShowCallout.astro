@@ -24,7 +24,7 @@ const showDateFormatted = (() => {
 ---
 
 <section
-  class="relative flex flex-col-reverse items-center gap-4 lg:flex lg:flex-row lg:justify-around bg-shapes lg:px-12"
+  class="relative flex flex-col-reverse items-center gap-4 bg-shapes lg:flex lg:flex-row lg:gap-12 lg:justify-around lg:p-12"
 >
   <div class="flex flex-col gap-8 pt-8 lg:pt-0 px-4 lg:px-0">
     <div
@@ -32,16 +32,16 @@ const showDateFormatted = (() => {
     >
       <Icon name="calendar" />
 
-      <p class="font-serif text-xl text-primary-purple font-semibold">
+      <p class="font-serif text-primary-purple font-semibold lg:text-xl">
         {showDateFormatted}
       </p>
     </div>
 
-    <h1 class="text-primary-purple text-6xl font-bold font-serif">
+    <h1 class="text-primary-purple font-bold font-serif text-4xl lg:text-6xl">
       {nextShow.listing_title}
     </h1>
 
-    <p class="text-black text-xl">Show details</p>
+    <p class="text-black lg:text-xl">Show details</p>
 
     <CoralButtonLink href={nextShow.listing_url}>
       <Icon name="ticket" />Get Tickets
