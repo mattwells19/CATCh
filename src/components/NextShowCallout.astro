@@ -1,5 +1,5 @@
 ---
-import format from "date-fns/format";
+import { format } from "date-fns";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import type { Show } from "~/api/getShows";
@@ -24,24 +24,24 @@ const showDateFormatted = (() => {
 ---
 
 <section
-  class="relative flex flex-col-reverse items-center lg:flex lg:flex-row lg:justify-between bg-shapes"
+  class="relative flex flex-col-reverse items-center gap-4 bg-shapes lg:flex lg:flex-row lg:gap-12 lg:justify-around lg:p-12"
 >
-  <div class="flex flex-col gap-8 pt-8 lg:pt-0">
+  <div class="flex flex-col gap-8 pt-8 lg:pt-0 px-4 lg:px-0">
     <div
-      class="flex items-center gap-2 border-b-2 border-purple-700 w-fit mr-auto py-4"
+      class="flex items-center gap-2 border-b-2 border-[#9470DC] w-fit mr-auto py-4"
     >
       <Icon name="calendar" />
 
-      <p class="text-primary-purple font-semibold">
+      <p class="font-serif text-primary-purple font-semibold lg:text-xl">
         {showDateFormatted}
       </p>
     </div>
 
-    <h1 class="text-primary-purple text-6xl font-bold font-serif">
+    <h1 class="text-primary-purple font-bold font-serif text-4xl lg:text-6xl">
       {nextShow.listing_title}
     </h1>
 
-    <p class="text-black text-xl">Show details</p>
+    <p class="text-black lg:text-xl">Show details</p>
 
     <CoralButtonLink href={nextShow.listing_url}>
       <Icon name="ticket" />Get Tickets
@@ -53,6 +53,7 @@ const showDateFormatted = (() => {
     alt={nextShow.listing_title}
     width="650"
     height="366"
+    class="lg:w-1/2 lg:min-w-[650px]"
   />
 
   <Image

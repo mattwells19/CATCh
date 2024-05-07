@@ -10,7 +10,9 @@ import icon from "astro-icon";
 export default defineConfig({
   integrations: [tailwind(), react(), icon()],
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: true,
+  }),
   image: {
     domains: ["tlt-events.s3.amazonaws.com", "catch.theater"],
     remotePatterns: [
