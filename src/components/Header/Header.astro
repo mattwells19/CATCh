@@ -1,47 +1,11 @@
 ---
-import { addMonths, getUnixTime } from "date-fns";
-import { getShows, type Show } from "~/api/getShows";
-import { getStaffMembers, type StaffMember } from "~/api/getStaffMembers.ts";
-import { getTeams, type Team } from "~/api/getTeams";
 import { DesktopNav } from "./DesktopNav.tsx";
 import MobileNav from "./MobileNav.astro";
-import { getClasses, type Class } from "~/api/getClasses";
-
-export type NavProps = {
-  nextShow: Show;
-  staffMembers: Array<StaffMember>;
-  teams: Array<Team>;
-  classes: Array<Class>;
-};
-
-const showsPromise = getShows({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 1)),
-});
-const staffMembersPromise = getStaffMembers();
-const teamsPromise = getTeams();
-const classesPromise = getClasses();
-
-const [upcomingShows, staffMembers, teams, classes] = await Promise.all([
-  showsPromise,
-  staffMembersPromise,
-  teamsPromise,
-  classesPromise,
-]);
-
-// TODO: handle no upcoming shows case
-const nextShow = upcomingShows[0];
 ---
 
 <header class="w-full sticky top-0 z-50 bg-peach">
   <div class="hidden lg:block">
-    <DesktopNav
-      client:visible
-      nextShow={nextShow}
-      staffMembers={staffMembers}
-      teams={teams}
-      classes={classes}
-    />
+    <DesktopNav client:visible />
   </div>
   <div class="block lg:hidden overflow-hidden">
     <MobileNav />

@@ -1,53 +1,22 @@
-import type { PropsWithChildren, ReactElement } from "react";
+import type { ReactElement } from "react";
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
-  NavigationMenuViewport,
-  NavigationMenuIndicator,
+  NavigationMenuLink,
 } from "@radix-ui/react-navigation-menu";
+import { routeCategories, routes } from "./routes.ts";
 
-import type { NavProps } from "./Header.astro";
 import FullLogo from "~/images/CATCh-full-big-nobg.webp";
+import "../../styles/desktop-nav.scss";
 
-import { Shows } from "./views/Shows.tsx";
-import { Classes } from "./views/Classes.tsx";
-import { Services } from "./views/Services.tsx";
-import { TheaterInfo } from "./views/TheaterInfo.tsx";
-
-const NavMenuContent = ({ children }: PropsWithChildren): ReactElement => {
-  return (
-    <NavigationMenuContent className="max-w-7xl m-auto px-12 py-8">
-      {children}
-    </NavigationMenuContent>
-  );
-};
-
-const NavItemTrigger = ({
-  children,
-  className = "",
-}: PropsWithChildren<{ className?: string }>): ReactElement => {
-  return (
-    <NavigationMenuTrigger
-      className={`${className} px-5 py-3 whitespace-nowrap`.trim()}
-    >
-      {children}
-    </NavigationMenuTrigger>
-  );
-};
-
-export const DesktopNav = ({
-  nextShow,
-  staffMembers,
-  teams,
-  classes,
-}: NavProps): ReactElement => {
+export const DesktopNav = (): ReactElement => {
   return (
     <NavigationMenu
       skipDelayDuration={500}
-      className="flex gap-16 items-center overflow-x-auto p-4"
+      className="flex gap-16 items-center overflow-visible p-4"
     >
       <a href="/" aria-label="Home" className="shrink-0">
         <img
@@ -56,38 +25,52 @@ export const DesktopNav = ({
           alt="CATCh - Comedy Arts Theater of Charlotte"
         />
       </a>
-      <NavigationMenuList className="flex items-center font-light">
-        <NavigationMenuItem value="Shows">
-          <NavItemTrigger className="uppercase">Shows</NavItemTrigger>
-          <NavMenuContent>
-            <Shows nextShow={nextShow} teams={teams} />
-          </NavMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem value="Classes">
-          <NavItemTrigger>CATCh A Class!</NavItemTrigger>
-          <NavMenuContent>
-            <Classes classes={classes} />
-          </NavMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem value="Services">
-          <NavItemTrigger>Business Services</NavItemTrigger>
-          <NavMenuContent>
-            <Services />
-          </NavMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem value="Info">
-          <NavItemTrigger>Theater Info</NavItemTrigger>
-          <NavMenuContent>
-            <TheaterInfo staffMembers={staffMembers} />
-          </NavMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuIndicator className="bg-violet-400 h-0.5 transition-all" />
+      <NavigationMenuList className="flex items-center">
+        {routeCategories.map((routeCategory) => (
+          <NavigationMenuItem
+            value={routeCategory}
+            key={routeCategory}
+            className="relative"
+          >
+            <NavigationMenuTrigger className="flex items-center gap-1 font-serif text-primary-purple text-xl font-bold max-w-7xl m-auto px-8 py-6 rounded-lg group data-[state=open]:bg-primary-purple data-[state=open]:text-peach">
+              {routeCategory}
+              <span aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="transition-transform group-data-[state=open]:rotate-180"
+                >
+                  <path
+                    d="M11.1808 15.8297L6.54199 9.20285C5.89247 8.27496 6.55629 7 7.68892 7L16.3111 7C17.4437 7 18.1075 8.27496 17.458 9.20285L12.8192 15.8297C12.4211 16.3984 11.5789 16.3984 11.1808 15.8297Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="nav-menu-content absolute top-[85%] left-0 w-64 bg-primary-purple rounded-lg p-4 shadow-lg">
+              <ul className="flex flex-col gap-4">
+                {routes[routeCategory].map((route) => (
+                  <li key={route.label}>
+                    <NavigationMenuLink
+                      href={route.path}
+                      target={route.isExternal ? "_blank" : undefined}
+                      className="block text-peach border-b-2 border-b-light-purple text-xl pb-3 aria-[current=page]:text-coral hover:text-coral"
+                    >
+                      {route.label}
+                      {route.isExternal ? (
+                        <span aria-hidden="true">&nbsp;↗</span>
+                      ) : null}
+                    </NavigationMenuLink>
+                  </li>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
-      <NavigationMenuViewport className="absolute top-full left-0 w-full bg-slate-600 text-slate-300 shadow-xl h-[var(--radix-navigation-menu-viewport-height)] overflow-hidden transition-[height] duration-300" />
     </NavigationMenu>
   );
 };
