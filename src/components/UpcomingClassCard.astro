@@ -1,0 +1,48 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import type { ClassListing } from "~/api/getClassListings";
+import { formatClassTime } from "~/utils/formatClassTime";
+import CoralButtonLink from "./CoralButtonLink.astro";
+
+type Props = {
+  classListing: ClassListing;
+};
+
+const { classListing } = Astro.props;
+
+const classMeetingTime = formatClassTime(new Date(classListing.event_start));
+---
+
+<div
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px]"
+>
+  <span class="sr-only">{classListing.listing_title}</span>
+  <Image
+    src={classListing.image}
+    alt={classListing.listing_title}
+    width="295"
+    height="165"
+    class="w-full"
+  />
+
+  <div class="flex flex-col gap-4 px-2 text-lg">
+    <div
+      class="flex items-center gap-2 border-b-2 border-light-purple w-fit mr-auto py-4"
+    >
+      <Icon name="calendar" />
+
+      <p class="text-primary-purple font-serif font-semibold">
+        {classMeetingTime}
+      </p>
+    </div>
+
+    <p>Class callout</p>
+
+    <p>Class details</p>
+  </div>
+
+  <CoralButtonLink href={classListing.listing_url} class="w-full min-w-full">
+    Learn More
+  </CoralButtonLink>
+</div>

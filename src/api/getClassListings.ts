@@ -12,7 +12,7 @@ export interface ClassListing {
   event_id: string;
   venue_name: string;
   venue_city: string;
-  image: string | null;
+  image: string;
   listing_title: string;
   listing_slug: string;
   listing_url: string;
@@ -42,7 +42,7 @@ export async function getClassListings({
 
   return sortedClasses.map((classSession) => ({
     ...classSession,
-    image: classSession.image ? `https:${classSession.image}` : null,
+    image: `https:${classSession.image}`,
     listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
   }));
 }
