@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { ClassListing } from "~/api/getClassListings";
 import { formatClassTime } from "~/utils/formatClassTime";
 import CoralButtonLink from "./CoralButtonLink.astro";
@@ -39,7 +40,14 @@ const classMeetingTime = formatClassTime(new Date(classListing.event_start));
 
     <p>Class callout</p>
 
-    <p>Class details</p>
+    {
+      classListing.description ? (
+        <div
+          class="wysiwyg"
+          set:html={documentToHtmlString(classListing.description)}
+        />
+      ) : null
+    }
   </div>
 
   <CoralButtonLink href={classListing.listing_url} class="w-full min-w-full">
