@@ -19,6 +19,13 @@ export interface Show {
   showShortDescription: string;
 }
 
+export const EMPTY_SHOW: Readonly<Nullable<Show>> = {
+  showName: null,
+  ticketleapEventId: null,
+  showDescription: null,
+  showShortDescription: null,
+};
+
 export async function getDetailsForShows(
   ticketleapEventIds: Array<number>,
 ): Promise<Map<number, Show>> {

@@ -52,10 +52,10 @@ const showDateFormatted = (() => {
     </div>
 
     {
-      showListing.description ? (
+      showListing.showDescription ? (
         <div
           class="wysiwyg overflow-auto"
-          set:html={documentToHtmlString(showListing.description)}
+          set:html={documentToHtmlString(showListing.showDescription)}
         />
       ) : null
     }

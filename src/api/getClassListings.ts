@@ -1,4 +1,4 @@
-import { getDetailsForClasses, type Class } from "./getClasses";
+import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
 
 interface TicketLeapClassListing {
   type: string;
@@ -26,10 +26,7 @@ interface TicketLeapClassListing {
   has_only_free_tickets: false;
 }
 
-export interface ClassListing extends TicketLeapClassListing {
-  header: Class["classHeader"] | null;
-  description: Class["classDescription"] | null;
-}
+export type ClassListing = TicketLeapClassListing & Nullable<Class>;
 
 export async function getClassListings({
   from,
@@ -58,14 +55,13 @@ export async function getClassListings({
   );
 
   return sortedClasses.map((classSession) => {
-    const details = classDetailsMap.get(classSession.listing_id);
+    const details = classDetailsMap.get(classSession.listing_id) ?? EMPTY_CLASS;
 
     return {
       ...classSession,
+      ...details,
       image: `https:${classSession.image}`,
       listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
-      header: details?.classHeader ?? null,
-      description: details?.classDescription ?? null,
     };
   });
 }

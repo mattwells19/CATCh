@@ -31,6 +31,19 @@ export interface Class {
   classHeader: string;
 }
 
+export const EMPTY_CLASS: Readonly<Nullable<Class>> = {
+  className: null,
+  classTrack: null,
+  classTrackNumber: null,
+  classLength: null,
+  classSlug: null,
+  classDescription: null,
+  classCost: null,
+  ticketleapEventId: null,
+  hasAShow: null,
+  classHeader: null,
+};
+
 export async function getDetailsForClasses(
   ticketleapEventIds: Array<number>,
 ): Promise<Map<number, Class>> {

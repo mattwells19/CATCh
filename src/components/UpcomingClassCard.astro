@@ -44,16 +44,18 @@ const classMeetingTime = formatClassTime(new Date(classListing.event_start));
     </div>
 
     {
-      classListing.header ? (
-        <p class="font-serif font-bold text-xl mb-2">{classListing.header}</p>
+      classListing.classHeader ? (
+        <p class="font-serif font-bold text-xl mb-2">
+          {classListing.classHeader}
+        </p>
       ) : null
     }
 
     {
-      classListing.description ? (
+      classListing.classDescription ? (
         <div
           class="wysiwyg overflow-auto"
-          set:html={documentToHtmlString(classListing.description)}
+          set:html={documentToHtmlString(classListing.classDescription)}
         />
       ) : null
     }

@@ -1,4 +1,4 @@
-import { getDetailsForShows, type Show } from "./getShows";
+import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 
 export interface TicketLeapShowListing {
   type: string;
@@ -25,10 +25,7 @@ export interface TicketLeapShowListing {
   custom_button_text: string | null;
 }
 
-export interface ShowListing extends TicketLeapShowListing {
-  description: Show["showDescription"] | null;
-  shortDescription: Show["showShortDescription"] | null;
-}
+export type ShowListing = TicketLeapShowListing & Nullable<Show>;
 
 export async function getShowListings({
   from,
@@ -57,16 +54,15 @@ export async function getShowListings({
   );
 
   return sortedUpcomingShows.map((showListing) => {
-    const details = showDetailsMap.get(showListing.listing_id);
+    const details = showDetailsMap.get(showListing.listing_id) ?? EMPTY_SHOW;
 
     return {
       ...showListing,
+      ...details,
       image: `https:${showListing.image}`,
       listing_url: `https://www.ticketleap.events/tickets/${
         showListing.listing_slug
       }?date=${Date.parse(showListing.event_start) / 1000}`,
-      description: details?.showDescription ?? null,
-      shortDescription: details?.showShortDescription ?? null,
     };
   });
 }
