@@ -14,6 +14,7 @@ interface ClassSkeleton {
     classCost: EntryFieldTypes.Number;
     ticketleapEventId: EntryFieldTypes.Number;
     hasAShow: EntryFieldTypes.Boolean;
+    classHeader: EntryFieldTypes.Text;
   };
 }
 
@@ -27,6 +28,7 @@ export interface Class {
   classCost: number;
   ticketleapEventId: number;
   hasAShow: boolean;
+  classHeader: string;
 }
 
 export async function getDetailsForClasses(
@@ -35,7 +37,6 @@ export async function getDetailsForClasses(
   const response = await contentfulClient.getEntries<ClassSkeleton>({
     content_type: "class",
     "fields.ticketleapEventId[in]": ticketleapEventIds,
-    limit: 1,
   });
 
   const richTextPromises = response.items.map((item) => {

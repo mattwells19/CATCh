@@ -2,7 +2,7 @@
 import { getUnixTime, addMonths } from "date-fns";
 import { Icon } from "astro-icon/components";
 
-import { getShows } from "~/api/getShows";
+import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
 
 import RootLayout from "../layouts/RootLayout.astro";
@@ -12,7 +12,7 @@ import NextShowCallout from "~/components/NextShowCallout.astro";
 import CardList from "~/components/CardList.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
-const upcomingShowsPromise = getShows({
+const upcomingShowsPromise = getShowListings({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });
@@ -65,9 +65,9 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     </h2>
     <CardList>
       {
-        otherShows.map((show) => (
+        otherShows.map((showListing) => (
           <li class="flex-1">
-            <UpcomingShowCard show={show} />
+            <UpcomingShowCard showListing={showListing} />
           </li>
         ))
       }

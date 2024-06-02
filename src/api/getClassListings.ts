@@ -15,19 +15,20 @@ interface TicketLeapClassListing {
   venue_name: string;
   venue_city: string;
   image: string;
+  listing_url: string;
   listing_title: string;
   listing_slug: string;
   is_parent: boolean;
   sold_out: boolean;
-  listing_id: string;
+  listing_id: number;
   listing_type: number; // probably an enum
   custom_button_text: string | null;
   has_only_free_tickets: false;
 }
 
 export interface ClassListing extends TicketLeapClassListing {
+  header: Class["classHeader"] | null;
   description: Class["classDescription"] | null;
-  listing_url: string;
 }
 
 export async function getClassListings({
@@ -44,7 +45,7 @@ export async function getClassListings({
     .then((data) =>
       data.listings.map((listing: TicketLeapClassListing) => ({
         ...listing,
-        event_id: Number.parseInt(listing.event_id.toString()),
+        listing_id: Number.parseInt(listing.listing_id.toString()),
       })),
     );
 
@@ -53,14 +54,18 @@ export async function getClassListings({
   );
 
   const classDetailsMap = await getDetailsForClasses(
-    sortedClasses.map((classListing) => classListing.event_id),
+    sortedClasses.map((classListing) => classListing.listing_id),
   );
 
-  return sortedClasses.map((classSession) => ({
-    ...classSession,
-    image: `https:${classSession.image}`,
-    listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
-    description:
-      classDetailsMap.get(classSession.event_id)?.classDescription ?? null,
-  }));
+  return sortedClasses.map((classSession) => {
+    const details = classDetailsMap.get(classSession.listing_id);
+
+    return {
+      ...classSession,
+      image: `https:${classSession.image}`,
+      listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
+      header: details?.classHeader ?? null,
+      description: details?.classDescription ?? null,
+    };
+  });
 }
