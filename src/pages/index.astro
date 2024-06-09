@@ -66,7 +66,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     <CardList>
       {
         otherShows.map((showListing) => (
-          <li class="flex-1">
+          <li class="flex-1 max-w-fit">
             <UpcomingShowCard showListing={showListing} />
           </li>
         ))
@@ -91,7 +91,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     <CardList>
       {
         upcomingClasses.map((classListing) => (
-          <li class="flex-1">
+          <li class="flex-1 max-w-fit">
             <UpcomingClassCard classListing={classListing} />
           </li>
         ))

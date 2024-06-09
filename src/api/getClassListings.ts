@@ -1,6 +1,6 @@
 import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
 
-interface TicketLeapClassListing {
+export interface TicketLeapClassListing {
   type: string;
   resource: string;
   event_start: string; // string date - "YYYY-MM-DD HH:MM:SS" (24 hour clock)

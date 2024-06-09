@@ -1,9 +1,9 @@
 ---
+import { add, format } from "date-fns";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { ClassListing } from "~/api/getClassListings";
-import { formatClassTime } from "~/utils/formatClassTime";
 import CoralButtonLink from "./CoralButtonLink.astro";
 
 type Props = {
@@ -12,11 +12,26 @@ type Props = {
 
 const { classListing } = Astro.props;
 
-const classMeetingTime = formatClassTime(new Date(classListing.event_start));
+const classStartDate = new Date(classListing.event_start);
+
+const classEndDate = (() => {
+  if (
+    classListing.classLengthUnits === "hours" ||
+    classListing.classLengthUnits === "minutes" ||
+    (classListing.classLengthUnits === "days" &&
+      classListing.classLengthValue === 1)
+  ) {
+    return null;
+  }
+
+  return add(classStartDate, {
+    [classListing.classLengthUnits as string]: classListing.classLengthValue,
+  });
+})();
 ---
 
 <div
-  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px]"
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[600px]"
 >
   <div class="group relative bg-black bg-opacity-10">
     <span
@@ -39,7 +54,14 @@ const classMeetingTime = formatClassTime(new Date(classListing.event_start));
       <Icon name="calendar" class="h-6 w-6" />
 
       <p class="text-primary-purple font-serif font-semibold">
-        {classMeetingTime}
+        {format(classStartDate, "MMM. d")}
+        {
+          classEndDate ? (
+            <>&nbsp;-&nbsp;{format(classEndDate, "MMM. d")}</>
+          ) : null
+        }
+        &nbsp;&bull;&nbsp;
+        {format(classStartDate, "h aa")}
       </p>
     </div>
 

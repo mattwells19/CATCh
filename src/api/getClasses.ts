@@ -15,6 +15,10 @@ interface ClassSkeleton {
     ticketleapEventId: EntryFieldTypes.Number;
     hasAShow: EntryFieldTypes.Boolean;
     classHeader: EntryFieldTypes.Text;
+    classLengthValue: EntryFieldTypes.Number;
+    classLengthUnits: EntryFieldTypes.Text<
+      "minutes" | "hours" | "days" | "weeks" | "months"
+    >;
   };
 }
 
@@ -29,6 +33,8 @@ export interface Class {
   ticketleapEventId: number;
   hasAShow: boolean;
   classHeader: string;
+  classLengthValue: number;
+  classLengthUnits: "minutes" | "hours" | "days" | "weeks" | "months";
 }
 
 export const EMPTY_CLASS: Readonly<Nullable<Class>> = {
@@ -42,6 +48,8 @@ export const EMPTY_CLASS: Readonly<Nullable<Class>> = {
   ticketleapEventId: null,
   hasAShow: null,
   classHeader: null,
+  classLengthUnits: null,
+  classLengthValue: null,
 };
 
 export async function getDetailsForClasses(
