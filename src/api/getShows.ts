@@ -1,48 +1,50 @@
-export interface Show {
-  type: string;
-  resource: string;
-  event_start: string; // string date - "YYYY-MM-DD HH:MM:SS" (24 hour clock)
-  event_end: string;
-  server_event_start: string; // string date
-  server_event_end: string; // string date
-  single_event_series: boolean;
-  children_count: string; // string number
-  min_price: string; // string number
-  min_price_fmt: string;
-  event_id: string;
-  venue_name: string;
-  venue_city: string;
-  image: string;
-  listing_title: string;
-  listing_slug: string;
-  listing_url: string;
-  is_parent: boolean;
-  sold_out: boolean;
-  listing_id: string;
-  listing_type: number; // probably an enum
-  custom_button_text: string | null;
+import { richTextFromMarkdown } from "@contentful/rich-text-from-markdown";
+import type { EntryFieldTypes } from "contentful";
+import { contentfulClient, type RichTextDocument } from "~/lib/contentful";
+
+interface ShowSkeleton {
+  contentTypeId: "show";
+  fields: {
+    showName: EntryFieldTypes.Text;
+    ticketleapEventId: EntryFieldTypes.Number;
+    showDescription: EntryFieldTypes.Text;
+    showShortDescription: EntryFieldTypes.Text;
+  };
 }
 
-export async function getShows({
-  from,
-  to,
-}: {
-  from: number;
-  to: number;
-}): Promise<Array<Show>> {
-  const upcomingShows: Array<Show> = await fetch(
-    `https://www.ticketleap.events/api/organization-listing/catch/range?start=${from}&end=${to}`,
-  )
-    .then((res) => res.json())
-    .then((data) => data.listings);
+export interface Show {
+  showName: string;
+  ticketleapEventId: number;
+  showDescription: RichTextDocument;
+  showShortDescription: string;
+}
 
-  const sortedUpcomingShows = [...upcomingShows].sort(
-    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
-  );
+export const EMPTY_SHOW: Readonly<Nullable<Show>> = {
+  showName: null,
+  ticketleapEventId: null,
+  showDescription: null,
+  showShortDescription: null,
+};
 
-  return sortedUpcomingShows.map((show) => ({
-    ...show,
-    image: `https:${show.image}`,
-    listing_url: `https://www.ticketleap.events/tickets/${show.listing_slug}`,
-  }));
+export async function getDetailsForShows(
+  ticketleapEventIds: Array<number>,
+): Promise<Map<number, Show>> {
+  const response = await contentfulClient.getEntries<ShowSkeleton>({
+    content_type: "show",
+    "fields.ticketleapEventId[in]": ticketleapEventIds,
+  });
+
+  const richTextPromises = response.items.map((item) => {
+    return richTextFromMarkdown(item.fields.showDescription);
+  });
+  const showDescriptions = await Promise.all(richTextPromises);
+
+  const showDetailsMap = new Map<number, Show>();
+  response.items.forEach((item, index) => {
+    showDetailsMap.set(item.fields.ticketleapEventId, {
+      ...item.fields,
+      showDescription: showDescriptions[index],
+    });
+  });
+  return showDetailsMap;
 }

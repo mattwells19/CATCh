@@ -2,12 +2,12 @@
 import { format } from "date-fns";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import type { Show } from "~/api/getShows";
+import type { ShowListing } from "~/api/getShowListings";
 import CoralButtonLink from "./CoralButtonLink.astro";
 import CastLaughingBackground from "../images/CastLaughingBackground.png";
 
 type Props = {
-  nextShow: Show;
+  nextShow: ShowListing;
 };
 
 const { nextShow } = Astro.props;
@@ -41,7 +41,11 @@ const showDateFormatted = (() => {
       {nextShow.listing_title}
     </h1>
 
-    <p class="text-black lg:text-xl">Show details</p>
+    {
+      nextShow.showShortDescription ? (
+        <p class="text-black lg:text-xl">{nextShow.showShortDescription}</p>
+      ) : null
+    }
 
     <CoralButtonLink href={nextShow.listing_url}>
       <Icon name="ticket" />Get Tickets

@@ -2,17 +2,17 @@
 import { getUnixTime, addMonths } from "date-fns";
 import { Icon } from "astro-icon/components";
 
-import { getShows } from "~/api/getShows";
+import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
 
 import RootLayout from "../layouts/RootLayout.astro";
 
-import ClassesList from "~/components/ClassesList.astro";
+import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NextShowCallout from "~/components/NextShowCallout.astro";
 import CardList from "~/components/CardList.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
-const upcomingShowsPromise = getShows({
+const upcomingShowsPromise = getShowListings({
   from: getUnixTime(new Date()),
   to: getUnixTime(addMonths(new Date(), 1)),
 });
@@ -34,28 +34,40 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   #upcoming-shows::after {
     content: "";
     position: absolute;
-    z-index: -10;
+    z-index: -9;
     inset: 0;
     background-color: var(--primary-purple);
     clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
     transform: scaleX(-1);
   }
+
+  // the yellow blob behind the classes section
+  #upcoming-classes::after {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    top: -50px;
+    background-color: #f2b63f;
+    clip-path: xywh(0 0px 100% 100% round 0 0 50% 0);
+    transform: scaleY(-1);
+  }
 </style>
 
-<RootLayout layoutClass="flex flex-col gap-24 overflow-x-hidden">
+<RootLayout layoutClass="flex flex-col overflow-x-hidden">
   <NextShowCallout nextShow={nextShow} />
   <section
     id="upcoming-shows"
-    class="relative pt-4 w-full overflow-y-visible pb-4"
+    class="relative pt-12 pb-4 w-full overflow-y-visible mt-24"
   >
-    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-peach my-8 px-4">
+    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-peach mb-10 px-8">
       Upcoming shows
     </h2>
     <CardList>
       {
-        otherShows.map((show) => (
-          <li class="flex-1">
-            <UpcomingShowCard show={show} />
+        otherShows.map((showListing) => (
+          <li class="flex-1 max-w-fit">
+            <UpcomingShowCard showListing={showListing} />
           </li>
         ))
       }
@@ -67,12 +79,29 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
       See all shows <Icon name="arrow-right" />
     </a>
   </section>
-  <section id="upcoming-classes">
+  <section
+    id="upcoming-classes"
+    class="relative pt-12 pb-4 w-full overflow-y-visible"
+  >
     <h2
-      class="text-transparent text-3xl font-medium mb-4 w-fit bg-gradient-to-r from-violet-600 to-indigo-400 bg-clip-text"
+      class="font-serif text-3xl lg:text-4xl font-bold text-primary-purple mb-10 px-8"
     >
-      CATCh a class!
+      Upcoming classes
     </h2>
-    <ClassesList upcomingClasses={upcomingClasses} />
+    <CardList>
+      {
+        upcomingClasses.map((classListing) => (
+          <li class="flex-1 max-w-fit">
+            <UpcomingClassCard classListing={classListing} />
+          </li>
+        ))
+      }
+    </CardList>
+    <a
+      href="/classes"
+      class="text-primary-purple underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto"
+    >
+      See all classes <Icon name="arrow-right" />
+    </a>
   </section>
 </RootLayout>

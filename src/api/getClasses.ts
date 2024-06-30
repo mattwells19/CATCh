@@ -1,52 +1,76 @@
-import type { CockpitImage, WYSIWYGString } from "./api.types";
-import { getCollectionEntries } from "./utils";
+import { richTextFromMarkdown } from "@contentful/rich-text-from-markdown";
+import type { EntryFieldTypes } from "contentful";
+import { contentfulClient, type RichTextDocument } from "~/lib/contentful";
+
+interface ClassSkeleton {
+  contentTypeId: "class";
+  fields: {
+    className: EntryFieldTypes.Text;
+    classTrack: EntryFieldTypes.Text; // might need to be an enum
+    classTrackNumber: EntryFieldTypes.Number;
+    classLength: EntryFieldTypes.Text;
+    classSlug: EntryFieldTypes.Text;
+    classDescription: EntryFieldTypes.Text;
+    classCost: EntryFieldTypes.Number;
+    ticketleapEventId: EntryFieldTypes.Number;
+    hasAShow: EntryFieldTypes.Boolean;
+    classHeader: EntryFieldTypes.Text;
+    classLengthValue: EntryFieldTypes.Number;
+    classLengthUnits: EntryFieldTypes.Text<
+      "minutes" | "hours" | "days" | "weeks" | "months"
+    >;
+  };
+}
 
 export interface Class {
-  class: string;
-  slug: string;
-  price: string;
-  length: string;
-  hasShow: boolean;
-  description: WYSIWYGString;
-  image: CockpitImage;
-  _id: string;
-  shortDesc: string;
-  navName: string;
-  navDesc: string;
-  addlHTML: WYSIWYGString | null;
-  category:
-    | "Personal & Professional Development"
-    | "Improv Performance Track"
-    | "Stand-up Comedy"
-    | "Sketch Comedy"
-    | "Other";
-  trackNum: number | null;
-  TLEventID: string;
-  descTagline: string;
-  metaName: string;
-  metaDesc: string;
-  metaImage: CockpitImage;
-  active: boolean;
+  className: string;
+  classTrack: string;
+  classTrackNumber: number;
+  classLength: string;
+  classSlug: string;
+  classDescription: RichTextDocument;
+  classCost: number;
+  ticketleapEventId: number;
+  hasAShow: boolean;
+  classHeader: string;
+  classLengthValue: number;
+  classLengthUnits: "minutes" | "hours" | "days" | "weeks" | "months";
 }
 
-export async function getClasses(): Promise<Array<Class>> {
-  const classEntries = await getCollectionEntries<Class>("classes");
+export const EMPTY_CLASS: Readonly<Nullable<Class>> = {
+  className: null,
+  classTrack: null,
+  classTrackNumber: null,
+  classLength: null,
+  classSlug: null,
+  classDescription: null,
+  classCost: null,
+  ticketleapEventId: null,
+  hasAShow: null,
+  classHeader: null,
+  classLengthUnits: null,
+  classLengthValue: null,
+};
 
-  return classEntries
-    .filter((classEntry) => classEntry.active)
-    .map((classEntry) => ({
-      ...classEntry,
-      image: {
-        path: `https://catch.theater${classEntry.image.path}`,
-      },
-      metaImage: {
-        path: `https://catch.theater${classEntry.metaImage.path}`,
-      },
-    }));
-}
+export async function getDetailsForClasses(
+  ticketleapEventIds: Array<number>,
+): Promise<Map<number, Class>> {
+  const response = await contentfulClient.getEntries<ClassSkeleton>({
+    content_type: "class",
+    "fields.ticketleapEventId[in]": ticketleapEventIds,
+  });
 
-export async function getClass(classSlug: string): Promise<Class | null> {
-  const classes = await getClasses();
+  const richTextPromises = response.items.map((item) => {
+    return richTextFromMarkdown(item.fields.classDescription);
+  });
+  const classDescriptions = await Promise.all(richTextPromises);
 
-  return classes.find((classEntry) => classEntry.slug === classSlug) ?? null;
+  const classDetailsMap = new Map<number, Class>();
+  response.items.forEach((item, index) => {
+    classDetailsMap.set(item.fields.ticketleapEventId, {
+      ...item.fields,
+      classDescription: classDescriptions[index],
+    });
+  });
+  return classDetailsMap;
 }

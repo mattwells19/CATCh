@@ -1,0 +1,97 @@
+---
+import { add, format } from "date-fns";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { ClassListing } from "~/api/getClassListings";
+import CoralButtonLink from "./CoralButtonLink.astro";
+
+type Props = {
+  classListing: ClassListing;
+};
+
+const { classListing } = Astro.props;
+
+const classStartDate = new Date(classListing.event_start);
+
+const formattedClassDate = (() => {
+  if (
+    classListing.classLengthUnits === "hours" ||
+    classListing.classLengthUnits === "minutes" ||
+    (classListing.classLengthUnits === "days" &&
+      classListing.classLengthValue === 1)
+  ) {
+    // single day classes
+    const dayOfTheWeek = format(classStartDate, "EEEE");
+    const time = format(classStartDate, "h:mm a");
+    const day = format(classStartDate, "LLL d");
+
+    return `${dayOfTheWeek}, ${day} at ${time}`;
+  }
+
+  if (
+    // > 1 day classes
+    classListing.classLengthUnits !== null &&
+    classListing.classLengthValue !== null
+  ) {
+    const endDate = add(classStartDate, {
+      [classListing.classLengthUnits]: classListing.classLengthValue,
+    });
+    return `${format(classStartDate, "MMM. d")} - ${format(endDate, "MMM. d")} • ${format(classStartDate, "h aa")}`;
+  }
+
+  // no end date/duration specified. This can happen if the class is not in the CMS
+  return `${format(classStartDate, "MMM. d")} • ${format(classStartDate, "h aa")}`;
+})();
+---
+
+<div
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
+>
+  <div class="group relative bg-black bg-opacity-10">
+    <span
+      class="text-center absolute z-10 inset-0 h-fit m-auto text-white opacity-0 transition-opacity group-hover:opacity-100"
+      >{classListing.listing_title}</span
+    >
+    <Image
+      src={classListing.image}
+      alt={classListing.listing_title}
+      width="295"
+      height="165"
+      class="w-full group-hover:opacity-20 transition-opacity"
+    />
+  </div>
+
+  <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
+    <div
+      class="flex items-start gap-2 border-b-2 border-light-purple w-fit mr-auto py-4"
+    >
+      <Icon name="calendar" class="h-6 w-6" />
+
+      <p class="text-primary-purple font-serif font-semibold">
+        {formattedClassDate}
+      </p>
+    </div>
+
+    {
+      classListing.classHeader ? (
+        <p class="font-serif font-bold text-xl mb-2">
+          {classListing.classHeader}
+        </p>
+      ) : null
+    }
+
+    {
+      classListing.classDescription ? (
+        <div
+          class="wysiwyg overflow-auto"
+          set:html={documentToHtmlString(classListing.classDescription)}
+        />
+      ) : null
+    }
+  </div>
+
+  <CoralButtonLink href={classListing.listing_url} class="w-full min-w-full">
+    Learn More
+  </CoralButtonLink>
+</div>

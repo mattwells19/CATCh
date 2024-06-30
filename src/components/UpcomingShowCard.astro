@@ -2,17 +2,18 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { format } from "date-fns";
-import type { Show } from "~/api/getShows";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { ShowListing } from "~/api/getShowListings";
 import CoralButtonLink from "./CoralButtonLink.astro";
 
 type Props = {
-  show: Show;
+  showListing: ShowListing;
 };
 
-const { show } = Astro.props;
+const { showListing } = Astro.props;
 
 const showDateFormatted = (() => {
-  const showTime = new Date(show.event_start);
+  const showTime = new Date(showListing.event_start);
 
   const dayOfTheWeek = format(showTime, "EEEE");
   const time = format(showTime, "h:mm a");
@@ -23,18 +24,23 @@ const showDateFormatted = (() => {
 ---
 
 <div
-  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px]"
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
 >
-  <span class="sr-only">{show.listing_title}</span>
-  <Image
-    src={show.image}
-    alt={show.listing_title}
-    width="295"
-    height="165"
-    class="w-full"
-  />
+  <div class="group relative bg-black bg-opacity-10">
+    <span
+      class="text-center absolute z-10 inset-0 h-fit m-auto text-white opacity-0 transition-opacity group-hover:opacity-100"
+      >{showListing.listing_title}</span
+    >
+    <Image
+      src={showListing.image}
+      alt={showListing.listing_title}
+      width="295"
+      height="165"
+      class="w-full group-hover:opacity-20 transition-opacity"
+    />
+  </div>
 
-  <div class="flex flex-col gap-4 px-2 text-lg">
+  <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
     <div
       class="flex items-center gap-2 border-b-2 border-light-purple w-fit mr-auto py-4"
     >
@@ -45,14 +51,21 @@ const showDateFormatted = (() => {
       </p>
     </div>
 
-    <p>Show details</p>
+    {
+      showListing.showDescription ? (
+        <div
+          class="wysiwyg overflow-auto"
+          set:html={documentToHtmlString(showListing.showDescription)}
+        />
+      ) : null
+    }
   </div>
 
   <p class="font-bold px-2">
-    ${show.min_price}
+    ${showListing.min_price}
   </p>
 
-  <CoralButtonLink href={show.listing_url} class="w-full min-w-full">
+  <CoralButtonLink href={showListing.listing_url} class="w-full min-w-full">
     <Icon name="ticket" />Get Tickets
   </CoralButtonLink>
 </div>
