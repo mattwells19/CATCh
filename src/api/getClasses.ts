@@ -8,7 +8,7 @@ interface ClassSkeleton {
     className: EntryFieldTypes.Text;
     classTrack: EntryFieldTypes.Text; // might need to be an enum
     classTrackNumber: EntryFieldTypes.Number;
-    classLength: EntryFieldTypes.Text; // might need this to be more strict
+    classLength: EntryFieldTypes.Text;
     classSlug: EntryFieldTypes.Text;
     classDescription: EntryFieldTypes.Text;
     classCost: EntryFieldTypes.Number;
