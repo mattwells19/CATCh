@@ -1,0 +1,56 @@
+---
+import { getUnixTime, addMonths } from "date-fns";
+import { Icon } from "astro-icon/components";
+
+import { getShowListings } from "~/api/getShowListings";
+
+import RootLayout from "~/layouts/RootLayout.astro";
+import { Image } from "astro:assets";
+import ShowDateTime from "~/components/ShowDateTime.astro";
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+
+const upcomingShows = await getShowListings({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 3)),
+});
+---
+
+<RootLayout layoutClass="lg:px-8">
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold pt-32 pb-8 border-b-2 border-light-purple bg-shapes"
+  >
+    Calendar
+  </h1>
+  <ul class="flex flex-col">
+    {
+      upcomingShows.map((show) => (
+        <li class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-24 py-12 lg:px-6 border-b-2 border-light-purple px-6">
+          <div class="flex gap-2 lg:gap-12 lg:items-center flex-col lg:flex-row">
+            <Image
+              src={show.image}
+              alt={show.listing_title}
+              width="280"
+              height="160"
+              class="w-full lg:w-[280px]"
+            />
+            <div class="flex flex-col gap-4">
+              <ShowDateTime showDate={show.event_start} />
+              <p class="font-serif text-3xl text-primary-purple">
+                {show.listing_title}
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-12 items-center flex-col lg:flex-row">
+            <p class="font-serif text-primary-purple font-bold text-2xl">
+              ${show.min_price}
+            </p>
+            <CoralButtonLink href={show.listing_url} class="w-fit">
+              <Icon name="ticket" />
+              Get Tickets
+            </CoralButtonLink>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</RootLayout>

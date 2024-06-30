@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+import { format } from "date-fns";
+import type { ShowListing } from "~/api/getShowListings";
+
+type Props = {
+  showDate: ShowListing["event_start"];
+  class?: string;
+};
+
+const { showDate, class: className } = Astro.props;
+
+const showDateFormatted = (() => {
+  const showDateCopy = new Date(showDate);
+
+  const dayOfTheWeek = format(showDateCopy, "EEEE");
+  const time = format(showDateCopy, "h:mm a");
+  const day = format(showDateCopy, "LLL d");
+
+  return `${dayOfTheWeek}, ${day} at ${time}`;
+})();
+---
+
+<div
+  class="flex items-center gap-2 border-b-2 border-light-purple"
+  class:list={className}
+>
+  <Icon name="calendar" />
+
+  <p class="text-primary-purple font-serif font-semibold">
+    {showDateFormatted}
+  </p>
+</div>

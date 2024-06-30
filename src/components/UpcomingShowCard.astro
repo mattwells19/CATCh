@@ -1,26 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import { format } from "date-fns";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { ShowListing } from "~/api/getShowListings";
 import CoralButtonLink from "./CoralButtonLink.astro";
+import ShowDateTime from "./ShowDateTime.astro";
 
 type Props = {
   showListing: ShowListing;
 };
 
 const { showListing } = Astro.props;
-
-const showDateFormatted = (() => {
-  const showTime = new Date(showListing.event_start);
-
-  const dayOfTheWeek = format(showTime, "EEEE");
-  const time = format(showTime, "h:mm a");
-  const day = format(showTime, "LLL d");
-
-  return `${dayOfTheWeek}, ${day} at ${time}`;
-})();
 ---
 
 <div
@@ -41,15 +31,10 @@ const showDateFormatted = (() => {
   </div>
 
   <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
-    <div
-      class="flex items-center gap-2 border-b-2 border-light-purple w-fit mr-auto py-4"
-    >
-      <Icon name="calendar" />
-
-      <p class="text-primary-purple font-serif font-semibold">
-        {showDateFormatted}
-      </p>
-    </div>
+    <ShowDateTime
+      showDate={showListing.event_start}
+      class="w-fit mr-auto py-4"
+    />
 
     {
       showListing.showDescription ? (
