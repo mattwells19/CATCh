@@ -1,85 +1,96 @@
 ---
-import Quote from "./components/Quote.astro";
-import FooterSection from "./components/FooterSection.astro";
-import AbbyHeadshot from "~/images/Abby.webp";
-import KevinHeadshot from "~/images/Kevin.webp";
+import { Image } from "astro:assets";
+import RemixIcon from "../RemixIcon.astro";
+import { socialMediaLinkList } from "~/utils/socialMediaLinkList";
+import NglccCertifiedImg from "../../images/nglcc-certified.png";
+import FooterSection from "./FooterSection.astro";
 ---
 
-<footer class="mt-24 lg:px-14 m-auto max-w-7xl">
-  <div class="flex justify-evenly gap-12 w-fit flex-col md:flex-row">
-    <FooterSection title="Founders">
-      <ul class="flex flex-row gap-8 md:flex-col justify-between">
-        <li>
-          <Quote imgSrc={AbbyHeadshot} author="Abigail Head">
-            If laughter is the best medicine, then a community that laughs
-            together is a healthy one.
-          </Quote>
-        </li>
-        <li>
-          <Quote imgSrc={KevinHeadshot} author="Kevin Shimko">
-            I wanted to build a place that comedy artists could call their own.
-            That's what CATCh is for me. A home.
-          </Quote>
-        </li>
-      </ul>
+<footer class="mt-24 px-4 lg:px-14 m-auto max-w-7xl">
+  <div class="flex gap-12 justify-evenly flex-col md:flex-row">
+    <FooterSection title="Community policy">
+      <div class="flex flex-col gap-8">
+        <p>
+          Our mission is to create an open, inclusive space that meets the needs
+          of improvisers and improv teams.
+        </p>
+        <Image
+          src={NglccCertifiedImg}
+          alt="NGLCC Certified LGBTBE"
+          class="max-w-[230px]"
+        />
+      </div>
     </FooterSection>
-    <FooterSection title="Contacts">
-      <a href="https://maps.google.com?q=Comedy Arts Theater of Charlotte"
-        >4128 South Blvd.<br />Suite A3<br />Charlotte, NC 28209</a
-      >
-      <dl class="mt-5">
-        <dt>Email:</dt>
-        <dd class="pl-4 text-red-400">
-          <a href="mailto:info@CATCh.theater">info@CATCh.theater</a>
-        </dd>
-        <dt>Phone:</dt>
-        <dd class="pl-4 text-red-400">
-          <a href="tel:(980) 522-8241">
-            (980) 5-CATCh-1
-            <br />
-             (980) 522-8241
-          </a>
-        </dd>
-      </dl>
-    </FooterSection>
-    <FooterSection title="Subscribe to our mailing list">
-      <p>
-        Keep informed on upcoming shows, classes, & workshops! We won't send you
-        stupid stuff like "partner offers" or other spam.
-      </p>
-      <form class="flex flex-col gap-4 pt-4">
-        <label>
-          Email Address <span class="text-red-600">*</span>
-          <input
-            type="email"
-            required
-            class="block border rounded px-2 py-1 border-slate-400"
-          />
-        </label>
-        <label>
-          First Name
-          <input
-            type="text"
-            class="block border rounded px-2 py-1 border-slate-400"
-          />
-        </label>
-        <label>
-          Last Name
-          <input
-            type="text"
-            class="block border rounded px-2 py-1 border-slate-400"
-          />
-        </label>
-        <button
-          type="submit"
-          class="px-3 py-2 bg-indigo-400 text-white uppercase rounded w-fit transition-colors hover:bg-indigo-500 focus:bg-indigo-500"
-          >Subscribe</button
+    <FooterSection title="Contact us">
+      <div class="flex flex-col gap-5">
+        <a href="tel:(980) 522-8241">
+          (980) 5-CATCh-1
+          <br />
+          (980) 522-8241
+        </a>
+        <a href="mailto:info@CATCh.theater" class="text-primary-purple"
+          >info@CATCh.theater</a
         >
-      </form>
+        <a href="https://maps.google.com?q=Comedy Arts Theater of Charlotte"
+          >4128 South Blvd.<br />Suite A3<br />Charlotte, NC 28209</a
+        >
+      </div>
+    </FooterSection>
+    <FooterSection title="Connect with the CATCh community">
+      <div class="flex flex-col gap-8">
+        <p>
+          Subscribe to our newsletter for new course offerings, show
+          announcements, and community events!
+        </p>
+        <form
+          method="post"
+          action="https://theater.us7.list-manage.com/subscribe/post?u=0aff844d3bdd9abb3086f5836&id=4de87ca1ca"
+          target="_blank"
+        >
+          <label class="mb-1" for="EMAIL"
+            >Email address <span class="text-red-600">*</span></label
+          >
+          <div class="flex gap-2 flex-1">
+            <input
+              type="email"
+              id="EMAIL"
+              name="EMAIL"
+              required
+              class="block rounded px-3 py-2 border-2 border-primary-purple w-full"
+              placeholder="iloveimprov@gmail.com"
+            />
+            <button
+              type="submit"
+              class="px-3 bg-coral text-white font-serif rounded w-fit"
+              >Subscribe</button
+            >
+          </div>
+        </form>
+        <ul class="flex justify-evenly gap-3 w-fit">
+          {
+            socialMediaLinkList.map((socialLink) => (
+              <li>
+                <a href={socialLink.path} target="_blank">
+                  <span class="sr-only">{socialLink.label}</span>
+                  <RemixIcon
+                    icon={socialLink.remixIcon}
+                    fill="var(--light-purple)"
+                    width="24"
+                    height="24"
+                  />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </FooterSection>
   </div>
-  <p class="text-gray-400 text-center my-16">
+  <p class="text-center mt-16">
     © The Comedy Arts Theater of Charlotte, LLC 2017 and beyond. All Rights
     Reserved.
+  </p>
+  <p class="text-center mt-4 mb-16">
+    Website made with 💖 by the CATCh community.
   </p>
 </footer>
