@@ -17,7 +17,7 @@ const upcomingShows = await getShowListings({
 
 <RootLayout layoutClass="lg:px-8">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold pt-12 lg:pt-32 pb-8 lg:border-b-2 border-light-purple bg-shapes"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
   >
     Calendar
   </h1>
@@ -35,7 +35,7 @@ const upcomingShows = await getShowListings({
               class="w-[280px]"
             />
             <div class="flex flex-col gap-4">
-              <ShowDateTime showDate={show.event_start} class="w-fit" />
+              <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
               <p class="font-serif text-3xl text-primary-purple">
                 {show.listing_title}
               </p>
@@ -55,35 +55,31 @@ const upcomingShows = await getShowListings({
     }
   </ul>
   <!-- mobile view -->
-  <ul class="flex flex-col lg:hidden">
+  <ul class="flex flex-col gap-20 lg:hidden">
     {
       upcomingShows.map((show) => (
-        <li class="flex flex-col gap-8 py-12">
-          <div class="flex gap-2 flex-col">
-            <Image
-              src={show.image}
-              alt={show.listing_title}
-              width="280"
-              height="160"
-              class="w-full"
-            />
-            <div class="flex flex-col gap-4 p-4">
-              <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
-              <p class="font-serif text-3xl text-primary-purple">
-                {show.listing_title}
-              </p>
-            </div>
-          </div>
-          <div class="flex gap-8 items-center flex-col">
-            <p class="font-serif text-primary-purple font-bold text-2xl">
-              ${show.min_price}
+        <li class="flex flex-col items-center gap-6">
+          <Image
+            src={show.image}
+            alt={show.listing_title}
+            width="280"
+            height="160"
+            class="w-full"
+          />
+          <div class="flex flex-col gap-4 px-4 self-start">
+            <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
+            <p class="font-serif text-3xl text-primary-purple">
+              {show.listing_title}
             </p>
-            <div class="w-4/5">
-              <CoralButtonLink href={show.listing_url}>
-                <Icon name="ticket" />
-                Get Tickets
-              </CoralButtonLink>
-            </div>
+          </div>
+          <p class="font-serif text-primary-purple font-bold text-2xl">
+            ${show.min_price}
+          </p>
+          <div class="w-4/5">
+            <CoralButtonLink href={show.listing_url}>
+              <Icon name="ticket" />
+              Get Tickets
+            </CoralButtonLink>
           </div>
         </li>
       ))
