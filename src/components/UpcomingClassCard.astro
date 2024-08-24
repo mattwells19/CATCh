@@ -8,9 +8,10 @@ import CoralButtonLink from "./CoralButtonLink.astro";
 
 type Props = {
   classListing: ClassListing;
+  class?: string;
 };
 
-const { classListing } = Astro.props;
+const { classListing, class: className } = Astro.props;
 
 const classStartDate = new Date(classListing.event_start);
 
@@ -47,6 +48,7 @@ const formattedClassDate = (() => {
 
 <div
   class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
+  class:list={className}
 >
   <div class="group relative bg-black bg-opacity-10">
     <span

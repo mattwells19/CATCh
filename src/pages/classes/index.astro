@@ -1,0 +1,31 @@
+---
+import { getUnixTime, addMonths } from "date-fns";
+
+import { getClassListings } from "~/api/getClassListings";
+
+import RootLayout from "~/layouts/RootLayout.astro";
+import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
+
+const upcomingClasses = await getClassListings({
+  from: getUnixTime(new Date()),
+  to: getUnixTime(addMonths(new Date(), 3)),
+});
+---
+
+<RootLayout layoutClass="lg:px-8">
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
+  >
+    Catch a class
+  </h1>
+
+  <ul class="flex flex-wrap gap-20 sm:gap-6 lg:py-12">
+    {
+      upcomingClasses.map((classListing) => (
+        <li class="flex-1 w-full">
+          <UpcomingClassCard classListing={classListing} class="max-w-none" />
+        </li>
+      ))
+    }
+  </ul>
+</RootLayout>

@@ -1,4 +1,6 @@
 import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
+import type { ImageMetadata } from "astro";
+import CATChPlaceholderImg from "../images/CATCh-Placeholder.png";
 
 export interface TicketLeapClassListing {
   type: string;
@@ -14,7 +16,7 @@ export interface TicketLeapClassListing {
   event_id: number;
   venue_name: string;
   venue_city: string;
-  image: string;
+  image: string | ImageMetadata;
   listing_url: string;
   listing_title: string;
   listing_slug: string;
@@ -60,7 +62,9 @@ export async function getClassListings({
     return {
       ...classSession,
       ...details,
-      image: `https:${classSession.image}`,
+      image: classSession.image
+        ? `https:${classSession.image}`
+        : CATChPlaceholderImg,
       listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
     };
   });
