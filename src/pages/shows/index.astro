@@ -11,43 +11,79 @@ import CoralButtonLink from "~/components/CoralButtonLink.astro";
 
 const upcomingShows = await getShowListings({
   from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 3)),
+  to: getUnixTime(addMonths(new Date(), 1)),
 });
 ---
 
 <RootLayout layoutClass="lg:px-8">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold pt-32 pb-8 border-b-2 border-light-purple bg-shapes"
+    class="text-primary-purple text-6xl font-serif font-bold pt-12 lg:pt-32 pb-8 lg:border-b-2 border-light-purple bg-shapes"
   >
     Calendar
   </h1>
-  <ul class="flex flex-col">
+  <!-- desktop view -->
+  <ul class="hidden flex-col lg:flex">
     {
       upcomingShows.map((show) => (
-        <li class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-24 py-12 lg:px-6 border-b-2 border-light-purple px-6">
-          <div class="flex gap-2 lg:gap-12 lg:items-center flex-col lg:flex-row">
+        <li class="flex items-center justify-between gap-24 px-6 py-12 border-b-2 border-light-purple">
+          <div class="flex gap-12 items-center">
             <Image
               src={show.image}
               alt={show.listing_title}
               width="280"
               height="160"
-              class="w-full lg:w-[280px]"
+              class="w-[280px]"
             />
             <div class="flex flex-col gap-4">
-              <ShowDateTime showDate={show.event_start} />
+              <ShowDateTime showDate={show.event_start} class="w-fit" />
               <p class="font-serif text-3xl text-primary-purple">
                 {show.listing_title}
               </p>
             </div>
           </div>
-          <div class="flex gap-12 items-center flex-col lg:flex-row">
+          <div class="flex gap-12 items-center">
             <p class="font-serif text-primary-purple font-bold text-2xl">
               ${show.min_price}
             </p>
-            <CoralButtonLink href={show.listing_url} class="w-fit">
+            <CoralButtonLink href={show.listing_url} class="w-fit pb-2">
               <Icon name="ticket" />
               Get Tickets
             </CoralButtonLink>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <!-- mobile view -->
+  <ul class="flex flex-col lg:hidden">
+    {
+      upcomingShows.map((show) => (
+        <li class="flex flex-col gap-8 py-12">
+          <div class="flex gap-2 flex-col">
+            <Image
+              src={show.image}
+              alt={show.listing_title}
+              width="280"
+              height="160"
+              class="w-full"
+            />
+            <div class="flex flex-col gap-4 p-4">
+              <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
+              <p class="font-serif text-3xl text-primary-purple">
+                {show.listing_title}
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-8 items-center flex-col">
+            <p class="font-serif text-primary-purple font-bold text-2xl">
+              ${show.min_price}
+            </p>
+            <div class="w-4/5">
+              <CoralButtonLink href={show.listing_url}>
+                <Icon name="ticket" />
+                Get Tickets
+              </CoralButtonLink>
+            </div>
           </div>
         </li>
       ))
