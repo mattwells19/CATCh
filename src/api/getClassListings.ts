@@ -1,5 +1,4 @@
 import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
-import type { ImageMetadata } from "astro";
 import CATChPlaceholderImg from "../images/CATCh-Placeholder.png";
 
 export interface TicketLeapClassListing {
@@ -16,7 +15,7 @@ export interface TicketLeapClassListing {
   event_id: number;
   venue_name: string;
   venue_city: string;
-  image: string | ImageMetadata;
+  image: string;
   listing_url: string;
   listing_title: string;
   listing_slug: string;
@@ -64,7 +63,8 @@ export async function getClassListings({
       ...details,
       image: classSession.image
         ? `https:${classSession.image}`
-        : CATChPlaceholderImg,
+        : // ImageMetaData is valid, but the types don't agree :/
+          (CATChPlaceholderImg as unknown as string),
       listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
     };
   });
