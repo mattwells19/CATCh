@@ -8,7 +8,7 @@
   "overrides": [
     {
       // Define the configuration for `.astro` file.
-      "files": ["*.astro"],
+      "files": ["*.astro", "*.tsx", "*.ts"],
       // Allows Astro components to be parsed.
       "parser": "astro-eslint-parser",
       // Parse the script in `.astro` as TypeScript by adding the following configuration.
@@ -30,12 +30,16 @@
         ],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "max-len": ["error", 120],
-        "sort-keys": ["error"],
-        "no-console": ["warn", { "allow": ["info", "error", "warn"] }],
+        "no-console": ["warn", { "allow": ["info", "error", "warn"] }]
+      }
+    },
+    {
+      // Define the configuration for `.astro` file.
+      "files": ["*.tsx", "*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
         "consistent-return": "error"
       }
     }
-    // ...
   ]
 }

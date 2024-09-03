@@ -10,14 +10,14 @@ export const routes: Record<string, Array<Route>> = {
       label: "Calendar",
       path: "/shows",
     },
-    {
-      label: "Performers",
-      path: "/performers",
-    },
-    {
-      label: "Teams",
-      path: "/teams",
-    },
+    // {
+    //   label: "Performers",
+    //   path: "/performers",
+    // },
+    // {
+    //   label: "Teams",
+    //   path: "/teams",
+    // },
     {
       label: "Videos",
       path: "https://www.youtube.com/@CATChTheater/playlists?view=1&sort=lad&flow=grid",
@@ -25,7 +25,7 @@ export const routes: Record<string, Array<Route>> = {
     },
     {
       label: "FAQs",
-      path: "/faqs",
+      path: "/faqs/show-faq",
     },
   ],
   Classes: [
@@ -35,42 +35,41 @@ export const routes: Record<string, Array<Route>> = {
     },
     {
       label: "Policies",
-      path: "/policies",
+      path: "/policies/class-policies",
     },
     {
       label: "FAQs",
-      // FIXME: different than shows FAQs?
-      path: "/faqs",
+      path: "/faqs/improv-class-faq",
     },
-    {
-      label: "Workstudy Program",
-      path: "/workstudy",
-    },
+    // {
+    //   label: "Workstudy Program",
+    //   path: "/workstudy",
+    // },
   ],
-  "Business Services": [
-    {
-      label: "Organizations",
-      path: "/organizations",
-    },
-    {
-      label: "Individuals",
-      path: "/uhhh-idk",
-    },
-  ],
-  "Theater Info": [
-    {
-      label: "Contact Us",
-      path: "/uhhh-idk",
-    },
-    {
-      label: "Our philosophy",
-      path: "/uhhh-idk",
-    },
-    {
-      label: "Our people",
-      path: "/uhhh-idk",
-    },
-  ],
+  // "Business Services": [
+  //   {
+  //     label: "Organizations",
+  //     path: "/organizations",
+  //   },
+  //   {
+  //     label: "Individuals",
+  //     path: "/uhhh-idk",
+  //   },
+  // ],
+  // "Theater Info": [
+  //   {
+  //     label: "Contact Us",
+  //     path: "/uhhh-idk",
+  //   },
+  //   {
+  //     label: "Our philosophy",
+  //     path: "/uhhh-idk",
+  //   },
+  //   {
+  //     label: "Our people",
+  //     path: "/uhhh-idk",
+  //   },
+  // ],
 };
 
 export const routeCategories = Object.keys(routes) as Array<
