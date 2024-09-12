@@ -63,8 +63,7 @@ export async function getClassListings({
       ...details,
       image: classSession.image
         ? `https:${classSession.image}`
-        : // ImageMetaData is valid, but the types don't agree :/
-          (CATChPlaceholderImg as unknown as string),
+        : (CATChPlaceholderImg as unknown as string), // ImageMetaData is valid, but the types don't agree :/
       listing_url: `https://www.ticketleap.events/tickets/${classSession.listing_slug}`,
     };
   });

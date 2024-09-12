@@ -34,11 +34,15 @@ export async function getTeams(): Promise<Array<Team>> {
       poster: {
         path: `https://catch.theater${team.poster.path}`,
       },
-      gallery: Array.isArray(team.gallery)
-        ? team.gallery.map((galleryImg) => ({
-            path: `https://catch.theater${galleryImg.path}`,
-          }))
-        : [],
+      get gallery() {
+        if (!Array.isArray(team.gallery)) {
+          return [];
+        }
+
+        return team.gallery.map((galleryImg) => ({
+          path: `https://catch.theater${galleryImg.path}`,
+        }));
+      },
     }));
 }
 
