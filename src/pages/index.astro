@@ -9,7 +9,6 @@ import RootLayout from "../layouts/RootLayout.astro";
 
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NextShowCallout from "~/components/NextShowCallout.astro";
-import CardList from "~/components/CardList.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
 const upcomingShowsPromise = getShowListings({
@@ -52,18 +51,28 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     clip-path: xywh(0 0px 100% 100% round 0 0 50% 0);
     transform: scaleY(-1);
   }
+
+  h2.section_header {
+    @apply font-serif text-3xl lg:text-4xl font-bold mb-10 px-8 xl:px-16;
+  }
+
+  a.see_all_link {
+    @apply underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto xl:pr-16;
+  }
+
+  ul.card_list {
+    @apply flex overflow-x-auto gap-4 pt-2 pb-4 px-4 xl:px-16;
+  }
 </style>
 
 <RootLayout layoutClass="flex flex-col overflow-x-hidden">
   <NextShowCallout nextShow={nextShow} />
   <section
     id="upcoming-shows"
-    class="relative pt-12 pb-4 w-full overflow-y-visible mt-24"
+    class="relative pt-12 pb-4 w-full overflow-y-visible mt-16"
   >
-    <h2 class="font-serif text-3xl lg:text-4xl font-bold text-peach mb-10 px-8">
-      Upcoming shows
-    </h2>
-    <CardList>
+    <h2 class="section_header text-peach">Upcoming shows</h2>
+    <ul class="card_list">
       {
         otherShows.map((showListing) => (
           <li class="flex-1 max-w-fit">
@@ -71,11 +80,8 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
-    </CardList>
-    <a
-      href="/shows"
-      class="text-peach underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto"
-    >
+    </ul>
+    <a href="/shows" class="see_all_link text-peach">
       See all shows <Icon name="arrow-right" />
     </a>
   </section>
@@ -83,12 +89,8 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     id="upcoming-classes"
     class="relative pt-12 pb-4 w-full overflow-y-visible"
   >
-    <h2
-      class="font-serif text-3xl lg:text-4xl font-bold text-primary-purple mb-10 px-8"
-    >
-      Upcoming classes
-    </h2>
-    <CardList>
+    <h2 class="section_header text-primary-purple">Upcoming classes</h2>
+    <ul class="card_list">
       {
         upcomingClasses.map((classListing) => (
           <li class="flex-1 max-w-fit">
@@ -96,11 +98,8 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
-    </CardList>
-    <a
-      href="/classes"
-      class="text-primary-purple underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto"
-    >
+    </ul>
+    <a href="/classes" class="see_all_link text-primary-purple">
       See all classes <Icon name="arrow-right" />
     </a>
   </section>
