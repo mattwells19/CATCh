@@ -1,6 +1,7 @@
 ---
 import { SEOMetadata } from "astro-seo-metadata";
 import LaughingDotImage from "../images/laughing-dot.png";
+import Tracking from "~/components/Tracking.astro";
 import Header from "~/components/Header/Header.astro";
 import Footer from "~/components/Footer/Footer.astro";
 import "~/styles/custom-rules.scss";
@@ -30,27 +31,9 @@ const GTM_ID = "GTM-WQRTM3H3";
       type="website"
       astroGenerator
     />
+    <meta property="fb:app_id" content="1788375124760247" />
 
-    <!-- Google Tag Manager -->
-    <script
-      async
-      src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
-      is:inline
-    >
-      // _
-    </script>
-
-    <script is:inline define:vars={{ id: GTM_ID }}>
-      (() => {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-        gtag("config", id);
-      })();
-    </script>
-    <!-- End Google Tag Manager -->
+    <Tracking GTM_ID={GTM_ID} />
   </head>
   <body>
     <Header />
