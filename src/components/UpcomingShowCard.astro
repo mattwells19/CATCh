@@ -1,10 +1,12 @@
 ---
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
 import type { ShowListing } from "~/api/getShowListings";
+
 import CoralButtonLink from "./CoralButtonLink.astro";
 import ShowDateTime from "./ShowDateTime.astro";
+import LinkedImage from "./LinkedImage.astro";
 
 type Props = {
   showListing: ShowListing;
@@ -16,20 +18,14 @@ const { showListing } = Astro.props;
 <div
   class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
 >
-  <div class="group relative bg-black bg-opacity-10">
-    <span
-      class="text-center absolute z-10 inset-0 h-fit m-auto text-white opacity-0 transition-opacity group-hover:opacity-100"
-    >
-      {showListing.listing_title}
-    </span>
-    <Image
-      src={showListing.image}
-      alt={showListing.listing_title}
-      width="295"
-      height="165"
-      class="w-full group-hover:opacity-20 transition-opacity"
-    />
-  </div>
+  <LinkedImage
+    listingImageSrc={showListing.image}
+    listingTitle={showListing.listing_title}
+    href={showListing.listing_url}
+    width={724}
+    height={407}
+    class="w-full"
+  />
 
   <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
     <ShowDateTime

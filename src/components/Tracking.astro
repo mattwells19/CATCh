@@ -1,0 +1,82 @@
+---
+const { GTM_ID } = Astro.props;
+---
+
+<!-- Google Tag Manager -->
+<script
+  async
+  src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+  is:inline
+>
+  // _
+</script>
+
+<script is:inline define:vars={{ id: GTM_ID }}>
+  (() => {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", id);
+  })();
+</script>
+<!-- End Google Tag Manager --><!-- Facebook Pixel -->
+<script is:inline>
+  (() => {
+    const fjs = document.getElementsByTagName("script")[0];
+    if (document.getElementById("facebook-jssdk")) {
+      return;
+    }
+
+    const js = document.createElement("script");
+    js.id = "facebook-jssdk";
+    js.src =
+      "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1788375124760247";
+    fjs.parentNode?.insertBefore(js, fjs);
+  })();
+</script>
+<!-- End Facebook Pixel --><!-- Hotjar Tracking Code for https://catch.theater -->
+<script is:inline>
+  (() => {
+    window.hj =
+      window.hj || (() => (window.hj.q = window.hj.q || []).push(arguments));
+
+    const a = document.getElementsByTagName("head")[0];
+    const r = document.createElement("script");
+    r.async = true;
+    r.src = `https://static.hotjar.com/c/hotjar-3815137.js?sv=6`;
+    a.appendChild(r);
+  })();
+</script>
+<!-- END Hotjar--><!-- ADROLL -->
+<script is:inline>
+  adroll_adv_id = "6VFU6NICXRGZ7BJMEAFUEQ";
+  adroll_pix_id = "H5ZUFK5ZAJBHVD6GPYM2O4";
+  adroll_version = "2.0";
+
+  (function (w, d, e, o, a) {
+    w.__adroll_loaded = true;
+    w.adroll = w.adroll || [];
+    w.adroll.f = ["setProperties", "identify", "track"];
+    var roundtripUrl =
+      "https://s.adroll.com/j/" + adroll_adv_id + "/roundtrip.js";
+    for (a = 0; a < w.adroll.f.length; a++) {
+      w.adroll[w.adroll.f[a]] =
+        w.adroll[w.adroll.f[a]] ||
+        (function (n) {
+          return function () {
+            w.adroll.push([n, arguments]);
+          };
+        })(w.adroll.f[a]);
+    }
+    e = d.createElement("script");
+    o = d.getElementsByTagName("script")[0];
+    e.async = 1;
+    e.src = roundtripUrl;
+    o.parentNode.insertBefore(e, o);
+  })(window, document);
+
+  adroll.track("pageView");
+</script>
+<!-- End ADROLL -->

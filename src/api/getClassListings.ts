@@ -1,5 +1,5 @@
 import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
-import CATChPlaceholderImg from "../images/CATCh-Placeholder.png";
+import CATChPlaceholderImg from "../images/CATCh-Placeholder.jpg";
 
 export interface TicketLeapClassListing {
   type: string;

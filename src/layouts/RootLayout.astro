@@ -1,4 +1,7 @@
 ---
+import { SEOMetadata } from "astro-seo-metadata";
+import LaughingDotImage from "../images/laughing-dot.png";
+import Tracking from "~/components/Tracking.astro";
 import Header from "~/components/Header/Header.astro";
 import Footer from "~/components/Footer/Footer.astro";
 import "~/styles/custom-rules.scss";
@@ -8,29 +11,44 @@ type Props = {
 };
 
 const { layoutClass } = Astro.props;
+
+const GTM_ID = "GTM-WQRTM3H3";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Join us at CATCh for Charlotte's best improv comedy shows & improv classes. $10 shows most Friday and Saturday nights!"
+
+    <SEOMetadata
+      siteName="Comedy Arts Theater of Charlotte"
+      title="Improv Shows & Classes in Charlotte | CATCh"
+      description="Join us at CATCh for Charlotte's best improv comedy shows & improv classes. $10 shows most Friday and Saturday nights!"
+      image={LaughingDotImage.src}
+      favicon="/favicon.ico"
+      astroSitemap
+      canonicalUrl={Astro.url.toString()}
+      type="website"
+      astroGenerator
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <title>Improv Shows & Classes in Charlotte | CATCh</title>
+    <meta property="fb:app_id" content="1788375124760247" />
+
+    <Tracking GTM_ID={GTM_ID} />
   </head>
   <body>
     <Header />
     <main class={layoutClass}>
       <slot />
     </main>
-    <!-- intentionally leaving this here for now for reference -->
-    <!-- <main class="py-2 px-6 lg:py-4 lg:px-24" class:list={[layoutClass]}>
-      <slot />
-    </main> -->
     <Footer />
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
   </body>
 </html>

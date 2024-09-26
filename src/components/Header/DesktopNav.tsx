@@ -16,7 +16,7 @@ export const DesktopNav = (): ReactElement => {
   return (
     <NavigationMenu
       skipDelayDuration={500}
-      className="flex gap-16 items-center overflow-visible p-4"
+      className="flex gap-16 items-center overflow-visible py-4 px-16"
     >
       <a href="/" aria-label="Home" className="shrink-0">
         <img
