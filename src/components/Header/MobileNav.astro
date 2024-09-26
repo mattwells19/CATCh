@@ -1,7 +1,8 @@
 ---
-import FullLogo from "~/images/CATCh-full-big-nobg.webp";
+import { Image } from "astro:assets";
 import RemixIcon from "../RemixIcon.astro";
 
+import FullLogo from "~/images/CATCh-big-no-tag.png";
 import { socialMediaLinkList } from "~/utils/socialMediaLinkList.ts";
 import { routeCategories, routes } from "./routes.ts";
 import "~/styles/mobile-nav.scss";
@@ -41,9 +42,9 @@ const activePath = Astro.url.pathname;
 
 <nav class="flex justify-between items-center p-2">
   <a href="/" class="shrink-0" aria-label="Home">
-    <img
-      src={FullLogo.src}
-      class="w-52 -translate-y-2"
+    <Image
+      src={FullLogo}
+      class="w-52"
       alt="CATCh - Comedy Arts Theater of Charlotte"
     />
   </a>

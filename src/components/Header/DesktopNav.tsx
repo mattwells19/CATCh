@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-navigation-menu";
 import { routeCategories, routes } from "./routes.ts";
 
-import FullLogo from "~/images/CATCh-full-big-nobg.webp";
+import FullLogo from "~/images/CATCh-big-no-tag.png";
 import "../../styles/desktop-nav.scss";
 
 export const DesktopNav = (): ReactElement => {
@@ -21,7 +21,7 @@ export const DesktopNav = (): ReactElement => {
       <a href="/" aria-label="Home" className="shrink-0">
         <img
           src={FullLogo.src}
-          className="w-64 -translate-y-2"
+          className="w-64"
           alt="CATCh - Comedy Arts Theater of Charlotte"
         />
       </a>
