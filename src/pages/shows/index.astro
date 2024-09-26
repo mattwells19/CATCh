@@ -33,7 +33,7 @@ const upcomingShows = await getShowListings({
               href={show.listing_url}
               width={280}
               height={158}
-              class="w-[280px]"
+              class="w-[280px] flex-shrink-0"
             />
             <div class="flex flex-col gap-4">
               <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
