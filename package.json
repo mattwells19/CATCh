@@ -6,13 +6,11 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "build-node": "astro build --config astro-node.config.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint 'src/**/*.{ts,tsx,astro}'"
   },
   "dependencies": {
-    "@astrojs/node": "^8.3.3",
     "@astrojs/react": "^3.6.2",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.8.1",
