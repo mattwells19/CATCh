@@ -5,9 +5,9 @@ import { Icon } from "astro-icon/components";
 import { getShowListings } from "~/api/getShowListings";
 
 import RootLayout from "~/layouts/RootLayout.astro";
-import { Image } from "astro:assets";
 import ShowDateTime from "~/components/ShowDateTime.astro";
 import CoralButtonLink from "~/components/CoralButtonLink.astro";
+import LinkedImage from "~/components/LinkedImage.astro";
 
 const upcomingShows = await getShowListings({
   from: getUnixTime(new Date()),
@@ -27,9 +27,10 @@ const upcomingShows = await getShowListings({
       upcomingShows.map((show) => (
         <li class="flex items-center justify-between gap-24 px-6 py-12 border-b-2 border-light-purple">
           <div class="flex gap-12 items-center">
-            <Image
-              src={show.image}
-              alt={show.listing_title}
+            <LinkedImage
+              listingImageSrc={show.image}
+              listingTitle={show.listing_title}
+              href={show.listing_url}
               width={280}
               height={158}
               class="w-[280px]"
@@ -59,9 +60,10 @@ const upcomingShows = await getShowListings({
     {
       upcomingShows.map((show) => (
         <li class="flex flex-col items-center gap-6">
-          <Image
-            src={show.image}
-            alt={show.listing_title}
+          <LinkedImage
+            listingImageSrc={show.image}
+            listingTitle={show.listing_title}
+            href={show.listing_url}
             width={1280}
             height={720}
             class="w-full"

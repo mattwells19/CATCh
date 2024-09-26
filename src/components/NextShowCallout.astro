@@ -1,10 +1,11 @@
 ---
 import { format } from "date-fns";
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+
 import type { ShowListing } from "~/api/getShowListings";
+
 import CoralButtonLink from "./CoralButtonLink.astro";
-import CastLaughingBackground from "../images/CastLaughingBackground.png";
+import LinkedImage from "./LinkedImage.astro";
 
 type Props = {
   nextShow: ShowListing;
@@ -52,9 +53,10 @@ const showDateFormatted = (() => {
     </CoralButtonLink>
   </div>
 
-  <Image
-    src={nextShow.image}
-    alt={nextShow.listing_title}
+  <LinkedImage
+    href={nextShow.listing_url}
+    listingTitle={nextShow.listing_title}
+    listingImageSrc={nextShow.image}
     width={1134}
     height={638}
     class="lg:w-1/2 lg:min-w-[650px]"

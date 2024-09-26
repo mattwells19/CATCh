@@ -1,10 +1,12 @@
 ---
 import { add, format } from "date-fns";
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
 import type { ClassListing } from "~/api/getClassListings";
+
 import CoralButtonLink from "./CoralButtonLink.astro";
+import LinkedImage from "./LinkedImage.astro";
 
 type Props = {
   classListing: ClassListing;
@@ -51,24 +53,14 @@ const formattedClassDate = (() => {
   class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
   class:list={className}
 >
-  <a
+  <LinkedImage
+    listingImageSrc={classListing.image}
+    listingTitle={classListing.listing_title}
     href={classListing.listing_url}
-    class="block group relative bg-black bg-opacity-10"
-    aria-label={`Learn more about ${classListing.listing_title}`}
-  >
-    <span
-      class="text-center absolute z-10 inset-0 h-fit m-auto text-white opacity-0 transition-opacity group-hover:opacity-100"
-    >
-      {classListing.listing_title}
-    </span>
-    <Image
-      src={classListing.image}
-      alt={classListing.listing_title}
-      width={724}
-      height={407}
-      class="w-full group-hover:opacity-20 transition-opacity"
-    />
-  </a>
+    width={724}
+    height={407}
+    class="w-full"
+  />
 
   <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
     <div
