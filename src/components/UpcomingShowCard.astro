@@ -47,7 +47,20 @@ const { showListing } = Astro.props;
     ${showListing.min_price}
   </p>
 
-  <CoralButtonLink href={showListing.listing_url} class="w-full min-w-full">
-    <Icon name="ticket" />Get Tickets
+  <CoralButtonLink
+    href={showListing.listing_url}
+    class="w-full min-w-full"
+    disabled={showListing.sold_out}
+  >
+    {
+      showListing.sold_out ? (
+        <>Sold Out!</>
+      ) : (
+        <>
+          <Icon name="ticket" />
+          Get Tickets
+        </>
+      )
+    }
   </CoralButtonLink>
 </div>

@@ -48,8 +48,17 @@ const showDateFormatted = (() => {
       ) : null
     }
 
-    <CoralButtonLink href={nextShow.listing_url}>
-      <Icon name="ticket" />Get Tickets
+    <CoralButtonLink href={nextShow.listing_url} disabled={nextShow.sold_out}>
+      {
+        nextShow.sold_out ? (
+          <>Sold Out!</>
+        ) : (
+          <>
+            <Icon name="ticket" />
+            Get Tickets
+          </>
+        )
+      }
     </CoralButtonLink>
   </div>
 
