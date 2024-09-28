@@ -17,7 +17,7 @@ const teamPerformers = performers.filter((performer) =>
 );
 ---
 
-<RootLayout layoutClass="flex flex-col gap-8">
+<RootLayout title={team.name} class="flex flex-col gap-8">
   <h1 class="text-gradient text-5xl font-bold m-auto">{team.name}</h1>
   <Image
     src={team.heroimg.path}

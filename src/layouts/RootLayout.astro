@@ -7,10 +7,11 @@ import Footer from "~/components/Footer/Footer.astro";
 import "~/styles/custom-rules.scss";
 
 type Props = {
-  layoutClass?: string;
+  title: string;
+  class?: string;
 };
 
-const { layoutClass } = Astro.props;
+const { title, class: className } = Astro.props;
 
 const GTM_ID = "GTM-WQRTM3H3";
 ---
@@ -22,7 +23,7 @@ const GTM_ID = "GTM-WQRTM3H3";
 
     <SEOMetadata
       siteName="Comedy Arts Theater of Charlotte"
-      title="Improv Shows & Classes in Charlotte | CATCh"
+      title={`${title} | CATCh`}
       description="Join us at CATCh for Charlotte's best improv comedy shows & improv classes. $10 shows most Friday and Saturday nights!"
       image={LaughingDotImage.src}
       favicon="/favicon.ico"
@@ -37,7 +38,7 @@ const GTM_ID = "GTM-WQRTM3H3";
   </head>
   <body>
     <Header />
-    <main class={layoutClass}>
+    <main class={className}>
       <slot />
     </main>
     <Footer />
