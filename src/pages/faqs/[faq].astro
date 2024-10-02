@@ -1,42 +1,127 @@
 ---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import RootLayout from "~/layouts/RootLayout.astro";
 import { getFaqs } from "~/api/getFaqs";
-import PageSubNavList from "~/components/PageSubNav/PageSubNavList.astro";
-import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
 
 const { faq: faqSlug } = Astro.params;
-if (!faqSlug) return Astro.redirect("/");
+if (!faqSlug) return Astro.redirect("/faqs/shows");
 
 const allFaqs = await getFaqs();
 
-const faq = allFaqs.find((f) => f.slug === faqSlug);
-if (!faq) return Astro.redirect("/");
+const faqCategoryEntries = allFaqs.filter((f) =>
+  f.categories.map((c) => c.toLowerCase()).includes(faqSlug.toLowerCase()),
+);
+if (faqCategoryEntries.length === 0) return Astro.redirect("/faqs/shows");
 ---
 
-<RootLayout layoutClass="flex flex-col gap-6 justify-center">
-  <PageSubNavList>
-    {
-      allFaqs.map((faqEntry) => (
-        <PageSubNavItem href={`/faqs/${faqEntry.slug}`}>
-          {faqEntry.name}
-        </PageSubNavItem>
-      ))
+<script>
+  const isLargeViewportQuery = window.matchMedia("(min-width: 1024px)");
+
+  const toggleAnswer = (rawHash = "", scrollTo = false) => {
+    const hash = rawHash.replace("#", "");
+    if (hash) {
+      const answerElement = document.getElementById(`q-${hash}`);
+      if (!answerElement) return;
+
+      answerElement?.classList.toggle("collapsed");
+      if (scrollTo && !isLargeViewportQuery.matches) {
+        setTimeout(() => {
+          window.scrollTo({
+            behavior: "smooth",
+            top: answerElement?.offsetTop - 100,
+          });
+        }, 5);
+      }
     }
-  </PageSubNavList>
+  };
 
-  <div class="flex flex-col gap-6 max-w-screen-md m-auto">
-    <h1 class="text-gradient text-3xl font-bold m-auto">{faq.name}</h1>
-    <p class="self-center">{faq.description}</p>
+  window.addEventListener("load", () => {
+    toggleAnswer(location.hash);
+  });
 
+  window.addEventListener("hashchange", (e) => {
+    toggleAnswer(new URL(e.newURL).hash, true);
+    toggleAnswer(new URL(e.oldURL).hash);
+  });
+</script>
+
+<style lang="scss">
+  @media (min-width: 1024px) {
+    .answer-body {
+      transition: grid-template-rows ease 500ms;
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    .answer-body {
+      transition: none;
+    }
+  }
+
+  .answer-body {
+    padding-top: 12px;
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+
+  .question-arrow {
+    @apply rotate-0;
+  }
+
+  .collapsed {
+    & .question-arrow {
+      transform: rotate(35deg);
+    }
+
+    & .answer-body {
+      padding-top: 0px;
+      visibility: collapse;
+      grid-template-rows: 0fr;
+    }
+  }
+</style>
+
+<RootLayout layoutClass="lg:px-16">
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
+  >
+    <span class="capitalize">{faqSlug}</span> FAQs
+  </h1>
+
+  <ul class="flex flex-col gap-6 lg:pt-8 lg:max-w-4xl">
     {
-      faq.faqs.map((entry) => (
-        <details>
-          <summary class="text-lg font-semibold cursor-pointer">
+      faqCategoryEntries.map((entry, index) => (
+        <li id={`q-${index}`} class="collapsed">
+          <a
+            href={`#${index}`}
+            class="text-xl font-serif font-bold text-primary-purple cursor-pointer flex items-center gap-2 p-4 transition-colors hover:bg-violet-100"
+          >
+            <span aria-hidden="true" role="presentation">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="question-arrow transition-transform"
+              >
+                <path
+                  d="M11.1808 15.8297L6.54199 9.20285C5.89247 8.27496 6.55629 7 7.68892 7L16.3111 7C17.4437 7 18.1075 8.27496 17.458 9.20285L12.8192 15.8297C12.4211 16.3984 11.5789 16.3984 11.1808 15.8297Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+
             {entry.question}
-          </summary>
-          <div class="wysiwyg pt-2 pl-6" set:html={entry.answer} />
-        </details>
+          </a>
+          <div class="answer-body px-12">
+            <div
+              class="wysiwyg overflow-hidden"
+              set:html={documentToHtmlString(entry.answer)}
+            />
+          </div>
+        </li>
       ))
     }
-  </div>
+  </ul>
 </RootLayout>
