@@ -1,0 +1,18 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
+---
+
+<RootLayout
+  title="Page not found"
+  class="max-w-md m-auto flex flex-col gap-8 pt-20 pb-60 px-3"
+>
+  <h1 class="text-primary-purple font-serif font-bold text-4xl">
+    This page doesn't exist
+  </h1>
+  <p>Let's get you back on track.</p>
+  <CoralButtonLink href="/" class="w-fit min-w-none">
+    <RemixIcon icon="home-4" variant="line" /> Go Home
+  </CoralButtonLink>
+</RootLayout>
