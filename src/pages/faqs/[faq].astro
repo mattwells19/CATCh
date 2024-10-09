@@ -11,7 +11,11 @@ const allFaqs = await getFaqs();
 const faqCategoryEntries = allFaqs.filter((f) =>
   f.categories.map((c) => c.toLowerCase()).includes(faqSlug.toLowerCase()),
 );
-if (faqCategoryEntries.length === 0) return Astro.redirect("/faqs/shows");
+if (faqCategoryEntries.length === 0) {
+  return new Response(null, { status: 404 });
+}
+
+const faqCategory = faqSlug[0].toUpperCase() + faqSlug.slice(1);
 ---
 
 <script>
@@ -95,11 +99,11 @@ if (faqCategoryEntries.length === 0) return Astro.redirect("/faqs/shows");
   }
 </style>
 
-<RootLayout layoutClass="lg:px-16">
+<RootLayout title={`${faqCategory} FAQs`} class="lg:px-16">
   <h1
     class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
   >
-    <span class="capitalize">{faqSlug}</span> FAQs
+    {faqCategory} FAQs
   </h1>
 
   <ul class="flex flex-col gap-6 lg:pt-8 lg:max-w-4xl mb-16">
