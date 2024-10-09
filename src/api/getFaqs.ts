@@ -1,48 +1,31 @@
-import { getCollectionEntries } from "./utils";
-import type { WYSIWYGString } from "./api.types";
+import type { EntryFieldTypes } from "contentful";
+import { contentfulClient, type RichTextDocument } from "~/lib/contentful";
 
-interface RawFAQ {
-  name: string;
-  slug: string;
-  tags: Array<string>;
-  metaDesc: string;
-  description: string;
-  faq: Array<{
-    value: {
-      faq_question: string;
-      faq_answer: WYSIWYGString;
-    };
-  }>;
-  _id: string;
+interface FAQSkeleton {
+  contentTypeId: "faqPage";
+  fields: {
+    question: EntryFieldTypes.Text;
+    answer: EntryFieldTypes.RichText;
+    category: EntryFieldTypes.Array<EntryFieldTypes.Symbol<string>>;
+  };
 }
 
 export interface FAQ {
-  name: string;
-  slug: string;
-  tags: Array<string>;
-  metaDesc: string;
-  description: string;
-  faqs: Array<{
-    question: string;
-    answer: WYSIWYGString;
-  }>;
-  _id: string;
+  question: string;
+  answer: RichTextDocument;
+  categories: Array<string>;
 }
 
 export async function getFaqs(): Promise<Array<FAQ>> {
-  const faqEntries = await getCollectionEntries<RawFAQ>("faqs");
+  const response = await contentfulClient.getEntries<FAQSkeleton>({
+    content_type: "faqPage",
+  });
 
-  return faqEntries.map((faqEntry) => ({
-    ...faqEntry,
-    faqs: faqEntry.faq.map(({ value }) => ({
-      question: value.faq_question,
-      answer: value.faq_answer,
-    })),
-  }));
-}
-
-export async function getFaq(faqSlug: string): Promise<FAQ | null> {
-  const faqEntries = await getFaqs();
-
-  return faqEntries.find((faqEntry) => faqEntry.slug === faqSlug) ?? null;
+  return response.items.map((item) => {
+    return {
+      ...item.fields,
+      categories: item.fields.category,
+      answer: item.fields.answer,
+    };
+  });
 }
