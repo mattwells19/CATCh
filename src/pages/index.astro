@@ -77,7 +77,10 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   }
 </style>
 
-<RootLayout layoutClass="flex flex-col overflow-x-hidden">
+<RootLayout
+  title="Improv Shows & Classes in Charlotte"
+  class="flex flex-col overflow-x-hidden"
+>
   <NextShowCallout nextShow={nextShow} />
   <section
     id="upcoming-shows"

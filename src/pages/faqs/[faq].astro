@@ -13,7 +13,7 @@ const faq = allFaqs.find((f) => f.slug === faqSlug);
 if (!faq) return Astro.redirect("/");
 ---
 
-<RootLayout layoutClass="flex flex-col gap-6 justify-center">
+<RootLayout title="FAQs" class="flex flex-col gap-6 justify-center">
   <PageSubNavList>
     {
       allFaqs.map((faqEntry) => (
