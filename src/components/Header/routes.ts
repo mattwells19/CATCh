@@ -25,7 +25,7 @@ export const routes: Record<string, Array<Route>> = {
     },
     {
       label: "FAQs",
-      path: "/faqs/show-faq",
+      path: "/faqs/shows",
     },
   ],
   Classes: [
@@ -39,7 +39,7 @@ export const routes: Record<string, Array<Route>> = {
     },
     {
       label: "FAQs",
-      path: "/faqs/improv-class-faq",
+      path: "/faqs/classes",
     },
     // {
     //   label: "Workstudy Program",

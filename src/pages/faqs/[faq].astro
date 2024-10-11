@@ -1,42 +1,152 @@
 ---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import RootLayout from "~/layouts/RootLayout.astro";
 import { getFaqs } from "~/api/getFaqs";
-import PageSubNavList from "~/components/PageSubNav/PageSubNavList.astro";
-import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
 
 const { faq: faqSlug } = Astro.params;
-if (!faqSlug) return Astro.redirect("/");
+if (!faqSlug) return Astro.redirect("/faqs/shows");
 
 const allFaqs = await getFaqs();
 
-const faq = allFaqs.find((f) => f.slug === faqSlug);
-if (!faq) return Astro.redirect("/");
+const faqCategoryEntries = allFaqs.filter((f) =>
+  f.categories.map((c) => c.toLowerCase()).includes(faqSlug.toLowerCase()),
+);
+if (faqCategoryEntries.length === 0) {
+  return new Response(null, { status: 404 });
+}
+
+const faqCategory = faqSlug[0].toUpperCase() + faqSlug.slice(1);
 ---
 
-<RootLayout title="FAQs" class="flex flex-col gap-6 justify-center">
-  <PageSubNavList>
+<script>
+  const isLargeViewportQuery = window.matchMedia("(min-width: 1024px)");
+
+  const accordionButtons = document.querySelectorAll(
+    'button[data-part="accordion-trigger"]',
+  );
+  const faqAccordionGroups = Array.from(accordionButtons).map((btnEl) => {
+    const answerPanelId = btnEl.id.replace("q", "faq");
+    const answerPanel = document.getElementById(answerPanelId);
+
+    return [btnEl, answerPanel];
+  });
+
+  for (const [accordionBtn, accordionPanel] of faqAccordionGroups) {
+    if (accordionBtn && accordionPanel) {
+      accordionBtn.addEventListener("click", () => {
+        // ensure all accordion elements are collapsed
+        faqAccordionGroups
+          .map(([, p]) => p)
+          .forEach((answerPanel) => {
+            answerPanel?.classList.add("collapsed");
+          });
+
+        // expand the panel associated to the button that was clicked
+        accordionPanel.classList.remove("collapsed");
+
+        // if we're in mobile, scroll to the clicked button
+        if (!isLargeViewportQuery.matches) {
+          setTimeout(() => {
+            window.scrollTo({
+              behavior: "smooth",
+              top: accordionBtn.offsetTop - 100,
+            });
+          }, 5);
+        }
+      });
+    }
+  }
+</script>
+
+<style lang="scss">
+  @media (min-width: 1024px) {
+    .answer-body {
+      transition: grid-template-rows ease 500ms;
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    .answer-body {
+      transition: none;
+    }
+  }
+
+  .answer-body {
+    padding-top: 12px;
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+
+  .question-arrow {
+    @apply rotate-0;
+  }
+
+  @media (scripting: enabled) {
+    .collapsed {
+      & .question-arrow {
+        transform: rotate(35deg);
+      }
+
+      & .answer-body {
+        padding-top: 0px;
+        visibility: collapse;
+        grid-template-rows: 0fr;
+      }
+    }
+  }
+</style>
+
+<RootLayout title={`${faqCategory} FAQs`} class="lg:px-16">
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
+  >
+    {faqCategory} FAQs
+  </h1>
+
+  <ul class="flex flex-col gap-6 lg:pt-8 lg:max-w-4xl mb-16">
     {
-      allFaqs.map((faqEntry) => (
-        <PageSubNavItem href={`/faqs/${faqEntry.slug}`}>
-          {faqEntry.name}
-        </PageSubNavItem>
+      faqCategoryEntries.map((entry, index) => (
+        <li id={`faq-${index}`} class="collapsed">
+          <h2>
+            <button
+              id={`q-${index}`}
+              aria-controls={`a-${index}`}
+              type="button"
+              data-part="accordion-trigger"
+              class="text-xl font-serif font-bold text-primary-purple cursor-pointer flex items-center gap-2 p-4 text-left w-full transition-colors hover:bg-violet-100"
+            >
+              <span aria-hidden="true" role="presentation">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="question-arrow transition-transform"
+                >
+                  <path
+                    d="M11.1808 15.8297L6.54199 9.20285C5.89247 8.27496 6.55629 7 7.68892 7L16.3111 7C17.4437 7 18.1075 8.27496 17.458 9.20285L12.8192 15.8297C12.4211 16.3984 11.5789 16.3984 11.1808 15.8297Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+
+              {entry.question}
+            </button>
+          </h2>
+          <div
+            id={`a-${index}`}
+            role="region"
+            aria-labelledby={`q-${index}`}
+            class="answer-body px-12"
+          >
+            <div
+              class="wysiwyg overflow-hidden"
+              set:html={documentToHtmlString(entry.answer)}
+            />
+          </div>
+        </li>
       ))
     }
-  </PageSubNavList>
-
-  <div class="flex flex-col gap-6 max-w-screen-md m-auto">
-    <h1 class="text-gradient text-3xl font-bold m-auto">{faq.name}</h1>
-    <p class="self-center">{faq.description}</p>
-
-    {
-      faq.faqs.map((entry) => (
-        <details>
-          <summary class="text-lg font-semibold cursor-pointer">
-            {entry.question}
-          </summary>
-          <div class="wysiwyg pt-2 pl-6" set:html={entry.answer} />
-        </details>
-      ))
-    }
-  </div>
+  </ul>
 </RootLayout>
