@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-navigation-menu";
 import { routeCategories, routes } from "./routes.ts";
 
-import FullLogo from "~/images/CATCh-big-no-tag.png";
+import FullLogo from "~/images/CATCh-big-tagline.webp";
 import "../../styles/desktop-nav.scss";
 
 export const DesktopNav = (): ReactElement => {
