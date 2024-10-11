@@ -24,15 +24,12 @@ const faqCategory = faqSlug[0].toUpperCase() + faqSlug.slice(1);
   const accordionButtons = document.querySelectorAll(
     'button[data-part="accordion-trigger"]',
   );
-  const faqAccordionGroups = accordionButtons
-    .values()
-    .map((btnEl) => {
-      const answerPanelId = btnEl.id.replace("q", "faq");
-      const answerPanel = document.getElementById(answerPanelId);
+  const faqAccordionGroups = Array.from(accordionButtons).map((btnEl) => {
+    const answerPanelId = btnEl.id.replace("q", "faq");
+    const answerPanel = document.getElementById(answerPanelId);
 
-      return [btnEl, answerPanel];
-    })
-    .toArray();
+    return [btnEl, answerPanel];
+  });
 
   for (const [accordionBtn, accordionPanel] of faqAccordionGroups) {
     if (accordionBtn && accordionPanel) {
