@@ -33,10 +33,10 @@ export const routes: Record<string, Array<Route>> = {
       label: "Catch a class",
       path: "/classes",
     },
-    // {
-    //   label: "Policies",
-    //   path: "/policies/class-policies",
-    // },
+    {
+      label: "Policies",
+      path: "/policies/class-policies",
+    },
     {
       label: "FAQs",
       path: "/faqs/classes",
