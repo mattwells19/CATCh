@@ -36,18 +36,21 @@ const { GTM_ID } = Astro.props;
     fjs.parentNode?.insertBefore(js, fjs);
   })();
 </script>
-<!-- End Facebook Pixel --><!-- Hotjar Tracking Code for https://catch.theater -->
-<script is:inline>
-  (() => {
-    window.hj =
-      window.hj || (() => (window.hj.q = window.hj.q || []).push(arguments));
-
-    const a = document.getElementsByTagName("head")[0];
-    const r = document.createElement("script");
-    r.async = true;
-    r.src = `https://static.hotjar.com/c/hotjar-3815137.js?sv=6`;
+<!-- End Facebook Pixel --><!-- Hotjar Tracking Code for Comedy Arts Theater of Charlotte -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj =
+      h.hj ||
+      function () {
+        (h.hj.q = h.hj.q || []).push(arguments);
+      };
+    h._hjSettings = { hjid: 3815137, hjsv: 6 };
+    a = o.getElementsByTagName("head")[0];
+    r = o.createElement("script");
+    r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
     a.appendChild(r);
-  })();
+  })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
 </script>
 <!-- END Hotjar--><!-- ADROLL -->
 <script is:inline>
