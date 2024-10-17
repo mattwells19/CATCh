@@ -1,33 +1,100 @@
 ---
-import { getUnixTime, addMonths } from "date-fns";
-
-import { getClassListings } from "~/api/getClassListings";
-
 import RootLayout from "~/layouts/RootLayout.astro";
-import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
-
-const upcomingClasses = await getClassListings({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 3)),
-});
+import PathwayCard from "./_components/PathwayCard.astro";
+import UnlockingTheSelfImg from "~/images/class-pathways/unlocking-the-self.png";
+import PerformanceTrackImg from "~/images/class-pathways/performance-track.png";
+import StandupImg from "~/images/class-pathways/standup.png";
+import OtherClassesImg from "~/images/class-pathways/other-classes.png";
 ---
+
+<style lang="scss">
+  // the purple blob behind the show section
+  #interested-in-header::after {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    inset: 0;
+    background-color: #f2b63f;
+    clip-path: xywh(0px 440px 480px 230px round 0px 100% 100% 0);
+    transition: clip-path ease-in-out 300ms;
+  }
+
+  // the yellow blob behind the classes section
+  #pathway-cards::after {
+    content: "";
+    position: absolute;
+    z-index: -9;
+    inset: 0;
+    top: -50px;
+    background-color: #005f66;
+    clip-path: xywh(0px 630px 92% 600px round 0px 100% 100% 0);
+    transition: clip-path ease-in-out 300ms;
+    transform: scaleX(-1);
+  }
+
+  // lg tailwind viewport
+  // reference: https://tailwindcss.com/docs/responsive-design
+  @media (min-width: 1024px) {
+    #upcoming-shows::after {
+      clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
+    }
+    #upcoming-classes::after {
+      clip-path: xywh(0 0px 100% 100% round 0 0 50% 0);
+    }
+  }
+</style>
 
 <RootLayout title="Classes" class="md:px-8 lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 bg-shapes lg:pt-32"
   >
     Catch a class
   </h1>
-
-  <ul
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12"
+  <h2
+    id="interested-in-header"
+    class="font-serif text-3xl font-bold pl-4 p- mt-40"
   >
-    {
-      upcomingClasses.map((classListing) => (
-        <li class="flex-1 w-full">
-          <UpcomingClassCard classListing={classListing} class="max-w-none" />
-        </li>
-      ))
-    }
+    I'm interested in...
+  </h2>
+  <ul
+    id="pathway-cards"
+    class="flex flex-col lg:flex-row gap-5 items-stretch mt-20 mb-72"
+  >
+    <li>
+      <PathwayCard
+        image={UnlockingTheSelfImg}
+        imageAlt="A group of happy and wacky improvisers!"
+        description="Growing my personal skills and meeting people through improv"
+        linkText="Explore Class"
+        href="/classes/unlocking-the-self"
+      />
+    </li>
+    <li>
+      <PathwayCard
+        image={PerformanceTrackImg}
+        imageAlt="Four silly improvisers having fun on stage."
+        description="Learning how to perform improv comedy"
+        linkText="Explore Classes"
+        href="/classes/performance-track"
+      />
+    </li>
+    <li>
+      <PathwayCard
+        image={StandupImg}
+        imageAlt="A woman killing it at her standup student showcase."
+        description="Learning how to create and deliver stand-up comedy"
+        linkText="Explore Classes"
+        href="/classes/standup"
+      />
+    </li>
+    <li>
+      <PathwayCard
+        image={OtherClassesImg}
+        imageAlt="A collage of students graduating from various classes."
+        description="Storytelling, acting classes, and more!"
+        linkText="Explore Classes"
+        href="/classes/other"
+      />
+    </li>
   </ul>
 </RootLayout>

@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+
+type Props = {
+  image: ImageMetadata;
+  imageAlt: string;
+  description: string;
+  linkText: string;
+  href: string;
+};
+
+const { description, href, image, imageAlt, linkText } = Astro.props;
+---
+
+<div
+  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col justify-between flex-1 h-full mx-8 md:m-0 my-4 lg:max-w-[500px]"
+>
+  <div>
+    <Image
+      src={image}
+      alt={imageAlt}
+      width={724}
+      height={407}
+      class="group-hover:opacity-20 transition-opacity w-full"
+    />
+    <p class="text-xl p-4 pt-6 leading-9">{description}</p>
+  </div>
+  <div class="p-4">
+    <CoralButtonLink href={href} class="w-full min-w-full py-5">
+      {linkText}
+    </CoralButtonLink>
+  </div>
+</div>
