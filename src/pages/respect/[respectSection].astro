@@ -1,0 +1,91 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { getRespectSections } from "~/api/getRespectSections";
+import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
+const { respectSection: respectSectionSlug } = Astro.params;
+
+const respectSections = await getRespectSections();
+
+const respectSection = respectSections.find(
+  (respectSection) => respectSection.slug === respectSectionSlug,
+);
+if (!respectSection) return Astro.redirect("/respect");
+---
+
+<style lang="scss">
+  aside {
+    @apply flex flex-col max-w-screen-md m-auto gap-3 mt-4 md:flex-row;
+
+    & > section {
+      @apply bg-violet-200 p-3 rounded border border-violet-600 whitespace-normal;
+
+      a {
+        @apply text-violet-600;
+
+        &:hover {
+          @apply underline;
+        }
+      }
+
+      & > .callout_title {
+        @apply font-bold mb-1;
+      }
+
+      & > p {
+        @apply mt-1;
+      }
+    }
+  }
+</style>
+
+<RootLayout title="Policies on Respect & Equality" class="py-4 px-6">
+  <nav class="flex flex-col md:flex-row gap-2 md:gap-4 w-fit max-w-full m-auto">
+    {
+      respectSections.map((respectSection) => (
+        <PageSubNavItem href={`/respect/${respectSection.slug}`}>
+          {respectSection.tabLabel}
+        </PageSubNavItem>
+      ))
+    }
+  </nav>
+
+  <aside>
+    <section>
+      <span class="callout_title">Sexual Assault</span>
+      <p>
+        If you have been sexually assaulted, please seek help. If you are in
+        immediate harm or distress, call 911.
+      </p>
+      <p>
+        If you are unsure where to start, or want support from someone who
+        understands your circumstance, contact <a
+          href="http://bravestep.org/apply">Brave Step</a
+        > online or by calling <a href="tel:(704) 361-5230">(704) 361-5230</a>.
+      </p>
+    </section>
+
+    <section>
+      <span class="callout_title">Discrimination or Harassment off-stage</span>
+      <p>
+        CATCh has a straight-forward policy that bars discrimination and
+        harassment. Most of the policy is common sense and decency.
+      </p>
+      <p>
+        If you are the victim of harassment or discrimination, please contact
+        our Respect & Equality Committee by emailing&nbsp;
+        <a href="mailto:respect@CATCh.theater">respect@CATCh.theater</a>
+        or use our
+        <a href="https://goo.gl/forms/EFQceVgmx9P74DlY2">
+          anonymous online form</a
+        >.
+      </p>
+    </section>
+  </aside>
+
+  <div
+    class="wysiwyg max-w-screen-md m-auto mt-4"
+    set:html={documentToHtmlString(respectSection.content)}
+  />
+</RootLayout>
