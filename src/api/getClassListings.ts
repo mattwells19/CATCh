@@ -32,12 +32,21 @@ export type ClassListing = TicketLeapClassListing & Nullable<Class>;
 export async function getClassListings({
   from,
   to,
+  limit,
 }: {
   from: number;
-  to: number;
+  to?: number;
+  limit?: number;
 }): Promise<Array<ClassListing>> {
+  const upcomingClassesUrl = new URL(
+    "https://www.ticketleap.events/api/organization-listing/catch-u/range",
+  );
+  upcomingClassesUrl.searchParams.set("start", from.toString());
+  if (typeof to === "number") {
+    upcomingClassesUrl.searchParams.set("end", to.toString());
+  }
   const upcomingClasses: Array<TicketLeapClassListing> = await fetch(
-    `https://www.ticketleap.events/api/organization-listing/catch-u/range?start=${from}&end=${to}`,
+    upcomingClassesUrl,
   )
     .then((res) => res.json())
     .then((data) =>
@@ -47,9 +56,9 @@ export async function getClassListings({
       })),
     );
 
-  const sortedClasses = [...upcomingClasses].sort(
-    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
-  );
+  const sortedClasses = [...upcomingClasses]
+    .sort((a, b) => Date.parse(a.event_start) - Date.parse(b.event_start))
+    .slice(0, limit);
 
   const classDetailsMap = await getDetailsForClasses(
     sortedClasses.map((classListing) => classListing.listing_id),

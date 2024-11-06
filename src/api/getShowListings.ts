@@ -30,12 +30,21 @@ export type ShowListing = TicketLeapShowListing & Nullable<Show>;
 export async function getShowListings({
   from,
   to,
+  limit,
 }: {
   from: number;
-  to: number;
+  to?: number;
+  limit?: number;
 }): Promise<Array<ShowListing>> {
+  const upcomingShowsUrl = new URL(
+    "https://www.ticketleap.events/api/organization-listing/catch/range",
+  );
+  upcomingShowsUrl.searchParams.set("start", from.toString());
+  if (typeof to === "number") {
+    upcomingShowsUrl.searchParams.set("end", to.toString());
+  }
   const upcomingShows: Array<TicketLeapShowListing> = await fetch(
-    `https://www.ticketleap.events/api/organization-listing/catch/range?start=${from}&end=${to}`,
+    upcomingShowsUrl,
   )
     .then((res) => res.json())
     .then((data) =>
@@ -45,9 +54,9 @@ export async function getShowListings({
       })),
     );
 
-  const sortedUpcomingShows = [...upcomingShows].sort(
-    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
-  );
+  const sortedUpcomingShows = [...upcomingShows]
+    .sort((a, b) => Date.parse(a.event_start) - Date.parse(b.event_start))
+    .slice(0, limit);
 
   const showDetailsMap = await getDetailsForShows(
     sortedUpcomingShows.map((showListing) => showListing.listing_id),
