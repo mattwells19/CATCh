@@ -55,6 +55,11 @@ export const EMPTY_CLASS: Readonly<Nullable<Class>> = {
 export async function getDetailsForClasses(
   ticketleapEventIds: Array<number>,
 ): Promise<Map<number, Class>> {
+  // contentful does not handle empty array filters and will throw a 400
+  if (ticketleapEventIds.length === 0) {
+    return Promise.resolve(new Map());
+  }
+
   const response = await contentfulClient.getEntries<ClassSkeleton>({
     content_type: "class",
     "fields.ticketleapEventId[in]": ticketleapEventIds,
