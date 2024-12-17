@@ -1,6 +1,6 @@
 ---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { Image } from "astro:assets";
-import { getPerformers } from "~/api/getPerformers";
 import { getTeam } from "~/api/getTeams";
 import ChipLink from "~/components/ChipLink.astro";
 import RootLayout from "~/layouts/RootLayout.astro";
@@ -9,35 +9,34 @@ const { team: teamSlug } = Astro.params;
 if (!teamSlug) return Astro.redirect("/");
 
 const team = await getTeam(teamSlug);
-if (!team) return Astro.redirect("/");
-
-const performers = await getPerformers();
-const teamPerformers = performers.filter((performer) =>
-  performer.teams.some((perfTeam) => perfTeam._id === team._id),
-);
+if (!team) return new Response(null, { status: 404 });
 ---
 
-<RootLayout title={team.name} class="flex flex-col gap-8">
-  <h1 class="text-gradient text-5xl font-bold m-auto">{team.name}</h1>
-  <Image
-    src={team.heroimg.path}
-    alt={team.heroimg.meta?.title ?? `${team.name}`}
-    width={1440}
-    height={1000}
-    class="w-full aspect-auto"
-  />
-  <section
-    class="max-w-screen-md m-auto flex flex-col gap-3 [&_a]:text-violet-600 [&_a:hover]:underline"
-    set:html={team.description}
+<RootLayout title={team.teamName} class="flex flex-col gap-8">
+  <h1 class="text-gradient text-5xl font-bold m-auto">{team.teamName}</h1>
+  {
+    team.teamHeader ? (
+      <Image
+        src={team.teamHeader}
+        alt={team.teamName}
+        width={1440}
+        height={1000}
+        class="w-full aspect-auto"
+      />
+    ) : null
+  }
+  <div
+    class="wysiwyg overflow-hidden max-w-screen-md m-auto"
+    set:html={documentToHtmlString(team.teamBio)}
   />
   <section>
     <h2 class="text-xl font-bold text-center mb-4">Featuring</h2>
     <ul class="flex justify-center gap-2">
       {
-        teamPerformers.map((performer) => (
+        team.teamMembers.map((member) => (
           <li>
-            <ChipLink href={`/performers/${performer.slug}`}>
-              {`${performer.firstName} ${performer.lastName}`}
+            <ChipLink href={`/performers/${member.fields.slug}`}>
+              {member.fields.fullName}
             </ChipLink>
           </li>
         ))

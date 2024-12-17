@@ -1,49 +1,47 @@
 ---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import RootLayout from "~/layouts/RootLayout.astro";
-import { getPerformer } from "~/api/getPerformers";
-import { getTeams } from "~/api/getTeams";
+import { getPerson } from "~/api/getPerformers";
+import LaughingDot from "~/images/laughing-dot.png";
 import ChipLink from "~/components/ChipLink.astro";
 import Headshot from "~/components/Headshot.astro";
 
 const { performer: performerSlug } = Astro.params;
 if (!performerSlug) return Astro.redirect("/");
 
-const performer = await getPerformer(performerSlug);
-if (!performer) return Astro.redirect("/");
-
-const teams = await getTeams();
-const performerTeams = teams.filter((team) =>
-  performer.teams.some((perfTeam) => perfTeam._id === team._id),
-);
+const performer = await getPerson(performerSlug);
+if (!performer) return new Response(null, { status: 404 });
 ---
 
-<RootLayout title={`${performer.firstName} ${performer.lastName}`}>
+<RootLayout title={performer.fullName}>
   <div class="absolute left-0 top-0 w-full h-72 bg-slate-600 bg-opacity-10">
   </div>
   <div class="relative">
     <Headshot
-      src={performer.headshot.path}
-      name={`${performer.firstName} ${performer.lastName}`}
+      src={performer.headshot.fields.file?.url ?? LaughingDot}
+      name={performer.fullName}
     />
     <div class="mt-4 mb-8">
       <h1 class="text-gradient text-3xl font-bold m-auto">
-        {`${performer.firstName} ${performer.lastName}`}
+        {performer.fullName}
       </h1>
-      <p class="text-center mt-2">{performer.pronouns}</p>
-      <p class="text-center font-medium">{performer.title ?? "Performer"}</p>
+      <!-- <p class="text-center mt-2">{performer.pronouns}</p> -->
+      <p class="text-center font-medium">{performer.roles.join(", ")}</p>
     </div>
     <div
-      class="max-w-screen-md m-auto flex flex-col gap-3 [&_a]:text-violet-600 [&_a:hover]:underline"
-      set:html={performer.bioLonger ?? performer.bio}
+      class="wysiwyg overflow-hidden max-w-screen-md m-auto"
+      set:html={documentToHtmlString(performer.bioLong ?? performer.bioShort)}
     />
     {
-      performerTeams.length > 0 ? (
+      performer.teams.length > 0 ? (
         <div class="mt-8">
           <h2 class="text-xl font-bold text-center mb-4">Teams</h2>
           <ul class="flex justify-center gap-2">
-            {performerTeams.map((team) => (
+            {performer.teams.map((team) => (
               <li>
-                <ChipLink href={`/teams/${team.slug}`}>{team.name}</ChipLink>
+                <ChipLink href={`/teams/${team.fields.teamSlug}`}>
+                  {team.fields.teamName}
+                </ChipLink>
               </li>
             ))}
           </ul>

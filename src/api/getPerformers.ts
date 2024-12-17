@@ -1,45 +1,42 @@
-import type { CockpitImage, WYSIWYGString } from "./api.types";
-import type { Team } from "./getTeams";
-import { getCollectionEntries } from "./utils";
+import type { EntryFieldTypes } from "contentful";
+import {
+  contentfulClient,
+  type ContentfulAsset,
+  type ContentfulEntry,
+} from "~/lib/contentful";
+import type { Document } from "@contentful/rich-text-types";
+import type { TeamSkeleton } from "./getTeams";
 
-export interface Performer {
-  firstName: string;
-  lastName: string;
-  active: boolean;
-  bio: WYSIWYGString;
-  headshot: CockpitImage;
-  teams: Array<{
-    _id: string /* team ID */;
-    link: "teams";
-    display: Team["name"];
-  }>;
-  pronouns: string;
-  bioLonger: WYSIWYGString;
+export interface PersonSkeleton {
+  contentTypeId: "person";
+  fields: {
+    slug: EntryFieldTypes.Text;
+    fullName: EntryFieldTypes.Text;
+    roles: EntryFieldTypes.Array<EntryFieldTypes.Symbol<string>>;
+    bioShort: EntryFieldTypes.RichText;
+    bioLong: EntryFieldTypes.RichText;
+    headshot: EntryFieldTypes.AssetLink;
+    teams: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TeamSkeleton>>;
+  };
+}
+
+export interface Person {
   slug: string;
-  title?: string;
-  externalLinks: Array<unknown>; // ??
-  alum: boolean;
+  fullName: string;
+  roles: Array<string>;
+  bioShort: Document;
+  bioLong: Document;
+  headshot: ContentfulAsset;
+  teams: Array<ContentfulEntry<TeamSkeleton>>;
 }
 
-export async function getPerformers(): Promise<Array<Performer>> {
-  const performerEntries = await getCollectionEntries<Performer>("performers");
+export async function getPerson(
+  personSlug: string,
+): Promise<Person | undefined> {
+  const response = await contentfulClient.getEntries<PersonSkeleton>({
+    content_type: "person",
+    "fields.slug": personSlug,
+  });
 
-  return performerEntries
-    .filter((performer) => performer.active)
-    .map((performer) => ({
-      ...performer,
-      headshot: {
-        path: `https://catch.theater${performer.headshot.path}`,
-      },
-    }));
-}
-
-export async function getPerformer(
-  performerSlug: string,
-): Promise<Performer | null> {
-  const performers = await getPerformers();
-
-  return (
-    performers.find((performer) => performer.slug === performerSlug) ?? null
-  );
+  return response.items[0].fields;
 }
