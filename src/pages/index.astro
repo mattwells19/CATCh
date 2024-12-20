@@ -16,8 +16,6 @@ const todayTsecs = getUnixTime(today);
 const nextYearTsecs = getUnixTime(addYears(today, 1));
 
 const upcomingShowsPromise = getShowListings({
-  from: todayTsecs,
-  to: nextYearTsecs,
   limit: 5,
 });
 const upcomingClassesPromise = getClassListings({
