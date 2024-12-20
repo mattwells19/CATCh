@@ -27,8 +27,12 @@ const upcomingShows = await fetch(
   .then((res) => res.json())
   .then((res: TicketLeapEvents) => {
     return res.data
-      .filter((d) => !d.attributes.settings.private)
-      .map((d) => ({ id: d.id, name: d.attributes.name }));
+      .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+      .map((d) => ({
+        id: d.id,
+        name: d.attributes.name,
+        dates: d.attributes.dates,
+      }));
   });
 
 console.log({

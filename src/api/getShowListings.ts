@@ -17,6 +17,7 @@ export interface TicketLeapEvents {
         event_id: string;
         start: string; // date string
         end: string; // usually empty string
+        status: string; // numbers as strings. idk what each one means, but "5" seems to be "active"
       }>;
     };
   }>;
@@ -76,22 +77,25 @@ export async function getShowListings({
   };
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
-    return (
-      event.dates
-        // the parent event may have listings from the past, so filter out anything before "today" here
-        .filter((listing) => isBefore(Date.now(), Date.parse(listing.start)))
-        .map((listing) => ({
-          event_id,
-          id: Number.parseInt(listing.event_id),
-          name: event.name,
-          image: `https:${event.image}`,
-          date: new Date(listing.start),
-          price: "",
-          listing_url: `https://www.ticketleap.events/tickets/${
-            event.slug
-          }?date=${Date.parse(listing.start) / 1000}`,
-        }))
-    );
+    return event.dates
+      .filter(
+        (listing) =>
+          // "5" seems to be the "active" status for a listing
+          listing.status === "5" &&
+          // the parent event may have listings from the past, so filter out anything before "today" here
+          isBefore(Date.now(), Date.parse(listing.start)),
+      )
+      .map((listing) => ({
+        event_id,
+        id: Number.parseInt(listing.event_id),
+        name: event.name,
+        image: `https:${event.image}`,
+        date: new Date(listing.start),
+        price: "",
+        listing_url: `https://www.ticketleap.events/tickets/${
+          event.slug
+        }?date=${Date.parse(listing.start) / 1000}`,
+      }));
   });
 
   const showListings = listings
