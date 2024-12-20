@@ -1,5 +1,5 @@
 import { addMonths, getUnixTime } from "date-fns";
-import type { TicketLeapShowListing } from "~/api/getShowListings";
+import type { TicketLeapEvents } from "~/api/getShowListings";
 import type { TicketLeapClassListing } from "~/api/getClassListings";
 
 const from = getUnixTime(new Date());
@@ -16,16 +16,20 @@ const upcomingClasses: Array<TicketLeapClassListing> = await fetch(
     })),
   );
 
-const upcomingShows: Array<TicketLeapShowListing> = await fetch(
-  `https://www.ticketleap.events/api/organization-listing/catch/range?start=${from}&end=${to}`,
+const upcomingShows = await fetch(
+  "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+  {
+    headers: {
+      "X-API-Token": "",
+    },
+  },
 )
   .then((res) => res.json())
-  .then((data) =>
-    data.listings.map((listing: TicketLeapShowListing) => ({
-      listing_id: Number.parseInt(listing.listing_id.toString()),
-      listing_title: listing.listing_title,
-    })),
-  );
+  .then((res: TicketLeapEvents) => {
+    return res.data
+      .filter((d) => !d.attributes.settings.private)
+      .map((d) => ({ id: d.id, name: d.attributes.name }));
+  });
 
 console.log({
   upcomingClasses,

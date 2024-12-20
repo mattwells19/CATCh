@@ -1,77 +1,129 @@
+import { isBefore } from "date-fns";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 
-export interface TicketLeapShowListing {
-  type: string;
-  resource: string;
-  event_start: string; // string date - "YYYY-MM-DD HH:MM:SS" (24 hour clock)
-  event_end: string;
-  server_event_start: string; // string date
-  server_event_end: string; // string date
-  single_event_series: boolean;
-  children_count: string; // string number
-  min_price: string; // string number
-  min_price_fmt: string;
-  event_id: string;
-  venue_name: string;
-  venue_city: string;
-  image: string;
-  listing_title: string;
-  listing_slug: string;
-  listing_url: string;
-  is_parent: boolean;
-  sold_out: boolean;
-  listing_id: number;
-  listing_type: number; // probably an enum
-  custom_button_text: string | null;
+export interface TicketLeapEvents {
+  data: Array<{
+    id: string;
+    type: "events";
+    attributes: {
+      name: string;
+      image: string;
+      slug: string;
+      onsale: boolean;
+      settings: {
+        private: boolean;
+      };
+      dates: Array<{
+        event_id: string;
+        start: string; // date string
+        end: string; // usually empty string
+      }>;
+    };
+  }>;
 }
+
+export interface TicketLeapShowListing {
+  id: number;
+  name: string;
+  image: string;
+  date: Date;
+  price: string;
+  listing_url: string;
+}
+
+const priceFormatter = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 
 export type ShowListing = TicketLeapShowListing & Nullable<Show>;
 
 export async function getShowListings({
-  from,
-  to,
   limit,
 }: {
-  from: number;
-  to?: number;
   limit?: number;
 }): Promise<Array<ShowListing>> {
-  const upcomingShowsUrl = new URL(
-    "https://www.ticketleap.events/api/organization-listing/catch/range",
-  );
-  upcomingShowsUrl.searchParams.set("start", from.toString());
-  if (typeof to === "number") {
-    upcomingShowsUrl.searchParams.set("end", to.toString());
-  }
-  const upcomingShows: Array<TicketLeapShowListing> = await fetch(
-    upcomingShowsUrl,
+  const events = await fetch(
+    // https://technically.showclix.com/events.html
+    "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+    {
+      headers: {
+        "X-API-Token": import.meta.env.TICKETLEAP_SHOWS_TOKEN,
+      },
+    },
   )
     .then((res) => res.json())
-    .then((data) =>
-      data.listings.map((listing: TicketLeapShowListing) => ({
-        ...listing,
-        listing_id: Number.parseInt(listing.listing_id.toString()),
-      })),
-    );
+    .then((res: TicketLeapEvents) => {
+      return res.data
+        .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+        .map((d) => ({ ...d, id: Number.parseInt(d.id) }));
+    });
 
-  const sortedUpcomingShows = [...upcomingShows]
-    .sort((a, b) => Date.parse(a.event_start) - Date.parse(b.event_start))
+  const getEventPrice = (eventId: number): Promise<string> => {
+    return fetch(
+      `https://admin.ticketleap.events/api/v1/events/${eventId}/relationships/price-levels`,
+      {
+        headers: {
+          "X-API-Token": import.meta.env.TICKETLEAP_SHOWS_TOKEN,
+        },
+      },
+    )
+      .then((res) => res.json())
+      .then((res) =>
+        priceFormatter.format(res[0].data.attributes.price.amount / 100),
+      );
+  };
+
+  const listings = events.map(({ attributes: event, id: event_id }) => {
+    return (
+      event.dates
+        // the parent event may have listings from the past, so filter out anything before "today" here
+        .filter((listing) => isBefore(Date.now(), Date.parse(listing.start)))
+        .map((listing) => ({
+          event_id,
+          id: Number.parseInt(listing.event_id),
+          name: event.name,
+          image: `https:${event.image}`,
+          date: new Date(listing.start),
+          price: "",
+          listing_url: `https://www.ticketleap.events/tickets/${
+            event.slug
+          }?date=${Date.parse(listing.start) / 1000}`,
+        }))
+    );
+  });
+
+  const showListings = listings
+    .flat()
+    .sort(
+      (listingA, listingB) => listingA.date.getTime() - listingB.date.getTime(),
+    )
     .slice(0, limit);
 
-  const showDetailsMap = await getDetailsForShows(
-    sortedUpcomingShows.map((showListing) => showListing.listing_id),
+  const eventIds = Array.from(
+    new Set(showListings.map((listing) => listing.event_id)),
   );
 
-  return sortedUpcomingShows.map((showListing) => {
-    const details = showDetailsMap.get(showListing.listing_id) ?? EMPTY_SHOW;
+  const eventPricesPromise = Promise.all(eventIds.map(getEventPrice));
+  const showDetailsMapPromise = getDetailsForShows(eventIds);
+
+  const [eventPrices, showDetailsMap] = await Promise.all([
+    eventPricesPromise,
+    showDetailsMapPromise,
+  ]);
+
+  const eventPriceMap = new Map(
+    eventPrices.map((eventPrice, index) => [eventIds[index], eventPrice]),
+  );
+
+  return showListings.map((showListing) => {
+    const details = showDetailsMap.get(showListing.event_id) ?? EMPTY_SHOW;
+    const price = eventPriceMap.get(showListing.event_id) ?? "";
 
     return {
       ...showListing,
       ...details,
-      image: `https:${showListing.image}`,
-      listing_url: `https://www.ticketleap.events/tickets/${
-        showListing.listing_slug
-      }?date=${Date.parse(showListing.event_start) / 1000}`,
+      price,
     };
   });
 }
