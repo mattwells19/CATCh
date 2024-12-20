@@ -44,9 +44,10 @@ export async function getShowListings({
 }: {
   limit?: number;
 }): Promise<Array<ShowListing>> {
+  const todaysDateIso = new Date().toISOString().slice(0, 10);
   const events = await fetch(
     // https://technically.showclix.com/events.html
-    "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+    `https://admin.ticketleap.events/api/v1/events?filter=start=${todaysDateIso}`,
     {
       headers: {
         "X-API-Token": import.meta.env.TICKETLEAP_SHOWS_TOKEN,
