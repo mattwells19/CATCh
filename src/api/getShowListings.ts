@@ -1,4 +1,3 @@
-import { isBefore } from "date-fns";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 
 export interface TicketLeapEvents {
@@ -44,10 +43,9 @@ export async function getShowListings({
 }: {
   limit?: number;
 }): Promise<Array<ShowListing>> {
-  const todaysDateIso = new Date().toISOString().slice(0, 10);
   const events = await fetch(
     // https://technically.showclix.com/events.html
-    `https://admin.ticketleap.events/api/v1/events?filter=start=${todaysDateIso}`,
+    "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
     {
       headers: {
         "X-API-Token": import.meta.env.TICKETLEAP_SHOWS_TOKEN,
@@ -84,7 +82,7 @@ export async function getShowListings({
           // "5" seems to be the "active" status for a listing
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          isBefore(Date.now(), Date.parse(listing.start)),
+          Date.now() < Date.parse(listing.start),
       )
       .map((listing) => ({
         event_id,
