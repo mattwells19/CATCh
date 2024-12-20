@@ -76,13 +76,14 @@ export async function getShowListings({
   };
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
+    console.log(event.dates);
     return event.dates
       .filter(
         (listing) =>
           // "5" seems to be the "active" status for a listing
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          Date.now() < Date.parse(listing.start),
+          Date.now() < new Date(listing.start).getTime(),
       )
       .map((listing) => ({
         event_id,
