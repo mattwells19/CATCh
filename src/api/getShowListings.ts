@@ -71,7 +71,8 @@ export async function getShowListings({
       .then((res) => res.json())
       .then((res) =>
         priceFormatter.format(res[0].data.attributes.price.amount / 100),
-      );
+      )
+      .catch(() => "");
   };
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
