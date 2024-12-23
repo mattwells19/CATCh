@@ -1,4 +1,4 @@
-import { isBefore } from "date-fns";
+import { parseISO, addHours } from "date-fns";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 
 export interface TicketLeapEvents {
@@ -76,15 +76,22 @@ export async function getShowListings({
       .catch(() => "");
   };
 
+  const now = new Date();
+
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
-      .filter(
-        (listing) =>
-          // "5" seems to be the "active" status for a listing
+      .filter((listing) => {
+        // listing is in 24-hour format, but has no offset.
+        // TODO: double check this when Daylight Savings starts in March as this number could change.
+        const listingStart = addHours(parseISO(listing.start), 5);
+
+        // "5" seems to be the "active" status for a listing
+        return (
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          isBefore(Date.now(), Date.parse(listing.start)),
-      )
+          now < listingStart
+        );
+      })
       .map((listing) => ({
         event_id,
         id: Number.parseInt(listing.event_id),
