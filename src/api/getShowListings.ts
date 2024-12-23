@@ -1,3 +1,4 @@
+import { isBefore, parseISO } from "date-fns";
 import { UTCDate } from "@date-fns/utc";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 import { TZDate } from "@date-fns/tz";
@@ -77,17 +78,15 @@ export async function getShowListings({
       .catch(() => "");
   };
 
-  const now = new UTCDate();
-
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        const listingStart = new TZDate(listing.start);
+        const listingStart = parseISO(listing.start);
 
         console.log({
           name: event.name,
-          now: now.toISOString(),
-          nowMs: now.getTime(),
+          now: new Date(Date.now()).toISOString(),
+          nowMs: Date.now(),
           listingStart_orig: listing.start,
           listingStart: listingStart.toISOString(),
           listingStartMs: listingStart.getTime(),
@@ -97,7 +96,7 @@ export async function getShowListings({
         return (
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          now < listingStart
+          isBefore(Date.now(), listingStart)
         );
       })
       .map((listing) => ({
