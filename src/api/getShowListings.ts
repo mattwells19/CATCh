@@ -1,4 +1,4 @@
-import { isBefore, parseISO, constructNow } from "date-fns";
+import { isBefore, parseISO, constructNow, addHours } from "date-fns";
 import { UTCDate } from "@date-fns/utc";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 import { TZDate } from "@date-fns/tz";
@@ -78,11 +78,14 @@ export async function getShowListings({
       .catch(() => "");
   };
 
+  const now = new Date();
+
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        const listingStart = parseISO(listing.start);
-        const now = constructNow(listingStart);
+        // listing is in 24-hour format, but has no offset.
+        // TODO: double check this when Daylight Savings starts in March as this number could change.
+        const listingStart = addHours(parseISO(listing.start), 7);
 
         console.log({
           name: event.name,
