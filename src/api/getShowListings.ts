@@ -85,7 +85,7 @@ export async function getShowListings({
       .filter((listing) => {
         // listing is in 24-hour format, but has no offset.
         // TODO: double check this when Daylight Savings starts in March as this number could change.
-        const listingStart = addHours(parseISO(listing.start), 7);
+        const listingStart = addHours(parseISO(listing.start), 5);
 
         console.log({
           name: event.name,
