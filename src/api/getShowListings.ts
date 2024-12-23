@@ -1,5 +1,6 @@
 import { UTCDate } from "@date-fns/utc";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
+import { TZDate } from "@date-fns/tz";
 
 export interface TicketLeapEvents {
   data: Array<{
@@ -81,14 +82,14 @@ export async function getShowListings({
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        const listingStart = new UTCDate(listing.start);
+        const listingStart = new TZDate(listing.start, "America/New_York");
 
         console.log({
           name: event.name,
-          now: now.toString(),
+          now: now.toISOString(),
           nowMs: now.getTime(),
           listingStart_orig: listing.start,
-          listingStart: listingStart.toString(),
+          listingStart: listingStart.toISOString(),
           listingStartMs: listingStart.getTime(),
         });
 
