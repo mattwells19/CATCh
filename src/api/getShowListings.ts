@@ -1,7 +1,5 @@
-import { isBefore, parseISO, constructNow, addHours } from "date-fns";
-import { UTCDate } from "@date-fns/utc";
+import { parseISO, addHours } from "date-fns";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
-import { TZDate } from "@date-fns/tz";
 
 export interface TicketLeapEvents {
   data: Array<{
@@ -87,20 +85,11 @@ export async function getShowListings({
         // TODO: double check this when Daylight Savings starts in March as this number could change.
         const listingStart = addHours(parseISO(listing.start), 5);
 
-        console.log({
-          name: event.name,
-          now: now.toISOString(),
-          nowMs: now.getTime(),
-          listingStart_orig: listing.start,
-          listingStart: listingStart.toISOString(),
-          listingStartMs: listingStart.getTime(),
-        });
-
         // "5" seems to be the "active" status for a listing
         return (
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          isBefore(now, listingStart)
+          now < listingStart
         );
       })
       .map((listing) => ({
