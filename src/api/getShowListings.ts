@@ -81,7 +81,7 @@ export async function getShowListings({
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        const listingStartEST = new Date(listing.start);
+        const listingStartEST = new TZDate(listing.start, "America/New_York");
 
         console.log({
           name: event.name,
