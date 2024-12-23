@@ -1,4 +1,4 @@
-import { TZDate } from "@date-fns/tz";
+import { UTCDate } from "@date-fns/utc";
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 
 export interface TicketLeapEvents {
@@ -76,27 +76,27 @@ export async function getShowListings({
       .catch(() => "");
   };
 
-  const nowEST = new TZDate().withTimeZone("America/New_York");
+  const now = new UTCDate();
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        const listingStartEST = new TZDate(listing.start, "America/New_York");
+        const listingStart = new UTCDate(listing.start);
 
         console.log({
           name: event.name,
-          now: nowEST.toString(),
-          nowMs: nowEST.getTime(),
+          now: now.toString(),
+          nowMs: now.getTime(),
           listingStart_orig: listing.start,
-          listingStart: listingStartEST.toString(),
-          listingStartMs: listingStartEST.getTime(),
+          listingStart: listingStart.toString(),
+          listingStartMs: listingStart.getTime(),
         });
 
         // "5" seems to be the "active" status for a listing
         return (
           listing.status === "5" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
-          nowEST < listingStartEST
+          now < listingStart
         );
       })
       .map((listing) => ({
