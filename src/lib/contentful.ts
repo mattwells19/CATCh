@@ -1,10 +1,18 @@
-import contentful from "contentful";
+import contentful, { type CreateClientParams } from "contentful";
 export type { Document as RichTextDocument } from "@contentful/rich-text-types";
 
-export const contentfulClient = contentful.createClient({
+const previewContentfulClient: CreateClientParams = {
   space: import.meta.env.CONTENTFUL_SPACE_ID,
-  accessToken: import.meta.env.DEV
-    ? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
-    : import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
-  host: import.meta.env.DEV ? "preview.contentful.com" : "cdn.contentful.com",
-});
+  accessToken: import.meta.env.CONTENTFUL_PREVIEW_TOKEN,
+  host: "preview.contentful.com",
+};
+
+const publicContentfulClient: CreateClientParams = {
+  space: import.meta.env.CONTENTFUL_SPACE_ID,
+  accessToken: import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
+  host: "cdn.contentful.com",
+};
+
+export const contentfulClient = contentful.createClient(
+  import.meta.env.DEV ? previewContentfulClient : publicContentfulClient,
+);

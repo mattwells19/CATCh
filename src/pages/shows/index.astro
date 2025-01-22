@@ -28,7 +28,7 @@ const upcomingShows = await getShowListings({
             <LinkedImage
               listingImageSrc={show.image}
               listingTitle={show.name}
-              href={show.listing_url}
+              href={show.listingUrl}
               width={280}
               height={158}
               class="w-[280px] flex-shrink-0"
@@ -42,7 +42,7 @@ const upcomingShows = await getShowListings({
             <p class="font-serif text-primary-purple font-bold text-2xl">
               {show.price}
             </p>
-            <CoralButtonLink href={show.listing_url} class="w-fit pb-2">
+            <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
               <Icon name="ticket" />
               Get Tickets
             </CoralButtonLink>
@@ -59,7 +59,7 @@ const upcomingShows = await getShowListings({
           <LinkedImage
             listingImageSrc={show.image}
             listingTitle={show.name}
-            href={show.listing_url}
+            href={show.listingUrl}
             width={1280}
             height={720}
             class="w-full"
@@ -72,7 +72,7 @@ const upcomingShows = await getShowListings({
             {show.price}
           </p>
           <div class="w-4/5">
-            <CoralButtonLink href={show.listing_url}>
+            <CoralButtonLink href={show.listingUrl}>
               <Icon name="ticket" />
               Get Tickets
             </CoralButtonLink>
