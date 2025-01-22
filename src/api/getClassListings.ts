@@ -16,8 +16,7 @@ export async function getClassListings({
 }: {
   limit?: number;
 } = {}): Promise<Array<ClassListing>> {
-  // const classListings = await getTicketLeapListings("classes", limit);
-  const classListings = [] as TicketLeapListing[];
+  const classListings = await getTicketLeapListings("classes", limit);
 
   const eventIds = Array.from(
     new Set(classListings.map((listing) => listing.eventId)),
