@@ -21,7 +21,7 @@ const { showListing } = Astro.props;
   <LinkedImage
     listingImageSrc={showListing.image}
     listingTitle={showListing.name}
-    href={showListing.listing_url}
+    href={showListing.listingUrl}
     width={724}
     height={407}
     class="w-full"
@@ -44,7 +44,7 @@ const { showListing } = Astro.props;
     {showListing.price}
   </p>
 
-  <CoralButtonLink href={showListing.listing_url} class="w-full min-w-full">
+  <CoralButtonLink href={showListing.listingUrl} class="w-full min-w-full">
     <Icon name="ticket" />Get Tickets
   </CoralButtonLink>
 </div>

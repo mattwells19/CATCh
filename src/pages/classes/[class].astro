@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { addMonths, getUnixTime } from "date-fns";
 import { getClassListings, type ClassListing } from "~/api/getClassListings";
 import RootLayout from "~/layouts/RootLayout.astro";
 import { formatClassTime } from "~/utils/formatClassTime";
@@ -11,13 +10,10 @@ if (!classSlug) return Astro.redirect("/");
 const classEntry = null as ClassListing | null;
 if (!classEntry) return Astro.redirect("/");
 
-const classListings = await getClassListings({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 3)),
-});
+const classListings = await getClassListings();
 
 const classEntryListings = classListings.filter(
-  (classListing) => classListing.listing_id === classEntry.listing_id,
+  (classListing) => classListing.id === classEntry.id,
 );
 ---
 
@@ -48,7 +44,7 @@ const classEntryListings = classListings.filter(
     <div class="flex flex-col gap-4">
       <h2 class="font-bold">{classEntry.classHeader}</h2>
       <ul class="list-disc list-inside">
-        <li class="font-medium">&dollar;{classEntry.min_price}</li>
+        <li class="font-medium">&dollar;{classEntry.price}</li>
         <li class="font-medium">
           Meets on the same night, once a week for {classEntry.classLength}.
         </li>
@@ -75,8 +71,8 @@ const classEntryListings = classListings.filter(
         <ul class="flex gap-2">
           {classEntryListings.map((classListing) => (
             <li class="rounded-md shadow-md p-4">
-              <a href={classListing.listing_url} class="group">
-                <p>{formatClassTime(new Date(classListing.event_start))}</p>
+              <a href={classListing.listingUrl} class="group">
+                <p>{formatClassTime(new Date(classListing.date))}</p>
                 <p class="font-bold text-violet-500 mt-3 group-hover:underline">
                   Register Now
                 </p>
