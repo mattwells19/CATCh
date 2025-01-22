@@ -44,7 +44,8 @@ const classEntryListings = classListings.filter(
     <div class="flex flex-col gap-4">
       <h2 class="font-bold">{classEntry.classHeader}</h2>
       <ul class="list-disc list-inside">
-        <li class="font-medium">&dollar;{classEntry.price}</li>
+        <!-- this page isn't really used, so to avoid the network call for pricing I'm commenting this out for now -->
+        <!-- <li class="font-medium">&dollar;{classEntry.price}</li> -->
         <li class="font-medium">
           Meets on the same night, once a week for {classEntry.classLength}.
         </li>
