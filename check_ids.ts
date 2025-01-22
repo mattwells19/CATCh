@@ -1,4 +1,3 @@
-import { addMonths, getUnixTime } from "date-fns";
 import type { TicketLeapEventsResponse } from "~/api/utils/getTicketLeapListings";
 
 const upcomingClasses = await fetch(
