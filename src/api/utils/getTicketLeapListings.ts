@@ -16,7 +16,7 @@ export interface TicketLeapEventsResponse {
         event_id: string;
         start: string; // date string
         end: string; // usually empty string
-        status: string; // numbers as strings. idk what each one means, but "5" seems to be "active"
+        status: string;
       }>;
     };
   }>;
@@ -63,9 +63,8 @@ export async function getTicketLeapListings(
         // TODO: double check this when Daylight Savings starts in March as this number could change.
         const listingStart = addHours(parseISO(listing.start), 5);
 
-        // "5" seems to be the "active" status for a listing
         return (
-          listing.status === "5" &&
+          listing.status === "active" &&
           // the parent event may have listings from the past, so filter out anything before "today" here
           now < listingStart
         );
