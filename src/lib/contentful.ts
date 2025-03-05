@@ -1,4 +1,4 @@
-import contentful, { type CreateClientParams } from "contentful";
+import { createClient, type CreateClientParams } from "contentful";
 export type { Document as RichTextDocument } from "@contentful/rich-text-types";
 
 const previewContentfulClient: CreateClientParams = {
@@ -13,6 +13,6 @@ const publicContentfulClient: CreateClientParams = {
   host: "cdn.contentful.com",
 };
 
-export const contentfulClient = contentful.createClient(
+export const contentfulClient = createClient(
   import.meta.env.DEV ? previewContentfulClient : publicContentfulClient,
 );
