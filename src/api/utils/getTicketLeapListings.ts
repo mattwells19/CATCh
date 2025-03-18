@@ -6,7 +6,7 @@ export interface TicketLeapEventsResponse {
     type: "events";
     attributes: {
       name: string;
-      image: string;
+      image: string | null;
       slug: string;
       onsale: boolean;
       settings: {
@@ -73,7 +73,9 @@ export async function getTicketLeapListings(
         eventId: event_id,
         id: Number.parseInt(listing.event_id),
         name: event.name,
-        image: `https:${event.image}`,
+        image: event.image
+          ? `https:${event.image}`
+          : "/images/CATCh-Placeholder.jpg",
         date: new Date(listing.start),
         listingUrl: `https://www.ticketleap.events/tickets/${event.slug}?date=${
           Date.parse(listing.start) / 1000
