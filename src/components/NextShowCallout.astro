@@ -14,7 +14,7 @@ type Props = {
 const { nextShow } = Astro.props;
 
 const showDateFormatted = (() => {
-  const showTime = new Date(nextShow.event_start);
+  const showTime = new Date(nextShow.date);
 
   const dayOfTheWeek = format(showTime, "EEEE");
   const time = format(showTime, "h:mm a");
@@ -39,7 +39,7 @@ const showDateFormatted = (() => {
     </div>
 
     <h1 class="text-primary-purple font-bold font-serif text-4xl lg:text-6xl">
-      {nextShow.listing_title}
+      {nextShow.name}
     </h1>
 
     {
@@ -48,14 +48,14 @@ const showDateFormatted = (() => {
       ) : null
     }
 
-    <CoralButtonLink href={nextShow.listing_url}>
+    <CoralButtonLink href={nextShow.listingUrl}>
       <Icon name="ticket" />Get Tickets
     </CoralButtonLink>
   </div>
 
   <LinkedImage
-    href={nextShow.listing_url}
-    listingTitle={nextShow.listing_title}
+    href={nextShow.listingUrl}
+    listingTitle={nextShow.name}
     listingImageSrc={nextShow.image}
     width={1134}
     height={638}

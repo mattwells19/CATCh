@@ -29,6 +29,11 @@ export const EMPTY_SHOW: Readonly<Nullable<Show>> = {
 export async function getDetailsForShows(
   ticketleapEventIds: Array<number>,
 ): Promise<Map<number, Show>> {
+  // contentful does not handle empty array filters and will throw a 400
+  if (ticketleapEventIds.length === 0) {
+    return Promise.resolve(new Map());
+  }
+
   const response = await contentfulClient.getEntries<ShowSkeleton>({
     content_type: "show",
     "fields.ticketleapEventId[in]": ticketleapEventIds,

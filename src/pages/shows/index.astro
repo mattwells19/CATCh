@@ -1,5 +1,4 @@
 ---
-import { getUnixTime, addMonths } from "date-fns";
 import { Icon } from "astro-icon/components";
 
 import { getShowListings } from "~/api/getShowListings";
@@ -10,8 +9,7 @@ import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import LinkedImage from "~/components/LinkedImage.astro";
 
 const upcomingShows = await getShowListings({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 1)),
+  limit: 8,
 });
 ---
 
@@ -29,24 +27,22 @@ const upcomingShows = await getShowListings({
           <div class="flex gap-12 items-center">
             <LinkedImage
               listingImageSrc={show.image}
-              listingTitle={show.listing_title}
-              href={show.listing_url}
+              listingTitle={show.name}
+              href={show.listingUrl}
               width={280}
               height={158}
               class="w-[280px] flex-shrink-0"
             />
             <div class="flex flex-col gap-4">
-              <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
-              <p class="font-serif text-3xl text-primary-purple">
-                {show.listing_title}
-              </p>
+              <ShowDateTime showDate={show.date} class="w-fit pb-2" />
+              <p class="font-serif text-3xl text-primary-purple">{show.name}</p>
             </div>
           </div>
           <div class="flex gap-12 items-center">
             <p class="font-serif text-primary-purple font-bold text-2xl">
-              ${show.min_price}
+              {show.price}
             </p>
-            <CoralButtonLink href={show.listing_url} class="w-fit pb-2">
+            <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
               <Icon name="ticket" />
               Get Tickets
             </CoralButtonLink>
@@ -62,23 +58,21 @@ const upcomingShows = await getShowListings({
         <li class="flex flex-col items-center gap-6">
           <LinkedImage
             listingImageSrc={show.image}
-            listingTitle={show.listing_title}
-            href={show.listing_url}
+            listingTitle={show.name}
+            href={show.listingUrl}
             width={1280}
             height={720}
             class="w-full"
           />
           <div class="flex flex-col gap-4 px-4 self-start">
-            <ShowDateTime showDate={show.event_start} class="w-fit pb-2" />
-            <p class="font-serif text-3xl text-primary-purple">
-              {show.listing_title}
-            </p>
+            <ShowDateTime showDate={show.date} class="w-fit pb-2" />
+            <p class="font-serif text-3xl text-primary-purple">{show.name}</p>
           </div>
           <p class="font-serif text-primary-purple font-bold text-2xl">
-            ${show.min_price}
+            {show.price}
           </p>
           <div class="w-4/5">
-            <CoralButtonLink href={show.listing_url}>
+            <CoralButtonLink href={show.listingUrl}>
               <Icon name="ticket" />
               Get Tickets
             </CoralButtonLink>

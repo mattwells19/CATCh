@@ -1,68 +1,49 @@
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
+import {
+  type TicketLeapListing,
+  getTicketLeapListings,
+} from "./utils/getTicketLeapListings";
+import { getTicketLeapPrice } from "./utils/getTicketLeapPrice";
 
-export interface TicketLeapShowListing {
-  type: string;
-  resource: string;
-  event_start: string; // string date - "YYYY-MM-DD HH:MM:SS" (24 hour clock)
-  event_end: string;
-  server_event_start: string; // string date
-  server_event_end: string; // string date
-  single_event_series: boolean;
-  children_count: string; // string number
-  min_price: string; // string number
-  min_price_fmt: string;
-  event_id: string;
-  venue_name: string;
-  venue_city: string;
-  image: string;
-  listing_title: string;
-  listing_slug: string;
-  listing_url: string;
-  is_parent: boolean;
-  sold_out: boolean;
-  listing_id: number;
-  listing_type: number; // probably an enum
-  custom_button_text: string | null;
+export interface TicketLeapShowListing extends TicketLeapListing {
+  price: string;
 }
 
 export type ShowListing = TicketLeapShowListing & Nullable<Show>;
 
 export async function getShowListings({
-  from,
-  to,
+  limit,
 }: {
-  from: number;
-  to: number;
-}): Promise<Array<ShowListing>> {
-  const upcomingShows: Array<TicketLeapShowListing> = await fetch(
-    `https://www.ticketleap.events/api/organization-listing/catch/range?start=${from}&end=${to}`,
-  )
-    .then((res) => res.json())
-    .then((data) =>
-      data.listings.map((listing: TicketLeapShowListing) => ({
-        ...listing,
-        listing_id: Number.parseInt(listing.listing_id.toString()),
-      })),
-    );
+  limit?: number;
+} = {}): Promise<Array<ShowListing>> {
+  const showListings = await getTicketLeapListings("shows", limit);
 
-  const sortedUpcomingShows = [...upcomingShows].sort(
-    (a, b) => Date.parse(a.event_start) - Date.parse(b.event_start),
+  const eventIds = Array.from(
+    new Set(showListings.map((listing) => listing.eventId)),
   );
 
-  const showDetailsMap = await getDetailsForShows(
-    sortedUpcomingShows.map((showListing) => showListing.listing_id),
+  const eventPricesPromise = Promise.all(
+    eventIds.map((eventId) => getTicketLeapPrice("shows", eventId)),
+  );
+  const showDetailsMapPromise = getDetailsForShows(eventIds);
+
+  const [eventPrices, showDetailsMap] = await Promise.all([
+    eventPricesPromise,
+    showDetailsMapPromise,
+  ]);
+
+  const eventPriceMap = new Map(
+    eventPrices.map((eventPrice, index) => [eventIds[index], eventPrice]),
   );
 
-  return sortedUpcomingShows.map((showListing) => {
-    const details = showDetailsMap.get(showListing.listing_id) ?? EMPTY_SHOW;
+  return showListings.map((showListing) => {
+    const details = showDetailsMap.get(showListing.eventId) ?? EMPTY_SHOW;
+    const price = eventPriceMap.get(showListing.eventId) ?? "";
 
     return {
       ...showListing,
       ...details,
-      image: `https:${showListing.image}`,
-      listing_url: `https://www.ticketleap.events/tickets/${
-        showListing.listing_slug
-      }?date=${Date.parse(showListing.event_start) / 1000}`,
+      price,
     };
   });
 }

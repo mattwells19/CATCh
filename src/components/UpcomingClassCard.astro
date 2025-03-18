@@ -15,7 +15,7 @@ type Props = {
 
 const { classListing, class: className } = Astro.props;
 
-const classStartDate = new Date(classListing.event_start);
+const classStartDate = new Date(classListing.date);
 
 const formattedClassDate = (() => {
   const dayOfTheWeek = format(classStartDate, "EEEE");
@@ -55,8 +55,8 @@ const formattedClassDate = (() => {
 >
   <LinkedImage
     listingImageSrc={classListing.image}
-    listingTitle={classListing.listing_title}
-    href={classListing.listing_url}
+    listingTitle={classListing.name}
+    href={classListing.listingUrl}
     width={724}
     height={407}
     class="w-full"
@@ -91,7 +91,7 @@ const formattedClassDate = (() => {
     }
   </div>
 
-  <CoralButtonLink href={classListing.listing_url} class="w-full min-w-full">
+  <CoralButtonLink href={classListing.listingUrl} class="w-full min-w-full">
     Learn More
   </CoralButtonLink>
 </div>

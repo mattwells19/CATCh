@@ -1,5 +1,4 @@
 ---
-import { getUnixTime, addMonths } from "date-fns";
 import { Icon } from "astro-icon/components";
 
 import { getShowListings } from "~/api/getShowListings";
@@ -12,12 +11,10 @@ import NextShowCallout from "~/components/NextShowCallout.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
 
 const upcomingShowsPromise = getShowListings({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 1)),
+  limit: 5,
 });
 const upcomingClassesPromise = getClassListings({
-  from: getUnixTime(new Date()),
-  to: getUnixTime(addMonths(new Date(), 1)),
+  limit: 4,
 });
 
 const [upcomingShows, upcomingClasses] = await Promise.all([

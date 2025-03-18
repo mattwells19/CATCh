@@ -56,20 +56,24 @@ export const routes: Record<string, Array<Route>> = {
   //     path: "/uhhh-idk",
   //   },
   // ],
-  // "Theater Info": [
-  //   {
-  //     label: "Contact Us",
-  //     path: "/uhhh-idk",
-  //   },
-  //   {
-  //     label: "Our philosophy",
-  //     path: "/uhhh-idk",
-  //   },
-  //   {
-  //     label: "Our people",
-  //     path: "/uhhh-idk",
-  //   },
-  // ],
+  "Theater Info": [
+    {
+      label: "Respect",
+      path: "/respect",
+    },
+    // {
+    //   label: "Contact Us",
+    //   path: "/uhhh-idk",
+    // },
+    // {
+    //   label: "Our philosophy",
+    //   path: "/uhhh-idk",
+    // },
+    // {
+    //   label: "Our people",
+    //   path: "/uhhh-idk",
+    // },
+  ],
 };
 
 export const routeCategories = Object.keys(routes) as Array<

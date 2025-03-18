@@ -54,7 +54,7 @@ body {
 .wysiwyg {
   @apply flex flex-col gap-3;
 
-  :global(a) {
+  a {
     @apply text-violet-600;
 
     &:hover {
@@ -62,15 +62,27 @@ body {
     }
   }
 
-  :global(h2) {
+  h1 {
     @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
   }
 
-  :global(h3) {
+  h2 {
+    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+  }
+
+  h3 {
     @apply text-lg font-semibold;
   }
 
-  :global(ul) {
+  ul {
     @apply list-disc pl-6;
+  }
+
+  blockquote {
+    @apply pl-4 border-l-2 border-gray-200;
+
+    p {
+      @apply whitespace-pre-line;
+    }
   }
 }
