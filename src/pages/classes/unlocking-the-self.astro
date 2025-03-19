@@ -6,6 +6,12 @@ import RootLayout from "~/layouts/RootLayout.astro";
 
 import UtSHero from "./_images/UtSHero.png";
 import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
+import YoutubeVideoEmbed from "~/components/YoutubeVideoEmbed.astro";
+import Testimonial from "./_components/Testimonial.astro";
+
+import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
+import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
+import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
 
 const utsClasses = await getClassListings({ eventId: 453 });
 ---
@@ -19,7 +25,7 @@ const utsClasses = await getClassListings({ eventId: 453 });
   >
     Unlocking the Self: Improv Skills for Life
   </h1>
-  <section class="flex gap-20 items-start">
+  <section class="grid grid-cols-2 gap-16">
     <div class="flex flex-col gap-6">
       <p>
         Now is the time to unlock your creative potential and dive into the
@@ -56,6 +62,95 @@ const utsClasses = await getClassListings({ eventId: 453 });
           </li>
         ))
       }
+    </ul>
+  </section>
+  <section class="flex flex-col gap-16">
+    <h2 class="font-serif font-bold text-2xl">Stories of Awesomeness</h2>
+    <div class="grid grid-cols-2 gap-16 items-center">
+      <YoutubeVideoEmbed
+        title="Clarissa's Story — CATCh Improv Classes"
+        videoId="JivQSqJrKIw"
+      />
+      <div class="flex flex-col gap-6">
+        <h3 class="font-serif font-bold">Clarissa: Confidence</h3>
+        <blockquote class="italic">
+          “That first moment is scary, but then it always turns out fun. That's
+          one of the things you really learn: whatever you say, that's what the
+          scene is. It really helps you with yourself, with how your mind works,
+          and interacting with other people.”
+        </blockquote>
+        <p>
+          "I want to feel more confident" is a goal we hear frequently on Day 1
+          of Improv Fundamentals class. Your beginning improv class is a safe,
+          supportive, energizing, and hilarious space to find your confidence.
+        </p>
+        <p>
+          In each 2.5 hour class, students will learn the foundations of improv
+          such as; saying “yes, and…,” active listening, staying present in the
+          moment, collaboration, and empowering the self. In this class, there
+          are no mistakes and everything is a gift as we reinvigorate our sense
+          of play!
+        </p>
+        <p>
+          Join the fun today! In addition to 6 weeks of class, your tuition also
+          gives you FREE tickets to come see our shows. That's right, FREE shows
+          for you to any of our non-sold-out performances while you're a
+          student.
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-16 items-center">
+      <div class="flex flex-col gap-6">
+        <h3 class="font-serif font-bold">Hillary: Saying Yes</h3>
+        <blockquote class="italic">
+          “It's about saying "yes" to yourself, to shedding your fears and
+          leaving them at the door.”
+        </blockquote>
+        <p>
+          How often do you find yourself saying "no,"" or "maybe" instead of
+          saying "Yes"? In today's world, it can be easy to get caught up in
+          social media, the news, and our daily grind. It's important to carve
+          out time to say yes to ourselves and do something that challenges us.
+          The classes at CATCh are all about creating an encouraging environment
+          to students looking to develop the "self," as they express their
+          creativity in a new way.
+        </p>
+      </div>
+      <YoutubeVideoEmbed
+        title="Hillary's Story - CATCh Improv Class"
+        videoId="hDXuUbfYwSU"
+      />
+    </div>
+  </section>
+  <section>
+    <ul class="flex justify-around">
+      <li>
+        <Testimonial name="Kristin" image={KristinHeadshot}>
+          “From Day 1, the class taught me not to be fearful and speak up; I
+          felt comfortable being my authentic self.”
+        </Testimonial>
+      </li>
+      <li>
+        <Testimonial name="Kelly" image={KellyHeadshot}>
+          <p>
+            “I'm 4 weeks into my improv class and I am loving it. I have always
+            enjoyed watching improv shows, and would always say 'I could never
+            do that.'
+          </p>
+          <p>
+            Well, here I am, doing it. And it's fun and freeing and motivating.”
+          </p>
+        </Testimonial>
+      </li>
+      <li>
+        <Testimonial name="Jess" image={JessHeadshot}>
+          “Of course I learned a lot about improv and how to work with a scene
+          partner. What I didn't realize was that I would walk away after 6
+          weeks having learned more about myself: how to be open and present to
+          what's in front of you, and to take life, and myself, a little less
+          seriously.”
+        </Testimonial>
+      </li>
     </ul>
   </section>
 </RootLayout>
