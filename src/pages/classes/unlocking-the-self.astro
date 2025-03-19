@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+
+import { getClassListings } from "~/api/getClassListings";
+import RootLayout from "~/layouts/RootLayout.astro";
+
+import UtSHero from "./_images/UtSHero.png";
+import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
+
+const utsClasses = await getClassListings({ eventId: 453 });
+---
+
+<RootLayout
+  title="Unlocking the Self - Classes"
+  class="lg:px-16 flex flex-col gap-16"
+>
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold pt-8 pb-12 bg-shapes lg:pt-32"
+  >
+    Unlocking the Self: Improv Skills for Life
+  </h1>
+  <section class="flex gap-20 items-start">
+    <div class="flex flex-col gap-6">
+      <p>
+        Now is the time to unlock your creative potential and dive into the
+        world of improv. This 6 week course consists of fun physical and mental
+        exercises, group activities, engaging open discussions on how to apply
+        improv to life, and plenty of laughter.
+      </p>
+      <p>
+        In each 2.5 hour class, students will learn the foundations of improv
+        such as; saying “yes, and…,” active listening, staying present in the
+        moment, collaboration, and empowering the self. In this class, there are
+        no mistakes and everything is a gift as we reinvigorate our sense of
+        play!
+      </p>
+      <p>
+        Join the fun today! In addition to 6 weeks of class, your tuition also
+        gives you FREE tickets to come see our shows. That's right, FREE shows
+        for you to any of our non-sold-out performances while you're a student.
+      </p>
+    </div>
+    <Image
+      alt="A photo of someone definitely telling a pun as a group of people cringe behind them."
+      src={UtSHero}
+      class=""
+    />
+  </section>
+  <section>
+    <h2 class="font-serif text-primary-purple text-xl">Upcoming Classes</h2>
+    <ul class="mt-8">
+      {
+        utsClasses.map((utsClass) => (
+          <li class="border-primary-purple border-y px-2 py-8">
+            <UpcomingClassItem classListing={utsClass} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</RootLayout>
