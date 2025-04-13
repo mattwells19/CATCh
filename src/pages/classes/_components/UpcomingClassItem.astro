@@ -13,17 +13,17 @@ const { classListing } = Astro.props;
 const formattedClassDate = formatClassDateRange(classListing);
 ---
 
-<div class="flex justify-between">
-  <div class="flex gap-6 items-center">
+<div class="flex flex-col lg:flex-row lg:justify-between">
+  <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center">
     <Icon name="calendar" class="h-10 w-10" />
     <div class="font-serif text-xl text-primary-purple">
       <h3 class="font-bold">
         {classListing.className}
       </h3>
-      <p>{formattedClassDate}</p>
+      <p class="my-4 lg:my-0">{formattedClassDate}</p>
     </div>
   </div>
-  <div class="flex gap-6 items-center">
+  <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center">
     <p class="font-serif font-bold text-xl text-primary-purple px-2">
       {classListing.price}
     </p>
