@@ -12,33 +12,18 @@ import Testimonial from "./_components/Testimonial.astro";
 import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
 import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
 import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
+import styles from "./_styles/unlocking-the-self.module.css";
 
 const utsClasses = await getClassListings({ eventId: 453 });
 ---
 
-<style lang="scss">
-  .two-col {
-    @apply flex gap-8 items-center;
-  }
-  @media (min-width: 1024px) {
-    .two-col {
-      @apply grid grid-cols-2 gap-16 items-start;
-    }
-  }
-
-  .horiz-list {
-  }
-</style>
-<RootLayout
-  title="Unlocking the Self - Classes"
-  class="lg:px-16 flex flex-col gap-16"
->
+<RootLayout title="Unlocking the Self - Classes" class={styles.layout}>
   <h1
     class="text-primary-purple text-6xl font-serif font-bold bg-shapes pt-12 px-6 lg:px-0"
   >
     Unlocking the Self: Improv Skills for Life
   </h1>
-  <section class="two-col px-6 lg:px-0 flex-col-reverse">
+  <section class={`${styles.two_col} px-6 lg:px-0 flex-col-reverse`}>
     <div class="flex flex-col gap-6">
       <p>
         Now is the time to unlock your creative potential and dive into the
@@ -79,16 +64,16 @@ const utsClasses = await getClassListings({ eventId: 453 });
       }
     </ul>
   </section>
-  <section class="flex flex-col gap-16 px-6 lg:px-0">
+  <section class={styles.awesomeness}>
     <h2 class="font-serif font-bold text-2xl">Stories of Awesomeness</h2>
-    <div class="two-col flex-col">
+    <div class={`${styles.two_col} flex-col`}>
       <YoutubeVideoEmbed
         title="Clarissa's Story — CATCh Improv Classes"
         videoId="JivQSqJrKIw"
       />
-      <div class="flex flex-col gap-6">
-        <h3 class="font-serif font-bold">Clarissa: Confidence</h3>
-        <blockquote class="italic">
+      <div class={styles.awesomeness_text_container}>
+        <h3>Clarissa: Confidence</h3>
+        <blockquote>
           “That first moment is scary, but then it always turns out fun. That's
           one of the things you really learn: whatever you say, that's what the
           scene is. It really helps you with yourself, with how your mind works,
@@ -114,10 +99,10 @@ const utsClasses = await getClassListings({ eventId: 453 });
         </p>
       </div>
     </div>
-    <div class="two-col flex-col-reverse">
-      <div class="flex flex-col gap-6">
-        <h3 class="font-serif font-bold">Hillary: Saying Yes</h3>
-        <blockquote class="italic">
+    <div class={`${styles.two_col} flex-col`}>
+      <div class={styles.awesomeness_text_container}>
+        <h3>Hillary: Saying Yes</h3>
+        <blockquote>
           “It's about saying "yes" to yourself, to shedding your fears and
           leaving them at the door.”
         </blockquote>
@@ -138,7 +123,7 @@ const utsClasses = await getClassListings({ eventId: 453 });
     </div>
   </section>
   <section>
-    <ul class="flex justify-around px-6 gap-8 overflow-x-auto">
+    <ul class={styles.testimonials}>
       <li>
         <Testimonial name="Kristin" image={KristinHeadshot}>
           “From Day 1, the class taught me not to be fearful and speak up; I

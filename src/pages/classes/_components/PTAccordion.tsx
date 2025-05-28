@@ -1,7 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import type { PropsWithChildren } from "react";
 import type { ClassListing } from "~/api/getClassListings";
-import UpcomingClassItem from "./UpcomingClassItem.astro";
+import { UpcomingClassItem } from "./UpcomingClassItem";
 import PTHero from "../_images/PTHero.png";
 
 interface PTAccordionItemProps {
@@ -17,12 +17,12 @@ const PTAccordionItem = ({
   children,
 }: PropsWithChildren<PTAccordionItemProps>) => {
   return (
-    <Accordion.Item value={title}>
-      <Accordion.Header>
+    <Accordion.Item value={title} className="pt-accordion-item">
+      <Accordion.Header className="pt-accordion-header">
         <Accordion.Trigger>
           <svg
-            width="48"
-            height="48"
+            width="36"
+            height="36"
             viewBox="0 0 48 48"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -35,20 +35,32 @@ const PTAccordionItem = ({
           {title}
         </Accordion.Trigger>
       </Accordion.Header>
-      <Accordion.Content>
-        {children}
-        <img src={image} />
+      <Accordion.Content className="pt-accordion-content">
+        <div className="pt-accordion-about">
+          <div className="pt-accordion-about-content">{children}</div>
+          <img
+            src={image}
+            className="invisible w-0 h-0 lg:visible lg:w-auto lg:h-auto"
+          />
+        </div>
 
-        <section>
-          <h2 className="font-serif text-primary-purple text-xl px-6 lg:px-0">
-            Upcoming Classes
-          </h2>
+        <section className="pt-accordion-content-classes">
+          <h2 className="pl-5 lg:pl-0">Upcoming Classes</h2>
           <ul className="mt-8">
-            {classes.map((classListing) => (
+            {classes.length > 0 ? (
+              classes.map((classListing) => (
+                <li
+                  key={classListing.id}
+                  className="border-primary-purple border-y p-8"
+                >
+                  <UpcomingClassItem classListing={classListing} />
+                </li>
+              ))
+            ) : (
               <li className="border-primary-purple border-y px-2 py-8">
-                <UpcomingClassItem classListing={classListing} />
+                Check back soon!
               </li>
-            ))}
+            )}
           </ul>
         </section>
       </Accordion.Content>
