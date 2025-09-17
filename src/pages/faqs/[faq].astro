@@ -7,6 +7,7 @@ const { faq: faqSlug } = Astro.params;
 if (!faqSlug) return Astro.redirect("/faqs/shows");
 
 const allFaqs = await getFaqs();
+console.log(allFaqs);
 
 const faqCategoryEntries = allFaqs.filter((f) =>
   f.categories.map((c) => c.toLowerCase()).includes(faqSlug.toLowerCase()),

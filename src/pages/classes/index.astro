@@ -12,10 +12,11 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
   #interested-in-header::after {
     content: "";
     position: absolute;
-    z-index: -10;
+    z-index: -9;
     inset: 0;
+    top: -172px;
     background-color: #f2b63f;
-    clip-path: xywh(0px 440px 480px 230px round 0px 100% 100% 0);
+    clip-path: xywh(0px 445px 80% 125px round 0px 100% 100% 0);
     transition: clip-path ease-in-out 300ms;
   }
 
@@ -23,11 +24,10 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
   #pathway-cards::after {
     content: "";
     position: absolute;
-    z-index: -9;
+    z-index: -10;
     inset: 0;
-    top: -50px;
+    clip-path: xywh(0px 0px 100% 100% round 0px 25% 25% 0);
     background-color: #005f66;
-    clip-path: xywh(0px 630px 92% 600px round 0px 100% 100% 0);
     transition: clip-path ease-in-out 300ms;
     transform: scaleX(-1);
   }
@@ -35,30 +35,27 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
   // lg tailwind viewport
   // reference: https://tailwindcss.com/docs/responsive-design
   @media (min-width: 1024px) {
-    #upcoming-shows::after {
-      clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
+    #interested-in-header::after {
+      clip-path: xywh(0px 440px 50% 230px round 0px 100% 100% 0);
     }
-    #upcoming-classes::after {
-      clip-path: xywh(0 0px 100% 100% round 0 0 50% 0);
+    #pathway-cards::after {
+      clip-path: xywh(0px 0px 100% 100% round 0px 45% 45% 0);
     }
   }
 </style>
 
 <RootLayout title="Classes" class="md:px-8 lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 bg-shapes lg:pt-32"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-10 lg:pb-24 bg-shapes"
   >
     Catch a class
   </h1>
-  <h2
-    id="interested-in-header"
-    class="font-serif text-3xl font-bold pl-4 p- mt-40"
-  >
+  <h2 id="interested-in-header" class="font-serif text-3xl font-bold pt-6 pl-4">
     I'm interested in...
   </h2>
   <ul
     id="pathway-cards"
-    class="flex flex-col lg:flex-row gap-5 items-stretch mt-20 mb-72"
+    class="relative flex flex-col lg:flex-row gap-5 items-stretch pt-4 lg:pt-12 pb-16 lg:pb-64 lg:-right-16 lg:px-16"
   >
     <li>
       <PathwayCard

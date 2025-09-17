@@ -1,4 +1,5 @@
 import type { EntryFieldTypes } from "contentful";
+import * as z from "zod";
 import { contentfulClient, type RichTextDocument } from "~/lib/contentful";
 
 interface FAQSkeleton {
@@ -9,6 +10,12 @@ interface FAQSkeleton {
     category: EntryFieldTypes.Array<EntryFieldTypes.Symbol<string>>;
   };
 }
+
+const FAQSchema = z.object({
+  question: z.string(),
+  answer: z.any(),
+  categories: z.array(z.string()),
+});
 
 export interface FAQ {
   question: string;
@@ -21,11 +28,13 @@ export async function getFaqs(): Promise<Array<FAQ>> {
     content_type: "faqPage",
   });
 
-  return response.items.map((item) => {
-    return {
-      ...item.fields,
-      categories: item.fields.category,
-      answer: item.fields.answer,
-    };
-  });
+  return response.items
+    .map((item) => {
+      return {
+        ...item.fields,
+        categories: item.fields.category,
+        answer: item.fields.answer,
+      };
+    })
+    .filter((item) => FAQSchema.safeParse(item).success);
 }
