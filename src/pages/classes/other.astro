@@ -6,28 +6,29 @@ import RootLayout from "~/layouts/RootLayout.astro";
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
 
-const pt1Classes = getClassListings({ eventId: ClassIDs.PT1 });
-const pt2Classes = getClassListings({ eventId: ClassIDs.PT2 });
-const pt3Classes = getClassListings({ eventId: ClassIDs.PT3 });
-
-const allCLasses = await Promise.all([pt1Classes, pt2Classes, pt3Classes]).then(
-  (classes) => classes.flat(),
+const allClasses = await getClassListings();
+console.log(allClasses);
+const otherClasses = allClasses.filter(
+  (classListing) =>
+    Array.from(Object.values<number>(ClassIDs)).includes(
+      classListing.eventId,
+    ) === false,
 );
 ---
 
-<RootLayout title="Performance Track - Classes" class="md:px-8 lg:px-16">
+<RootLayout title="Classes" class="md:px-8 lg:px-16">
   <h1
     class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
   >
-    Performance Track 1 - 3
+    Catch a class
   </h1>
 
   {
-    allCLasses.length > 0 ? (
+    otherClasses.length > 0 ? (
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12">
-        {allCLasses.map((ptClass) => (
+        {otherClasses.map((otherClass) => (
           <li class="flex-1 w-full">
-            <UpcomingClassCard classListing={ptClass} class="max-w-none" />
+            <UpcomingClassCard classListing={otherClass} class="max-w-none" />
           </li>
         ))}
       </ul>

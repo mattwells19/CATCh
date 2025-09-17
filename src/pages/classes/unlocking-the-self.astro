@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 import { getClassListings } from "~/api/getClassListings";
 import RootLayout from "~/layouts/RootLayout.astro";
+import { ClassIDs } from "./class-ids";
 
 import UtSHero from "./_images/UtSHero.png";
 import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
@@ -14,7 +15,9 @@ import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
 import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
 import styles from "./_styles/unlocking-the-self.module.css";
 
-const utsClasses = await getClassListings({ eventId: 453 });
+const utsClasses = await getClassListings({
+  eventId: ClassIDs.UnlockingTheSelf,
+});
 ---
 
 <RootLayout title="Unlocking the Self - Classes" class={styles.layout}>
@@ -56,8 +59,13 @@ const utsClasses = await getClassListings({ eventId: 453 });
     </h2>
     <ul class="mt-8">
       {
-        utsClasses.map((utsClass) => (
-          <li class="border-primary-purple border-y px-2 py-8">
+        utsClasses.map((utsClass, index) => (
+          <li
+            class="border-primary-purple border-b px-2 py-8"
+            class:list={{
+              "border-t": index === 0,
+            }}
+          >
             <UpcomingClassItem classListing={utsClass} />
           </li>
         ))
