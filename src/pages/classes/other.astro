@@ -8,7 +8,7 @@ import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 
 const allClasses = await getClassListings();
-console.log(allClasses);
+
 const otherClasses = allClasses.filter(
   (classListing) =>
     Array.from(Object.values<number>(ClassIDs)).includes(
