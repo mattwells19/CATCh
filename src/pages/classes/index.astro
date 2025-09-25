@@ -1,28 +1,113 @@
 ---
-import { getClassListings } from "~/api/getClassListings";
-
 import RootLayout from "~/layouts/RootLayout.astro";
-import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
-
-const upcomingClasses = await getClassListings({ limit: 8 });
+import PathwayCard from "./_components/PathwayCard.astro";
+import UnlockingTheSelfImg from "~/images/class-pathways/unlocking-the-self.png";
+import PerformanceTrackImg from "~/images/class-pathways/performance-track.png";
+import StandupImg from "~/images/class-pathways/standup.png";
+import OtherClassesImg from "~/images/class-pathways/other-classes.png";
 ---
+
+<style lang="scss">
+  // the purple blob behind the show section
+  #interested-in-header::after {
+    content: "";
+    position: absolute;
+    z-index: -9;
+    clip-path: inset(0 0 0 0 round 0px 100px 100px 0px);
+    inset: 0% 5% -100% -4rem;
+    background-color: #f2b63f;
+    transition: clip-path ease-in-out 300ms;
+  }
+
+  // the yellow blob behind the classes section
+  #pathway-cards::after {
+    content: "";
+    position: absolute;
+    z-index: -10;
+    clip-path: inset(0 0 0 0 round 500px 0px 0px 500px);
+    inset: 0%;
+    background-color: #005f66;
+    transition: clip-path ease-in-out 300ms;
+  }
+
+  // lg tailwind viewport
+  // reference: https://tailwindcss.com/docs/responsive-design
+  @media (min-width: 1024px) {
+    #interested-in-header::after {
+      clip-path: inset(0 0 0 0 round 0px 200px 200px 0px);
+      inset: 0% 50% -200% -4rem;
+    }
+    #pathway-cards::after {
+      clip-path: inset(0 0 0 0 round 500px 0px 0px 500px);
+      inset: 0% -4rem 0% 5%;
+    }
+  }
+</style>
 
 <RootLayout title="Classes" class="md:px-8 lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-10 lg:pb-24 bg-shapes"
   >
     Catch a class
   </h1>
-
-  <ul
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12"
+  <h2
+    id="interested-in-header"
+    class="font-serif text-3xl font-bold pt-16 pb-2 px-4 lg:px-0 relative overflow-visible"
   >
-    {
-      upcomingClasses.map((classListing) => (
-        <li class="flex-1 w-full">
-          <UpcomingClassCard classListing={classListing} class="max-w-none" />
-        </li>
-      ))
-    }
+    I'm interested in...
+  </h2>
+  <ul
+    id="pathway-cards"
+    class="flex gap-5 flex-col lg:flex-row pt-4 lg:pt-12 pb-16 lg:pb-64 relative overflow-visible"
+  >
+    <li>
+      <PathwayCard
+        image={UnlockingTheSelfImg}
+        imageAlt="A group of happy and wacky improvisers!"
+        linkText="Explore Class"
+        href="/classes/unlocking-the-self"
+      >
+        <Fragment slot="description">
+          Growing my personal skills and meeting people through improv
+        </Fragment>
+      </PathwayCard>
+    </li>
+    <li>
+      <PathwayCard
+        image={PerformanceTrackImg}
+        imageAlt="Four silly improvisers having fun on stage."
+        linkText="Explore Classes"
+        href="/classes/performance-track"
+      >
+        <Fragment slot="description">
+          Get stage ready and learn how to perform improv comedy with our&nbsp;
+          <span class="font-semibold">Performance Track</span>
+        </Fragment>
+      </PathwayCard>
+    </li>
+    <li>
+      <PathwayCard
+        image={StandupImg}
+        imageAlt="A woman killing it at her standup student showcase."
+        linkText="Explore Classes"
+        href="/classes/standup"
+      >
+        <Fragment slot="description">
+          Learning how to create and deliver stand-up comedy
+        </Fragment>
+      </PathwayCard>
+    </li>
+    <li>
+      <PathwayCard
+        image={OtherClassesImg}
+        imageAlt="A collage of students graduating from various classes."
+        linkText="Explore Classes"
+        href="/classes/other"
+      >
+        <Fragment slot="description">
+          Storytelling, acting classes, and more!
+        </Fragment>
+      </PathwayCard>
+    </li>
   </ul>
 </RootLayout>

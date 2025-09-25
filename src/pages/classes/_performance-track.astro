@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import PTHero from "./_images/PTHero.png";
+import RootLayout from "~/layouts/RootLayout.astro";
+import { getClassListings } from "~/api/getClassListings";
+import { PTAccordion } from "./_components/PTAccordion";
+import styles from "./_styles/performance-track.module.css";
+import { ClassIDs } from "./class-ids";
+
+const pt1Classes = await getClassListings({ eventId: ClassIDs.PT1 });
+const pt2Classes = await getClassListings({ eventId: ClassIDs.PT2 });
+const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
+---
+
+<RootLayout title="Performance Track - Classes" class={styles.layout}>
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold bg-shapes pt-12 px-6 lg:px-0"
+  >
+    Performance Track 1 - 3
+  </h1>
+  <section class={styles.top_content}>
+    <p class="text-xl px-8">
+      For those who shine in the spotlight & want to join our community of
+      hilariously talented improvisers, our Performance Track is for you!
+    </p>
+    <Image
+      alt="A group of 3 improvisers screaming in surprise!"
+      src={PTHero}
+      class=""
+    />
+  </section>
+  <section class={styles.accordions}>
+    <PTAccordion
+      client:load
+      pt1Classes={pt1Classes}
+      pt2Classes={pt2Classes}
+      pt3Classes={pt3Classes}
+    />
+  </section>
+</RootLayout>

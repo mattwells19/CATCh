@@ -1,0 +1,44 @@
+---
+import { getClassListings } from "~/api/getClassListings";
+
+import { ClassIDs } from "./class-ids";
+import RootLayout from "~/layouts/RootLayout.astro";
+import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
+import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
+import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+
+const allClasses = await getClassListings();
+
+const otherClasses = allClasses.filter(
+  (classListing) =>
+    Array.from(Object.values<number>(ClassIDs)).includes(
+      classListing.eventId,
+    ) === false,
+);
+---
+
+<RootLayout title="Classes" class="md:px-8 lg:px-16">
+  <div class="px-4">
+    <ClassBreadcrumbs>Something different!</ClassBreadcrumbs>
+  </div>
+
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-20 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+  >
+    Catch a class
+  </h1>
+
+  {
+    otherClasses.length > 0 ? (
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12">
+        {otherClasses.map((otherClass) => (
+          <li class="flex-1 w-full">
+            <UpcomingClassCard classListing={otherClass} class="max-w-none" />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <NoClassesPlaceholder />
+    )
+  }
+</RootLayout>
