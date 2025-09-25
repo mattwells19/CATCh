@@ -14,6 +14,7 @@ import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
 import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
 import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
 import styles from "./_styles/unlocking-the-self.module.css";
+import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 
 const utsClasses = await getClassListings({
   eventId: ClassIDs.UnlockingTheSelf,
@@ -21,6 +22,12 @@ const utsClasses = await getClassListings({
 ---
 
 <RootLayout title="Unlocking the Self - Classes" class={styles.layout}>
+  <div class="px-6 lg:px-0">
+    <ClassBreadcrumbs>
+      Unlocking the Self: Improv Skills for Life
+    </ClassBreadcrumbs>
+  </div>
+
   <h1
     class="text-primary-purple text-6xl font-serif font-bold bg-shapes pt-12 px-6 lg:px-0"
   >

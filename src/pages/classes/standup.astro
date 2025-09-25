@@ -5,13 +5,18 @@ import { ClassIDs } from "./class-ids";
 import RootLayout from "~/layouts/RootLayout.astro";
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
+import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 
 const standupClasses = await getClassListings({ eventId: ClassIDs.Standup });
 ---
 
 <RootLayout title="Standup Classes" class="md:px-8 lg:px-16">
+  <div class="px-4">
+    <ClassBreadcrumbs>Standup</ClassBreadcrumbs>
+  </div>
+
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-20 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
   >
     Catch a standup class!
   </h1>

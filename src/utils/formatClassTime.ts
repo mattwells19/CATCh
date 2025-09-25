@@ -34,7 +34,7 @@ export function formatClassDateRange(classListing: ClassListing) {
     const endDate = add(classStartDate, {
       [classListing.classLengthUnits]: classListing.classLengthValue,
     });
-    return `${dayOfTheWeek}s, ${format(classStartDate, "MMM. d")} - ${format(
+    return `${dayOfTheWeek}s, ${format(classStartDate, "MMM. d")} – ${format(
       endDate,
       "MMM. d",
     )} at ${format(classStartDate, "h aa")}`;

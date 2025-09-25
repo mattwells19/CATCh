@@ -5,6 +5,7 @@ import { ClassIDs } from "./class-ids";
 import RootLayout from "~/layouts/RootLayout.astro";
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
+import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 
 const pt1Classes = getClassListings({ eventId: ClassIDs.PT1 });
 const pt2Classes = getClassListings({ eventId: ClassIDs.PT2 });
@@ -16,10 +17,14 @@ const allCLasses = await Promise.all([pt1Classes, pt2Classes, pt3Classes]).then(
 ---
 
 <RootLayout title="Performance Track - Classes" class="md:px-8 lg:px-16">
+  <div class="px-4">
+    <ClassBreadcrumbs>Perform Improv Comedy</ClassBreadcrumbs>
+  </div>
+
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+    class="text-primary-purple text-5xl md:text-6xl font-serif font-bold px-4 pt-20 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
   >
-    Performance Track 1 - 3
+    Performance Track 1 – 3
   </h1>
 
   {
