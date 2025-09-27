@@ -1,22 +1,19 @@
 ---
-import { getClassListings } from "~/api/getClassListings";
-
-import { ClassIDs } from "./class-ids";
+import { Image } from "astro:assets";
+import PTHero from "./_images/PTHero.png";
 import RootLayout from "~/layouts/RootLayout.astro";
-import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
-import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
+import { getClassListings } from "~/api/getClassListings";
+import { PTAccordion } from "./_components/PTAccordion";
+import styles from "./_styles/performance-track.module.css";
+import { ClassIDs } from "./class-ids";
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 
-const pt1Classes = getClassListings({ eventId: ClassIDs.PT1 });
-const pt2Classes = getClassListings({ eventId: ClassIDs.PT2 });
-const pt3Classes = getClassListings({ eventId: ClassIDs.PT3 });
-
-const allCLasses = await Promise.all([pt1Classes, pt2Classes, pt3Classes]).then(
-  (classes) => classes.flat(),
-);
+const pt1Classes = await getClassListings({ eventId: ClassIDs.PT1 });
+const pt2Classes = await getClassListings({ eventId: ClassIDs.PT2 });
+const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
 ---
 
-<RootLayout title="Performance Track - Classes" class="md:px-8 lg:px-16">
+<RootLayout title="Performance Track - Classes" class={styles.layout}>
   <div class="px-4">
     <ClassBreadcrumbs>Perform Improv Comedy</ClassBreadcrumbs>
   </div>
@@ -27,17 +24,23 @@ const allCLasses = await Promise.all([pt1Classes, pt2Classes, pt3Classes]).then(
     Performance Track 1 – 3
   </h1>
 
-  {
-    allCLasses.length > 0 ? (
-      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12">
-        {allCLasses.map((ptClass) => (
-          <li class="flex-1 w-full">
-            <UpcomingClassCard classListing={ptClass} class="max-w-none" />
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <NoClassesPlaceholder />
-    )
-  }
+  <section class={styles.top_content}>
+    <p class="text-xl px-8">
+      For those who shine in the spotlight & want to join our community of
+      hilariously talented improvisers, our Performance Track is for you!
+    </p>
+    <Image
+      alt="A group of 3 improvisers screaming in surprise!"
+      src={PTHero}
+      class=""
+    />
+  </section>
+  <section class={styles.accordions}>
+    <PTAccordion
+      client:load
+      pt1Classes={pt1Classes}
+      pt2Classes={pt2Classes}
+      pt3Classes={pt3Classes}
+    />
+  </section>
 </RootLayout>
