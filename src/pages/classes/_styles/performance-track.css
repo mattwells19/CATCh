@@ -75,28 +75,6 @@
 
 .pt-accordion-content {
   overflow: hidden;
-  display: grid;
-  gap: 1rem;
-}
-
-@media (width >= 1024px) {
-  .pt-accordion-content {
-    transition: grid-template-rows ease 500ms;
-  }
-}
-
-@media (prefers-reduced-motion) {
-  .pt-accordion-content {
-    transition: none;
-  }
-}
-
-.pt-accordion-content[data-state="open"] {
-  grid-template-rows: 1fr;
-}
-
-.pt-accordion-content[data-state="closed"] {
-  grid-template-rows: 0fr;
 }
 
 .pt-accordion-about {
