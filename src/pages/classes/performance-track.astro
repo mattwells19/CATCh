@@ -3,17 +3,26 @@ import { Image } from "astro:assets";
 import PTHero from "./_images/PTHero.png";
 import RootLayout from "~/layouts/RootLayout.astro";
 import { getClassListings } from "~/api/getClassListings";
-import { PTAccordion } from "./_components/PTAccordion";
-import styles from "./_styles/performance-track.module.css";
 import { ClassIDs } from "./class-ids";
+
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+import { PTAccordion } from "./_components/PTAccordion";
+import PT1AccordionImg from "./_images/PT1-accordion.webp";
+import PT2AccordionImg from "./_images/PT2-accordion.webp";
+import PT3AccordionImg from "./_images/PT2-accordion.webp";
+import "./_styles/performance-track.css";
 
 const pt1Classes = await getClassListings({ eventId: ClassIDs.PT1 });
 const pt2Classes = await getClassListings({ eventId: ClassIDs.PT2 });
 const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
 ---
 
-<RootLayout title="Performance Track - Classes" class={styles.layout}>
+<!-- preload images -->
+<Image src={PT1AccordionImg} alt="PT1 image" hidden />
+<Image src={PT2AccordionImg} alt="PT2 image" hidden />
+<Image src={PT3AccordionImg} alt="PT3 image" hidden />
+
+<RootLayout title="Performance Track - Classes" class="pt-page-layout">
   <div class="px-4">
     <ClassBreadcrumbs>Perform Improv Comedy</ClassBreadcrumbs>
   </div>
@@ -24,7 +33,7 @@ const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
     Performance Track 1 – 3
   </h1>
 
-  <section class={styles.top_content}>
+  <section class="pt-top-content">
     <p class="text-xl px-8">
       For those who shine in the spotlight & want to join our community of
       hilariously talented improvisers, our Performance Track is for you!
@@ -32,12 +41,12 @@ const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
     <Image
       alt="A group of 3 improvisers screaming in surprise!"
       src={PTHero}
-      class=""
+      class="w-full"
     />
   </section>
-  <section class={styles.accordions}>
+  <section class="pt-accordions">
     <PTAccordion
-      client:load
+      client:only="react"
       pt1Classes={pt1Classes}
       pt2Classes={pt2Classes}
       pt3Classes={pt3Classes}

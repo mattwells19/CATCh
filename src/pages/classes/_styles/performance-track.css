@@ -1,4 +1,4 @@
-.layout {
+.pt-page-layout {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -6,36 +6,47 @@
 }
 
 @media (width >=1024px) {
-  .layout {
+  .pt-page-layout {
     padding: 0px 1rem;
     margin: auto;
   }
+
+  .pt-page-layout::after {
+    content: "";
+    position: absolute;
+    z-index: -9;
+    background-color: #005f66;
+    clip-path: inset(0 0 0 0 round 0px 600px 600px 0px);
+    inset: 50% 0% -5% -100%;
+  }
 }
 
-.top_content {
+.pt-top-content {
   display: flex;
   flex-direction: column-reverse;
+  position: relative;
   gap: 2rem;
 }
 
 @media (width >=1024px) {
-  .top_content {
+  .pt-top-content {
     display: flex;
     flex-direction: row;
     gap: 2rem;
   }
 }
 
-.accordions {
+.pt-accordions {
   border: 2px solid black;
   margin: 0rem 1rem;
+  background-color: var(--peach);
 }
 
-.accordions :global .pt-accordion-item:not(:last-child) {
+.pt-accordion-item:not(:last-child) {
   border-bottom: 2px solid black;
 }
 
-.accordions :global .pt-accordion-header button {
+.pt-accordion-header button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -46,60 +57,79 @@
   color: var(--primary-purple);
   font: bold var(--font-lg) var(--font-serif);
 
-  >svg {
+  > svg {
     rotate: 180deg;
     flex-shrink: 0;
   }
 
-  &[data-state="open"]>svg {
+  &[data-state="open"] > svg {
     rotate: 0deg;
   }
 }
 
 @media (width >=1024px) {
-  .accordions :global .pt-accordion-header button {
+  .pt-accordion-header button {
     font-size: var(--font-xl);
   }
 }
 
-.accordions :global .pt-accordion-content {
+.pt-accordion-content {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
 }
 
-.accordions :global .pt-accordion-about {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  padding: 3rem 4rem;
-}
-
-@media (width >=1024px) {
-  .accordions :global .pt-accordion-about {
-
-    grid-template-columns: 1fr 1fr;
+@media (width >= 1024px) {
+  .pt-accordion-content {
+    transition: grid-template-rows ease 500ms;
   }
 }
 
-.accordions :global .pt-accordion-about-content {
+@media (prefers-reduced-motion) {
+  .pt-accordion-content {
+    transition: none;
+  }
+}
+
+.pt-accordion-content[data-state="open"] {
+  grid-template-rows: 1fr;
+}
+
+.pt-accordion-content[data-state="closed"] {
+  grid-template-rows: 0fr;
+}
+
+.pt-accordion-about {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+@media (width >=1024px) {
+  .pt-accordion-about {
+    grid-template-columns: 1fr 1fr;
+    padding: 3rem 4rem;
+  }
+}
+
+.pt-accordion-about-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.accordions :global .pt-accordion-content-classes {
+.pt-accordion-content-classes {
   padding-bottom: 3rem;
 
-  >h2 {
+  > h2 {
     font: bold var(--font-lg) var(--font-serif);
     color: var(--primary-purple);
   }
 }
 
 @media (width >=1024px) {
-  .accordions :global .pt-accordion-content-classes {
+  .pt-accordion-content-classes {
     padding: 0rem 4rem 3rem 4rem;
   }
 }

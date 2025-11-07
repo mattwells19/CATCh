@@ -2,22 +2,26 @@ import * as Accordion from "@radix-ui/react-accordion";
 import type { PropsWithChildren } from "react";
 import type { ClassListing } from "~/api/getClassListings";
 import { UpcomingClassItem } from "./UpcomingClassItem";
-import PTHero from "../_images/PTHero.png";
+import PT1AccordionImg from "../_images/PT1-accordion.webp";
+import PT2AccordionImg from "../_images/PT2-accordion.webp";
+import PT3AccordionImg from "../_images/PT3-accordion.webp";
 
 interface PTAccordionItemProps {
   title: string;
+  value: string;
   classes: Array<ClassListing>;
   image: string;
 }
 
 const PTAccordionItem = ({
   title,
+  value,
   classes,
   image,
   children,
 }: PropsWithChildren<PTAccordionItemProps>) => {
   return (
-    <Accordion.Item value={title} className="pt-accordion-item">
+    <Accordion.Item value={value} className="pt-accordion-item">
       <Accordion.Header className="pt-accordion-header">
         <Accordion.Trigger>
           <svg
@@ -79,15 +83,23 @@ export const PTAccordion = ({
   pt2Classes,
   pt3Classes,
 }: PTAccordionProps) => {
+  const accordionValues = ["pt1", "pt2", "pt3"];
+  const hashValue = location.hash.replace("#", "");
+  const value = accordionValues.includes(hashValue)
+    ? hashValue
+    : accordionValues[0];
+
   return (
     <Accordion.Root
-      type="multiple"
-      defaultValue={["PT 1: Discovering the Scene"]}
+      type="single"
+      defaultValue={value}
+      onValueChange={(value) => (location.hash = value)}
     >
       <PTAccordionItem
         title="PT 1: Discovering the Scene"
+        value={accordionValues[0]}
         classes={pt1Classes}
-        image={PTHero.src}
+        image={PT1AccordionImg.src}
       >
         <p>
           The first class in our Improv Performance Track, which is targeted to
@@ -109,48 +121,45 @@ export const PTAccordion = ({
       </PTAccordionItem>
       <PTAccordionItem
         title="PT 2: Improv Stagecraft & Techniques"
+        value={accordionValues[1]}
         classes={pt2Classes}
-        image={PTHero.src}
+        image={PT2AccordionImg.src}
       >
         <p>
-          The first class in our Improv Performance Track, which is targeted to
-          those who wish to — and can commit to — practice & perform improv for
-          the stage as an artist. This class teaches improvisers the basic
-          tenets of character-driven long form improv.
+          Improv Performance Track The second class in our Improv Performance
+          Track, which is targeted to those who wish to — and can commit to —
+          practice & perform improv for the stage as an artist. This class
+          teaches improvisers the techniques and components of a long-form
+          improv show. This includes edits, tag-outs, walk-ons, group game, and
+          openings.
         </p>
         <p>
-          Through more advanced exercises and two-person scenework, students
-          will be challenged to initiate scenes from the top of their
-          intelligence, develop characters from their life experiences, and
-          build relationships with their scene partners. This highly engaging
-          class will bring each student closer to trusting themselves and their
-          instincts as well as those of their fellow classmates. Truly focused
-          on grounded, patient, and collaborative play, this course will awaken
-          each student's curiosity to discover themselves and the world around
-          them.
+          In the second class of CATCh's Performance Track, you will master the
+          essential elements of long-form improv such as openings, game, edits,
+          tag-outs, beats, call-backs, and making people laugh.
         </p>
       </PTAccordionItem>
       <PTAccordionItem
         title="PT 3: Improv Stagecraft & Techniques"
+        value={accordionValues[2]}
         classes={pt3Classes}
-        image={PTHero.src}
+        image={PT3AccordionImg.src}
       >
         <p>
-          The first class in our Improv Performance Track, which is targeted to
-          those who wish to — and can commit to — practice & perform improv for
-          the stage as an artist. This class teaches improvisers the basic
-          tenets of character-driven long form improv.
+          Learn the basics of an improv form, including openings, how and when
+          to edit a scene, callbacks, tag-outs, and way more!
         </p>
         <p>
-          Through more advanced exercises and two-person scenework, students
-          will be challenged to initiate scenes from the top of their
-          intelligence, develop characters from their life experiences, and
-          build relationships with their scene partners. This highly engaging
-          class will bring each student closer to trusting themselves and their
-          instincts as well as those of their fellow classmates. Truly focused
-          on grounded, patient, and collaborative play, this course will awaken
-          each student's curiosity to discover themselves and the world around
-          them.
+          The third course in our Performance Track, specifically for students
+          who are ready to learn how to sustain, manage, and support a full
+          long-form set.
+        </p>
+        <p>
+          This 6 week course introduces students to long-form style
+          improvisation, which is thematic, narrative-focused, and character
+          driven. This level teaches students a structured format that delves
+          into many of the essential elements of sustaning long-form improv,
+          including second & third beats, group games, and more.
         </p>
       </PTAccordionItem>
     </Accordion.Root>

@@ -1,0 +1,87 @@
+---
+import type { TicketLeapEventsResponse } from "~/api/utils/getTicketLeapListings";
+import RootLayout from "~/layouts/RootLayout.astro";
+
+const showsP = fetch(
+  "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+  {
+    headers: {
+      "X-API-Token": import.meta.env.TICKETLEAP_SHOWS_TOKEN,
+    },
+  },
+)
+  .then((res) => res.json())
+  .then((res: TicketLeapEventsResponse) => {
+    return res.data
+      .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+      .map((d) => ({
+        id: d.id,
+        name: d.attributes.name,
+        dates: d.attributes.dates,
+      }));
+  });
+
+const classesP = await fetch(
+  "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+  {
+    headers: {
+      "X-API-Token": import.meta.env.TICKETLEAP_CLASSES_TOKEN,
+    },
+  },
+)
+  .then((res) => res.json())
+  .then((res: TicketLeapEventsResponse) => {
+    return res.data
+      .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+      .map((d) => ({
+        id: d.id,
+        name: d.attributes.name,
+        dates: d.attributes.dates,
+      }));
+  });
+
+const [shows, classes] = await Promise.all([showsP, classesP]);
+---
+
+<meta name="robots" content="noindex" />
+<RootLayout title="Check Events" class="max-w-4xl px-12">
+  <h1 class="text-2xl font-bold">Check Events</h1>
+  <h2 class="text-xl mt-4 font-bold">Shows</h2>
+  <ul class="pl-8">
+    {
+      shows.map((show) => (
+        <li class="pt-2">
+          <p class="font-bold">
+            {show.id} - {show.name}
+          </p>
+          <ul class="pl-8">
+            {show.dates.map((listing) => (
+              <li>
+                {listing.start} - {listing.status}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+  <h2 class="text-xl mt-4 font-bold">Classes</h2>
+  <ul class="pl-8">
+    {
+      classes.map((classEvent) => (
+        <li class="pt-2">
+          <p class="font-bold">
+            {classEvent.id} - {classEvent.name}
+          </p>
+          <ul class="pl-8">
+            {classEvent.dates.map((listing) => (
+              <li>
+                {listing.start} - {listing.status}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</RootLayout>

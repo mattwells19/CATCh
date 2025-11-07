@@ -1,10 +1,11 @@
+/// <reference types="./lib.deno.d.ts" />
 import type { TicketLeapEventsResponse } from "~/api/utils/getTicketLeapListings";
 
 const upcomingClasses = await fetch(
   "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
   {
     headers: {
-      "X-API-Token": "",
+      "X-API-Token": Deno.env.get("TICKETLEAP_CLASSES_TOKEN")!,
     },
   },
 )
@@ -21,7 +22,7 @@ const upcomingShows = await fetch(
   "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
   {
     headers: {
-      "X-API-Token": "",
+      "X-API-Token": Deno.env.get("TICKETLEAP_SHOWS_TOKEN")!,
     },
   },
 )
