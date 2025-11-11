@@ -1,26 +1,25 @@
 ---
-import { Image } from "astro:assets";
-import PTHero from "./_images/PTHero.png";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import RootLayout from "~/layouts/RootLayout.astro";
+
 import { getClassListings } from "~/api/getClassListings";
+import { getTopOfPage } from "~/api/getTopOfPage";
+import { getPerformanceTrackAccordions } from "~/api/getPerformanceTrackAccordions";
 import { ClassIDs } from "./class-ids";
 
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
 import { PTAccordion } from "./_components/PTAccordion";
-import PT1AccordionImg from "./_images/PT1-accordion.webp";
-import PT2AccordionImg from "./_images/PT2-accordion.webp";
-import PT3AccordionImg from "./_images/PT2-accordion.webp";
+import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
 import "./_styles/performance-track.css";
 
-const pt1Classes = await getClassListings({ eventId: ClassIDs.PT1 });
-const pt2Classes = await getClassListings({ eventId: ClassIDs.PT2 });
-const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
+const [topOfPage, ptAccordionsContent, ...classListings] = await Promise.all([
+  getTopOfPage("performance-track"),
+  getPerformanceTrackAccordions(),
+  getClassListings({ eventId: ClassIDs.PT1 }),
+  getClassListings({ eventId: ClassIDs.PT2 }),
+  getClassListings({ eventId: ClassIDs.PT3 }),
+]);
 ---
-
-<!-- preload images -->
-<Image src={PT1AccordionImg} alt="PT1 image" hidden />
-<Image src={PT2AccordionImg} alt="PT2 image" hidden />
-<Image src={PT3AccordionImg} alt="PT3 image" hidden />
 
 <RootLayout title="Performance Track - Classes" class="pt-page-layout">
   <div class="px-4">
@@ -34,22 +33,40 @@ const pt3Classes = await getClassListings({ eventId: ClassIDs.PT3 });
   </h1>
 
   <section class="pt-top-content">
-    <p class="text-xl px-8">
-      For those who shine in the spotlight & want to join our community of
-      hilariously talented improvisers, our Performance Track is for you!
-    </p>
-    <Image
+    <div
+      class="text-xl px-8 wysiwyg"
+      set:html={documentToHtmlString(topOfPage.content)}
+    />
+    <img
       alt="A group of 3 improvisers screaming in surprise!"
-      src={PTHero}
+      src={topOfPage.image}
       class="w-full"
     />
   </section>
   <section class="pt-accordions">
     <PTAccordion
       client:only="react"
-      pt1Classes={pt1Classes}
-      pt2Classes={pt2Classes}
-      pt3Classes={pt3Classes}
+      ptAccordionContent={ptAccordionsContent}
+      classListings={classListings}
     />
+  </section>
+  <section class="my-12 mx-4">
+    <h2 class="font-serif text-primary-purple text-3xl font-bold px-6 lg:px-0">
+      Upcoming Classes
+    </h2>
+    <ul class="mt-8">
+      {
+        classListings.flat().map((utsClass, index) => (
+          <li
+            class="border-primary-purple border-b px-2 py-8"
+            class:list={{
+              "border-t": index === 0,
+            }}
+          >
+            <UpcomingClassItem classListing={utsClass} />
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </RootLayout>

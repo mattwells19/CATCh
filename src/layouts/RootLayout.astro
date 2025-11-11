@@ -33,9 +33,10 @@ const GTM_ID = "GTM-WQRTM3H3";
       type="website"
       astroGenerator
     />
+    {import.meta.env.PROD ? (
     <meta property="fb:app_id" content="1788375124760247" />
-
     <Tracking GTM_ID={GTM_ID} />
+    ) : null}
   </head>
   <body>
     <Header />
@@ -43,6 +44,8 @@ const GTM_ID = "GTM-WQRTM3H3";
       <slot />
     </main>
     <Footer />
+
+    {import.meta.env.PROD ? (
     <!-- Google Tag Manager (noscript) -->
     <noscript>
       <iframe
@@ -52,5 +55,6 @@ const GTM_ID = "GTM-WQRTM3H3";
         style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
+    ) : null}
   </body>
 </html>
