@@ -34,9 +34,15 @@ export interface TicketLeapListing {
   listingUrl: string;
 }
 
+export interface GetTicketLeapListingsOptions {
+  limit?: number;
+  start?: Date;
+  end?: Date;
+}
+
 export async function getTicketLeapListings(
   type: "shows" | "classes",
-  limit?: number,
+  options?: GetTicketLeapListingsOptions,
 ): Promise<Array<TicketLeapListing>> {
   const now = new Date();
 
@@ -66,10 +72,16 @@ export async function getTicketLeapListings(
         // TODO: double check this when Daylight Savings starts in March as this number could change.
         const listingStart = addHours(parseISO(listing.start), 5);
 
+        // the parent event may have listings from the past, so filter out anything before "today" here
+        const isAfterNow = now < listingStart;
+        const isAfterStart = !options?.start || listingStart > options.start;
+        const isBeforeEnd = !options?.end || listingStart <= options.end;
+
         return (
           listing.status === "active" &&
-          // the parent event may have listings from the past, so filter out anything before "today" here
-          now < listingStart
+          isAfterNow &&
+          isAfterStart &&
+          isBeforeEnd
         );
       })
       .map((listing) => {
@@ -100,5 +112,5 @@ export async function getTicketLeapListings(
     .sort(
       (listingA, listingB) => listingA.date.getTime() - listingB.date.getTime(),
     )
-    .slice(0, limit);
+    .slice(0, options?.limit);
 }
