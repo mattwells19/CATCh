@@ -18,6 +18,9 @@ export interface TicketLeapEventsResponse {
         end: string; // usually empty string
         status: string;
       }>;
+      listing_settings: {
+        header_image: string;
+      };
     };
   }>;
 }
@@ -69,18 +72,27 @@ export async function getTicketLeapListings(
           now < listingStart
         );
       })
-      .map((listing) => ({
-        eventId: event_id,
-        id: Number.parseInt(listing.event_id),
-        name: event.name,
-        image: event.image
-          ? `https:${event.image}`
-          : "/images/CATCh-Placeholder.jpg",
-        date: new Date(listing.start),
-        listingUrl: `https://www.ticketleap.events/tickets/${event.slug}?date=${
-          Date.parse(listing.start) / 1000
-        }`,
-      }));
+      .map((listing) => {
+        let imageUrl = event.image ?? event.listing_settings.header_image;
+        if (imageUrl) {
+          imageUrl = imageUrl.startsWith("//")
+            ? `https:${event.listing_settings.header_image}`
+            : imageUrl;
+        } else {
+          imageUrl = "/images/CATCh-Placeholder.jpg";
+        }
+
+        return {
+          eventId: event_id,
+          id: Number.parseInt(listing.event_id),
+          name: event.name,
+          image: imageUrl,
+          date: new Date(listing.start),
+          listingUrl: `https://www.ticketleap.events/tickets/${event.slug}?date=${
+            Date.parse(listing.start) / 1000
+          }`,
+        };
+      });
   });
 
   return listings
