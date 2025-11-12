@@ -1,4 +1,5 @@
 import { parseISO, addHours } from "date-fns";
+import LRUCache from "quick-lru";
 
 export interface TicketLeapEventsResponse {
   data: Array<{
@@ -40,13 +41,21 @@ export interface GetTicketLeapListingsOptions {
   end?: Date;
 }
 
-export async function getTicketLeapListings(
-  type: "shows" | "classes",
-  options?: GetTicketLeapListingsOptions,
-): Promise<Array<TicketLeapListing>> {
-  const now = new Date();
+const localCache = new LRUCache<string, TicketLeapEventsResponse>({
+  maxSize: 10,
+  // 10 minutes
+  maxAge: 1000 * 60 * 10,
+});
 
-  const events = await fetch(
+const fetchWithCache = async (
+  type: "shows" | "classes",
+): Promise<TicketLeapEventsResponse> => {
+  const cacheHit = localCache.get(type);
+  if (cacheHit) {
+    return Promise.resolve(cacheHit);
+  }
+
+  const res = await fetch(
     // https://technically.showclix.com/events.html
     "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
     {
@@ -57,13 +66,24 @@ export async function getTicketLeapListings(
             : import.meta.env.TICKETLEAP_CLASSES_TOKEN,
       },
     },
-  )
-    .then((res) => res.json())
-    .then((res: TicketLeapEventsResponse) => {
-      return res.data
-        .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
-        .map((d) => ({ ...d, id: Number.parseInt(d.id) }));
-    });
+  ).then((res) => res.json());
+
+  localCache.set(type, res);
+
+  return res;
+};
+
+export async function getTicketLeapListings(
+  type: "shows" | "classes",
+  options?: GetTicketLeapListingsOptions,
+): Promise<Array<TicketLeapListing>> {
+  const now = new Date();
+
+  const events = await fetchWithCache(type).then((res) => {
+    return res.data
+      .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+      .map((d) => ({ ...d, id: Number.parseInt(d.id) }));
+  });
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
@@ -100,9 +120,9 @@ export async function getTicketLeapListings(
           name: event.name,
           image: imageUrl,
           date: new Date(listing.start),
-          listingUrl: `https://www.ticketleap.events/tickets/${event.slug}?date=${
-            Date.parse(listing.start) / 1000
-          }`,
+          listingUrl: `https://www.ticketleap.events/tickets/${
+            event.slug
+          }?date=${Date.parse(listing.start) / 1000}`,
         };
       });
   });

@@ -1,4 +1,5 @@
 import { parseISO, addHours } from "date-fns";
+import LRUCache from "quick-lru";
 import type {
   TicketLeapEventsResponse,
   TicketLeapListing,
@@ -8,14 +9,22 @@ export interface TicketLeapEventResponse {
   data: TicketLeapEventsResponse["data"][number];
 }
 
-export async function getTicketLeapEventListings(
+const localCache = new LRUCache<string, TicketLeapEventResponse>({
+  maxSize: 10,
+  // 10 minutes
+  maxAge: 1000 * 60 * 10,
+});
+
+const fetchWithCache = async (
   eventId: number,
   type: "shows" | "classes",
-  limit?: number,
-): Promise<Array<TicketLeapListing> | null> {
-  const now = new Date();
+): Promise<TicketLeapEventResponse> => {
+  const cacheHit = localCache.get(`${type}-${eventId}`);
+  if (cacheHit) {
+    return Promise.resolve(cacheHit);
+  }
 
-  const event = await fetch(
+  const res = await fetch(
     // https://technically.showclix.com/events.html
     `https://admin.ticketleap.events/api/v1/events/${eventId}?filter=upcoming=true`,
     {
@@ -26,23 +35,34 @@ export async function getTicketLeapEventListings(
             : import.meta.env.TICKETLEAP_CLASSES_TOKEN,
       },
     },
-  )
-    .then((res) => res.json())
-    .then((res: TicketLeapEventResponse) => {
-      const eventData = res.data;
+  ).then((res) => res.json());
 
-      if (
-        eventData.attributes.onsale &&
-        !eventData.attributes.settings.private
-      ) {
-        return {
-          ...eventData,
-          id: Number.parseInt(eventData.id),
-        };
-      }
+  if (res) {
+    localCache.set(`${type}-${eventId}`, res);
+  }
 
-      return null;
-    });
+  return res;
+};
+
+export async function getTicketLeapEventListings(
+  eventId: number,
+  type: "shows" | "classes",
+  limit?: number,
+): Promise<Array<TicketLeapListing> | null> {
+  const now = new Date();
+
+  const event = await fetchWithCache(eventId, type).then((res) => {
+    const eventData = res.data;
+
+    if (eventData.attributes.onsale && !eventData.attributes.settings.private) {
+      return {
+        ...eventData,
+        id: Number.parseInt(eventData.id),
+      };
+    }
+
+    return null;
+  });
 
   if (event === null) {
     return null;
