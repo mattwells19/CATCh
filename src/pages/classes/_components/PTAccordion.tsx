@@ -74,7 +74,7 @@ const PTAccordionItem = ({
                   </li>
                 ))
               ) : (
-                <li className="border-primary-purple border-y px-2 py-8">
+                <li className="border-primary-purple border-t lg:border-b p-8">
                   Check back soon!
                 </li>
               )}
