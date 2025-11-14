@@ -115,7 +115,7 @@ export const PTAccordion = ({
       setTimeout(() => {
         window.scrollTo({
           behavior: "smooth",
-          top: selectedAccordionItem.offsetTop - 110,
+          top: selectedAccordionItem.offsetTop - 10,
         });
       }, 5);
     }

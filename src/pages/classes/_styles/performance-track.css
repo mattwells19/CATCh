@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  max-width: 1264px;
+  --max-page-width: 1264px;
+  max-width: var(--max-page-width);
+  position: relative;
 }
 
 @media (width >=1024px) {
@@ -11,13 +13,14 @@
     margin: auto;
   }
 
-  .pt-page-layout::after {
+  .pt-bubble-box {
     content: "";
     position: absolute;
     z-index: -9;
     background-color: #005f66;
     clip-path: inset(0 0 0 0 round 0px 600px 600px 0px);
-    inset: 50% 0% -5% -100%;
+    --page-margin: calc((max(0%, 100vw - var(--max-page-width)) / 2) * -1);
+    inset: 30% calc(var(--page-margin) + 2%) 35% var(--page-margin);
   }
 }
 
