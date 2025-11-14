@@ -1,5 +1,14 @@
 ---
 import { Icon } from "astro-icon/components";
+import {
+  addMonths,
+  parseISO,
+  format,
+  subMonths,
+  isSameMonth,
+  setDate,
+  isMatch,
+} from "date-fns";
 
 import { getShowListings } from "~/api/getShowListings";
 
@@ -7,18 +16,98 @@ import RootLayout from "~/layouts/RootLayout.astro";
 import ShowDateTime from "~/components/ShowDateTime.astro";
 import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import LinkedImage from "~/components/LinkedImage.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
+
+const fromDateParam = Astro.url.searchParams.get("from");
+
+if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
+  return Astro.redirect("/shows");
+}
+
+const now = new Date();
+
+const fromDate: Date = (() => {
+  const startDate = fromDateParam ? parseISO(fromDateParam) : null;
+  if (startDate && startDate >= now) {
+    return startDate;
+  } else {
+    return now;
+  }
+})();
+
+const toDate = setDate(addMonths(fromDate, 1), 1);
 
 const upcomingShows = await getShowListings({
-  limit: 15,
+  start: fromDate,
+  end: toDate,
 });
+
+const startOfFromDateMonth = setDate(fromDate, 1);
+
+const prevMonth: Date | null = (() => {
+  const lastMonth = subMonths(startOfFromDateMonth, 1);
+  if (lastMonth < now) {
+    return null;
+  } else {
+    return lastMonth;
+  }
+})();
+
+const prevMonthHref: URL = (() => {
+  const destinationUrl = new URL(Astro.url);
+  if (prevMonth) {
+    destinationUrl.searchParams.set("from", format(prevMonth, "yyyy-MM-dd"));
+  } else {
+    destinationUrl.searchParams.delete("from");
+  }
+  return destinationUrl;
+})();
+
+const nextMonth = addMonths(startOfFromDateMonth, 1);
+const nextMonthHref: URL = (() => {
+  const destinationUrl = new URL(Astro.url);
+  destinationUrl.searchParams.set("from", format(nextMonth, "yyyy-MM-dd"));
+  return destinationUrl;
+})();
 ---
 
 <RootLayout title="Upcoming Shows" class="lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 bg-shapes"
   >
-    Calendar
+    <a href="/shows">Calendar</a>
   </h1>
+  <nav
+    class="lg:border-b-2 border-light-purple pb-12 px-4 flex items-center gap-2"
+  >
+    {
+      isSameMonth(fromDate, now) ? null : (
+        <a
+          href={prevMonthHref}
+          aria-label="View the previous month's shows"
+          class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+        >
+          <RemixIcon icon="arrow-left-s" variant="line" />
+        </a>
+      )
+    }
+    <h3
+      class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
+    >
+      <Icon name="calendar" class="inline" />
+      <span>
+        {format(fromDate, "MMMM")}
+      </span>
+    </h3>
+    <a
+      name="from"
+      href={nextMonthHref}
+      aria-label="View next month's shows"
+      class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+    >
+      <RemixIcon icon="arrow-right-s" variant="line" />
+    </a>
+  </nav>
   <!-- desktop view -->
   <ul class="hidden flex-col lg:flex">
     {

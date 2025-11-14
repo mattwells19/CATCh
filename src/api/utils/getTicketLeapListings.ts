@@ -1,4 +1,5 @@
 import { parseISO, addHours } from "date-fns";
+import LRUCache from "quick-lru";
 
 export interface TicketLeapEventsResponse {
   data: Array<{
@@ -34,13 +35,27 @@ export interface TicketLeapListing {
   listingUrl: string;
 }
 
-export async function getTicketLeapListings(
-  type: "shows" | "classes",
-  limit?: number,
-): Promise<Array<TicketLeapListing>> {
-  const now = new Date();
+export interface GetTicketLeapListingsOptions {
+  limit?: number;
+  start?: Date;
+  end?: Date;
+}
 
-  const events = await fetch(
+const localCache = new LRUCache<string, TicketLeapEventsResponse>({
+  maxSize: 10,
+  // 30 minutes
+  maxAge: 1000 * 60 * 30,
+});
+
+const fetchWithCache = async (
+  type: "shows" | "classes",
+): Promise<TicketLeapEventsResponse> => {
+  const cacheHit = localCache.get(type);
+  if (cacheHit) {
+    return Promise.resolve(cacheHit);
+  }
+
+  const res = await fetch(
     // https://technically.showclix.com/events.html
     "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
     {
@@ -51,13 +66,24 @@ export async function getTicketLeapListings(
             : import.meta.env.TICKETLEAP_CLASSES_TOKEN,
       },
     },
-  )
-    .then((res) => res.json())
-    .then((res: TicketLeapEventsResponse) => {
-      return res.data
-        .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
-        .map((d) => ({ ...d, id: Number.parseInt(d.id) }));
-    });
+  ).then((res) => res.json());
+
+  localCache.set(type, res);
+
+  return res;
+};
+
+export async function getTicketLeapListings(
+  type: "shows" | "classes",
+  options?: GetTicketLeapListingsOptions,
+): Promise<Array<TicketLeapListing>> {
+  const now = new Date();
+
+  const events = await fetchWithCache(type).then((res) => {
+    return res.data
+      .filter((d) => d.attributes.onsale && !d.attributes.settings.private)
+      .map((d) => ({ ...d, id: Number.parseInt(d.id) }));
+  });
 
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
@@ -66,10 +92,16 @@ export async function getTicketLeapListings(
         // TODO: double check this when Daylight Savings starts in March as this number could change.
         const listingStart = addHours(parseISO(listing.start), 5);
 
+        // the parent event may have listings from the past, so filter out anything before "today" here
+        const isAfterNow = now < listingStart;
+        const isAfterStart = !options?.start || listingStart > options.start;
+        const isBeforeEnd = !options?.end || listingStart <= options.end;
+
         return (
           listing.status === "active" &&
-          // the parent event may have listings from the past, so filter out anything before "today" here
-          now < listingStart
+          isAfterNow &&
+          isAfterStart &&
+          isBeforeEnd
         );
       })
       .map((listing) => {
@@ -88,9 +120,9 @@ export async function getTicketLeapListings(
           name: event.name,
           image: imageUrl,
           date: new Date(listing.start),
-          listingUrl: `https://www.ticketleap.events/tickets/${event.slug}?date=${
-            Date.parse(listing.start) / 1000
-          }`,
+          listingUrl: `https://www.ticketleap.events/tickets/${
+            event.slug
+          }?date=${Date.parse(listing.start) / 1000}`,
         };
       });
   });
@@ -100,5 +132,5 @@ export async function getTicketLeapListings(
     .sort(
       (listingA, listingB) => listingA.date.getTime() - listingB.date.getTime(),
     )
-    .slice(0, limit);
+    .slice(0, options?.limit);
 }
