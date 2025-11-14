@@ -1,43 +1,73 @@
 ---
-import { getClassListings } from "~/api/getClassListings";
-
-import { ClassIDs } from "./class-ids";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import RootLayout from "~/layouts/RootLayout.astro";
-import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
-import NoClassesPlaceholder from "./_components/NoClassesPlaceholder.astro";
+
+import { getClassListings } from "~/api/getClassListings";
+import { getTopOfPage } from "~/api/getTopOfPage";
+import { getPerformanceTrackAccordions } from "~/api/getPerformanceTrackAccordions";
+import { ClassIDs } from "./class-ids";
+
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+import { PTAccordion } from "./_components/PTAccordion";
+import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
+import "./_styles/performance-track.css";
 
-const pt1Classes = getClassListings({ eventId: ClassIDs.PT1 });
-const pt2Classes = getClassListings({ eventId: ClassIDs.PT2 });
-const pt3Classes = getClassListings({ eventId: ClassIDs.PT3 });
-
-const allCLasses = await Promise.all([pt1Classes, pt2Classes, pt3Classes]).then(
-  (classes) => classes.flat(),
-);
+const [topOfPage, ptAccordionsContent, ...classListings] = await Promise.all([
+  getTopOfPage("performance-track"),
+  getPerformanceTrackAccordions(),
+  getClassListings({ eventId: ClassIDs.PT1 }),
+  getClassListings({ eventId: ClassIDs.PT2 }),
+  getClassListings({ eventId: ClassIDs.PT3 }),
+]);
 ---
 
-<RootLayout title="Performance Track - Classes" class="md:px-8 lg:px-16">
+<RootLayout title="Performance Track - Classes" class="pt-page-layout">
   <div class="px-4">
     <ClassBreadcrumbs>Perform Improv Comedy</ClassBreadcrumbs>
   </div>
 
   <h1
-    class="text-primary-purple text-5xl md:text-6xl font-serif font-bold px-4 pt-20 pb-12 border-light-purple bg-shapes md:border-b-2 lg:pt-32"
+    class="text-primary-purple text-5xl md:text-6xl font-serif font-bold px-4 pt-8 bg-shapes lg:pt-12"
   >
-    Performance Track 1 – 3
+    Performance Track 1 &ndash; 3
   </h1>
 
-  {
-    allCLasses.length > 0 ? (
-      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 sm:gap-6 md:py-12">
-        {allCLasses.map((ptClass) => (
-          <li class="flex-1 w-full">
-            <UpcomingClassCard classListing={ptClass} class="max-w-none" />
+  <div class="pt-bubble-box"></div>
+  <section class="pt-top-content">
+    <div
+      class="text-xl px-8 wysiwyg"
+      set:html={documentToHtmlString(topOfPage.content)}
+    />
+    <img
+      alt="A group of 3 improvisers screaming in surprise!"
+      src={topOfPage.image}
+      class="w-full"
+    />
+  </section>
+  <section class="pt-accordions">
+    <PTAccordion
+      client:only="react"
+      ptAccordionContent={ptAccordionsContent}
+      classListings={classListings}
+    />
+  </section>
+  <section class="my-12 mx-4">
+    <h2 class="font-serif text-primary-purple text-3xl font-bold px-6 lg:px-0">
+      Upcoming Classes
+    </h2>
+    <ul class="mt-8">
+      {
+        classListings.flat().map((utsClass, index) => (
+          <li
+            class="border-primary-purple border-b px-2 py-8"
+            class:list={{
+              "border-t": index === 0,
+            }}
+          >
+            <UpcomingClassItem classListing={utsClass} />
           </li>
-        ))}
-      </ul>
-    ) : (
-      <NoClassesPlaceholder />
-    )
-  }
+        ))
+      }
+    </ul>
+  </section>
 </RootLayout>
