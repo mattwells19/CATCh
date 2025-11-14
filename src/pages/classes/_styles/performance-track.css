@@ -101,7 +101,7 @@
   padding-bottom: 3rem;
 
   > h2 {
-    font: bold var(--font-lg) var(--font-serif);
+    font-family: var(--font-serif);
     color: var(--primary-purple);
   }
 }

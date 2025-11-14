@@ -25,7 +25,11 @@ const PTAccordionItem = ({
     <>
       {/* preload image even if accordion is closed */}
       <img src={image} hidden />
-      <Accordion.Item value={value} className="pt-accordion-item">
+      <Accordion.Item
+        data-value={value}
+        value={value}
+        className="pt-accordion-item"
+      >
         <Accordion.Header className="pt-accordion-header">
           <Accordion.Trigger>
             <svg
@@ -56,13 +60,15 @@ const PTAccordionItem = ({
           </div>
 
           <section className="pt-accordion-content-classes">
-            <h2 className="pl-5 lg:pl-0">Upcoming Classes</h2>
+            <h2 className="pl-8 text-2xl lg:text-3xl lg:font-bold lg:pl-0">
+              Upcoming Classes
+            </h2>
             <ul className="mt-8">
               {classes.length > 0 ? (
                 classes.map((classListing) => (
                   <li
                     key={classListing.id}
-                    className="border-primary-purple border-y p-8"
+                    className="border-primary-purple border-t lg:border-b p-8"
                   >
                     <UpcomingClassItem classListing={classListing} />
                   </li>
@@ -95,11 +101,31 @@ export const PTAccordion = ({
     ? hashValue
     : accordionValues[0];
 
+  const handleValueChange = (newValue: string) => {
+    if (!accordionValues.includes(newValue)) {
+      return;
+    }
+
+    location.hash = newValue;
+
+    const selectedAccordionItem = document.querySelector<HTMLElement>(
+      `[data-value="${newValue}"]`,
+    );
+    if (selectedAccordionItem) {
+      setTimeout(() => {
+        window.scrollTo({
+          behavior: "smooth",
+          top: selectedAccordionItem.offsetTop - 110,
+        });
+      }, 5);
+    }
+  };
+
   return (
     <Accordion.Root
       type="single"
       defaultValue={value}
-      onValueChange={(value) => (location.hash = value)}
+      onValueChange={handleValueChange}
     >
       {ptAccordionContent.map((ptAccordion, index) => (
         <PTAccordionItem
