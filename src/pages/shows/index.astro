@@ -91,8 +91,13 @@ const nextMonthHref: URL = (() => {
         </a>
       )
     }
-    <h3 class="text-primary-purple text-4xl font-serif font-bold">
-      {format(fromDate, "MMMM")}
+    <h3
+      class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
+    >
+      <Icon name="calendar" class="inline" />
+      <span>
+        {format(fromDate, "MMMM")}
+      </span>
     </h3>
     <a
       name="from"
