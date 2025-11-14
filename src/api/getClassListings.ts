@@ -2,6 +2,7 @@ import { EMPTY_CLASS, getDetailsForClasses, type Class } from "./getClasses";
 import { getTicketLeapEventListings } from "./utils/getTicketLeapListing";
 import {
   getTicketLeapListings,
+  type GetTicketLeapListingsOptions,
   type TicketLeapListing,
 } from "./utils/getTicketLeapListings";
 import { getTicketLeapPrice } from "./utils/getTicketLeapPrice";
@@ -12,18 +13,17 @@ export interface TicketLeapClassListing extends TicketLeapListing {
 
 export type ClassListing = TicketLeapClassListing & Nullable<Class>;
 
-interface GetClassListingsOptions {
-  limit?: number;
+interface GetClassListingsOptions extends GetTicketLeapListingsOptions {
   eventId?: number;
 }
 
 export async function getClassListings({
-  limit,
   eventId,
+  ...options
 }: GetClassListingsOptions = {}): Promise<Array<ClassListing>> {
   const classListings = eventId
-    ? await getTicketLeapEventListings(eventId, "classes", limit)
-    : await getTicketLeapListings("classes", limit);
+    ? await getTicketLeapEventListings(eventId, "classes", options.limit)
+    : await getTicketLeapListings("classes", options);
   if (classListings === null) {
     return [];
   }

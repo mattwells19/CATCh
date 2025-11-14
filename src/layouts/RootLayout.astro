@@ -15,6 +15,12 @@ type Props = {
 const { title, class: className } = Astro.props;
 
 const GTM_ID = "GTM-WQRTM3H3";
+
+Astro.response.headers.set(
+  "Cache-Control",
+  // 30 minutes
+  "public, max-age=0, s-maxage=1800, must-revalidate",
+);
 ---
 
 <html lang="en">

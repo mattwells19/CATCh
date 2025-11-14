@@ -1,5 +1,6 @@
 import { EMPTY_SHOW, getDetailsForShows, type Show } from "./getShows";
 import {
+  type GetTicketLeapListingsOptions,
   type TicketLeapListing,
   getTicketLeapListings,
 } from "./utils/getTicketLeapListings";
@@ -11,12 +12,10 @@ export interface TicketLeapShowListing extends TicketLeapListing {
 
 export type ShowListing = TicketLeapShowListing & Nullable<Show>;
 
-export async function getShowListings({
-  limit,
-}: {
-  limit?: number;
-} = {}): Promise<Array<ShowListing>> {
-  const showListings = await getTicketLeapListings("shows", limit);
+export async function getShowListings(
+  options: GetTicketLeapListingsOptions = {},
+): Promise<Array<ShowListing>> {
+  const showListings = await getTicketLeapListings("shows", options);
 
   const eventIds = Array.from(
     new Set(showListings.map((listing) => listing.eventId)),

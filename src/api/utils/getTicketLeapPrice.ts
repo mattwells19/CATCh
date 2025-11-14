@@ -1,12 +1,25 @@
+import LRUCache from "quick-lru";
+
 const priceFormatter = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
+});
+
+const localCache = new LRUCache<number, string>({
+  maxSize: 50,
+  // 1 hour
+  maxAge: 1000 * 60 * 60 * 1,
 });
 
 export async function getTicketLeapPrice(
   type: "shows" | "classes",
   eventId: number,
 ): Promise<string> {
+  const cacheHit = localCache.get(eventId);
+  if (cacheHit) {
+    return Promise.resolve(cacheHit);
+  }
+
   return fetch(
     `https://admin.ticketleap.events/api/v1/events/${eventId}/relationships/price-levels`,
     {
@@ -19,8 +32,14 @@ export async function getTicketLeapPrice(
     },
   )
     .then((res) => res.json())
-    .then((res) =>
-      priceFormatter.format(res[0].data.attributes.price.amount / 100),
-    )
+    .then((res) => {
+      const eventPrice = priceFormatter.format(
+        res[0].data.attributes.price.amount / 100,
+      );
+
+      localCache.set(eventId, eventPrice);
+
+      return eventPrice;
+    })
     .catch(() => "");
 }
