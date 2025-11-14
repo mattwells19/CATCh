@@ -43,8 +43,8 @@ export interface GetTicketLeapListingsOptions {
 
 const localCache = new LRUCache<string, TicketLeapEventsResponse>({
   maxSize: 10,
-  // 10 minutes
-  maxAge: 1000 * 60 * 10,
+  // 30 minutes
+  maxAge: 1000 * 60 * 30,
 });
 
 const fetchWithCache = async (

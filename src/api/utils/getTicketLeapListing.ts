@@ -10,9 +10,9 @@ export interface TicketLeapEventResponse {
 }
 
 const localCache = new LRUCache<string, TicketLeapEventResponse>({
-  maxSize: 10,
-  // 10 minutes
-  maxAge: 1000 * 60 * 10,
+  maxSize: 25,
+  // 30 minutes
+  maxAge: 1000 * 60 * 30,
 });
 
 const fetchWithCache = async (

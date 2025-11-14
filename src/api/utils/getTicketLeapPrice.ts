@@ -6,9 +6,9 @@ const priceFormatter = Intl.NumberFormat("en-US", {
 });
 
 const localCache = new LRUCache<number, string>({
-  maxSize: 30,
+  maxSize: 50,
   // 1 hour
-  maxAge: 1000 * 60 * 60,
+  maxAge: 1000 * 60 * 60 * 1,
 });
 
 export async function getTicketLeapPrice(
