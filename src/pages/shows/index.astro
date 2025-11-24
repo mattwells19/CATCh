@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { TZDate } from "@date-fns/tz";
 import {
   addMonths,
   parseISO,
@@ -24,7 +25,7 @@ if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
   return Astro.redirect("/shows");
 }
 
-const now = new Date();
+const now = new TZDate(Date.now(), "America/New_York");
 
 const fromDate: Date = (() => {
   const startDate = fromDateParam ? parseISO(fromDateParam) : null;

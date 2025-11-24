@@ -1,3 +1,4 @@
+import { TZDate } from "@date-fns/tz";
 import type { WYSIWYGString } from "./api.types";
 import { getCollectionEntries } from "./utils";
 
@@ -20,7 +21,7 @@ export async function getPolicies(): Promise<Array<Policy>> {
 
   return policyEntries.map((policyEntry) => ({
     ...policyEntry,
-    _modified: new Date(policyEntry._modified),
+    _modified: new TZDate(policyEntry._modified, "America/New_York"),
   }));
 }
 

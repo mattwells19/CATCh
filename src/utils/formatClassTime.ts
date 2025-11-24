@@ -1,4 +1,5 @@
 import { add, format } from "date-fns";
+import { TZDate } from "@date-fns/tz";
 import type { ClassListing } from "~/api/getClassListings";
 
 export function formatClassTime(startDate: Date): string {
@@ -10,7 +11,7 @@ export function formatClassTime(startDate: Date): string {
 }
 
 export function formatClassDateRange(classListing: ClassListing) {
-  const classStartDate = new Date(classListing.date);
+  const classStartDate = new TZDate(classListing.date, "America/New_York");
   const dayOfTheWeek = format(classStartDate, "EEEE");
 
   if (

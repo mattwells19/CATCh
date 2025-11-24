@@ -1,3 +1,4 @@
+import { TZDate } from "@date-fns/tz";
 import { parseISO, addHours } from "date-fns";
 import LRUCache from "quick-lru";
 
@@ -77,7 +78,7 @@ export async function getTicketLeapListings(
   type: "shows" | "classes",
   options?: GetTicketLeapListingsOptions,
 ): Promise<Array<TicketLeapListing>> {
-  const now = new Date();
+  const now = new TZDate(Date.now(), "America/New_York");
 
   const events = await fetchWithCache(type).then((res) => {
     return res.data
@@ -119,7 +120,7 @@ export async function getTicketLeapListings(
           id: Number.parseInt(listing.event_id),
           name: event.name,
           image: imageUrl,
-          date: new Date(listing.start),
+          date: new TZDate(listing.start, "America/New_York"),
           listingUrl: `https://www.ticketleap.events/tickets/${
             event.slug
           }?date=${Date.parse(listing.start) / 1000}`,
