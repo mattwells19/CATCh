@@ -1,4 +1,4 @@
-import { parseISO, addHours } from "date-fns";
+import { toDate } from "date-fns-tz";
 import LRUCache from "quick-lru";
 import type {
   TicketLeapEventsResponse,
@@ -49,7 +49,7 @@ export async function getTicketLeapEventListings(
   type: "shows" | "classes",
   limit?: number,
 ): Promise<Array<TicketLeapListing> | null> {
-  const now = new Date();
+  const now = toDate(Date.now(), { timeZone: "America/New_York" });
 
   const event = await fetchWithCache(eventId, type).then((res) => {
     const eventData = res.data;
@@ -70,9 +70,10 @@ export async function getTicketLeapEventListings(
 
   const listings = event.attributes.dates
     .filter((listing) => {
-      // listing is in 24-hour format, but has no offset.
-      // TODO: double check this when Daylight Savings starts in March as this number could change.
-      const listingStart = addHours(parseISO(listing.start), 5);
+      // listing is ISO 8601 with no offset.
+      const listingStart = toDate(listing.start, {
+        timeZone: "America/New_York",
+      });
 
       return (
         listing.status === "active" &&
@@ -87,7 +88,7 @@ export async function getTicketLeapEventListings(
       image: event.attributes.image
         ? `https:${event.attributes.image}`
         : "/images/CATCh-Placeholder.jpg",
-      date: new Date(listing.start),
+      date: toDate(listing.start, { timeZone: "America/New_York" }),
       listingUrl: `https://www.ticketleap.events/tickets/${
         event.attributes.slug
       }?date=${Date.parse(listing.start) / 1000}`,

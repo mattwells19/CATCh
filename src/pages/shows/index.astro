@@ -9,6 +9,7 @@ import {
   setDate,
   isMatch,
 } from "date-fns";
+import { toDate as toDateTz } from "date-fns-tz";
 
 import { getShowListings } from "~/api/getShowListings";
 
@@ -24,7 +25,7 @@ if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
   return Astro.redirect("/shows");
 }
 
-const now = new Date();
+const now = toDateTz(Date.now(), { timeZone: "America/New_York" });
 
 const fromDate: Date = (() => {
   const startDate = fromDateParam ? parseISO(fromDateParam) : null;
