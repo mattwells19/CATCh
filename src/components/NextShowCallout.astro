@@ -1,5 +1,4 @@
 ---
-import { TZDate } from "@date-fns/tz";
 import { format } from "date-fns";
 import { Icon } from "astro-icon/components";
 
@@ -15,7 +14,7 @@ type Props = {
 const { nextShow } = Astro.props;
 
 const showDateFormatted = (() => {
-  const showTime = new TZDate(nextShow.date, "America/New_York");
+  const showTime = nextShow.date;
 
   const dayOfTheWeek = format(showTime, "EEEE");
   const time = format(showTime, "h:mm a");
