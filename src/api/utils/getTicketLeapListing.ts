@@ -49,7 +49,7 @@ export async function getTicketLeapEventListings(
   type: "shows" | "classes",
   limit?: number,
 ): Promise<Array<TicketLeapListing> | null> {
-  const now = new Date();
+  const now = toDate(Date.now(), { timeZone: "America/New_York" });
 
   const event = await fetchWithCache(eventId, type).then((res) => {
     const eventData = res.data;
