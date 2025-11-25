@@ -1,8 +1,8 @@
 ---
-import { format } from "date-fns";
 import { Icon } from "astro-icon/components";
 
 import type { ShowListing } from "~/api/getShowListings";
+import { formatEst } from "~/utils/formatEst";
 
 import CoralButtonLink from "./CoralButtonLink.astro";
 import LinkedImage from "./LinkedImage.astro";
@@ -16,9 +16,9 @@ const { nextShow } = Astro.props;
 const showDateFormatted = (() => {
   const showTime = nextShow.date;
 
-  const dayOfTheWeek = format(showTime, "EEEE");
-  const time = format(showTime, "h:mm a");
-  const day = format(showTime, "LLL d");
+  const dayOfTheWeek = formatEst(showTime, "EEEE");
+  const time = formatEst(showTime, "h:mm a");
+  const day = formatEst(showTime, "LLL d");
 
   return `${dayOfTheWeek}, ${day} at ${time}`;
 })();

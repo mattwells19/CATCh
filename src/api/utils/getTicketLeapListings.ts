@@ -1,4 +1,4 @@
-import { parseISO, addHours } from "date-fns";
+import { toDate } from "date-fns-tz";
 import LRUCache from "quick-lru";
 
 export interface TicketLeapEventsResponse {
@@ -88,9 +88,10 @@ export async function getTicketLeapListings(
   const listings = events.map(({ attributes: event, id: event_id }) => {
     return event.dates
       .filter((listing) => {
-        // listing is in 24-hour format, but has no offset.
-        // TODO: double check this when Daylight Savings starts in March as this number could change.
-        const listingStart = addHours(parseISO(listing.start), 5);
+        // listing is ISO 8601 with no offset.
+        const listingStart = toDate(listing.start, {
+          timeZone: "America/New_York",
+        });
 
         // the parent event may have listings from the past, so filter out anything before "today" here
         const isAfterNow = now < listingStart;
@@ -119,7 +120,7 @@ export async function getTicketLeapListings(
           id: Number.parseInt(listing.event_id),
           name: event.name,
           image: imageUrl,
-          date: parseISO(listing.start),
+          date: toDate(listing.start, { timeZone: "America/New_York" }),
           listingUrl: `https://www.ticketleap.events/tickets/${
             event.slug
           }?date=${Date.parse(listing.start) / 1000}`,

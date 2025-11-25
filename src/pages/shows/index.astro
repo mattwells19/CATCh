@@ -11,6 +11,7 @@ import {
 } from "date-fns";
 
 import { getShowListings } from "~/api/getShowListings";
+import { formatEst } from "~/utils/formatEst";
 
 import RootLayout from "~/layouts/RootLayout.astro";
 import ShowDateTime from "~/components/ShowDateTime.astro";
@@ -96,7 +97,7 @@ const nextMonthHref: URL = (() => {
     >
       <Icon name="calendar" class="inline" />
       <span>
-        {format(fromDate, "MMMM")}
+        {formatEst(fromDate, "MMMM")}
       </span>
     </h3>
     <a
