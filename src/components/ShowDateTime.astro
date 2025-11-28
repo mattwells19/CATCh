@@ -1,7 +1,7 @@
 ---
-import { Icon } from "astro-icon/components";
 import type { ShowListing } from "~/api/getShowListings";
 import { formatEst } from "~/utils/formatEst";
+import CalendarIcon from "../icons/calendar.svg";
 
 type Props = {
   showDate: ShowListing["date"];
@@ -20,12 +20,12 @@ const showDateFormatted = (() => {
 ---
 
 <div
-  class="flex items-center gap-2 border-b-2 border-light-purple"
+  class="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple"
   class:list={className}
 >
-  <Icon name="calendar" />
+  <CalendarIcon name="calendar" class="size-5" />
 
-  <p class="text-primary-purple font-serif font-semibold">
+  <p class="font-serif font-semibold">
     {showDateFormatted}
   </p>
 </div>

@@ -1,8 +1,8 @@
 ---
-import { Icon } from "astro-icon/components";
 import type { ClassListing } from "~/api/getClassListings";
 import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import { formatClassDateRange } from "~/utils/formatClassTime";
+import CalendarIcon from "~/icons/calendar.svg";
 
 type Props = {
   classListing: ClassListing;
@@ -15,7 +15,7 @@ const formattedClassDate = formatClassDateRange(classListing);
 
 <div class="flex flex-col lg:flex-row lg:justify-between px-6 lg:px-0">
   <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center">
-    <Icon name="calendar" class="h-10 w-10" />
+    <CalendarIcon name="calendar" class="size-10 text-primary-purple" />
     <div class="font-serif text-xl text-primary-purple">
       <h3 class="font-bold">
         {classListing.name}
