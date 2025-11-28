@@ -19,7 +19,6 @@
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "astro": "^5.16.2",
-    "astro-icon": "^1.1.5",
     "astro-seo-metadata": "^0.6.0",
     "contentful": "^11.9.0",
     "date-fns": "^4.1.0",

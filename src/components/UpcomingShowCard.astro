@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 import type { ShowListing } from "~/api/getShowListings";
@@ -7,6 +6,7 @@ import type { ShowListing } from "~/api/getShowListings";
 import CoralButtonLink from "./CoralButtonLink.astro";
 import ShowDateTime from "./ShowDateTime.astro";
 import LinkedImage from "./LinkedImage.astro";
+import TicketIcon from "../icons/ticket.svg";
 
 type Props = {
   showListing: ShowListing;
@@ -45,6 +45,6 @@ const { showListing } = Astro.props;
   </p>
 
   <CoralButtonLink href={showListing.listingUrl} class="w-full min-w-full">
-    <Icon name="ticket" />Get Tickets
+    <TicketIcon name="ticket" class="size-5" />Get Tickets
   </CoralButtonLink>
 </div>
