@@ -1,6 +1,6 @@
 import type { ClassListing } from "~/api/getClassListings";
-import { RemixIcon } from "~/components/RemixIcon";
 import { formatClassDateRange } from "~/utils/formatClassTime";
+import { CalendarIcon } from "~/icons/CalendarIcon";
 
 type Props = {
   classListing: ClassListing;
@@ -11,10 +11,9 @@ export const UpcomingClassItem = ({ classListing }: Props) => {
 
   return (
     <div className="flex flex-col lg:flex-row lg:justify-between">
-      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center text-center lg:text-left">
-        <RemixIcon
-          icon="calendar"
-          variant="line"
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center">
+        <CalendarIcon
+          name="calendar"
           className="h-10 w-10 text-primary-purple"
         />
         <div className="font-serif text-xl text-primary-purple">
