@@ -1,11 +1,10 @@
 ---
-import { Icon } from "astro-icon/components";
-
 import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
 
 import RootLayout from "../layouts/RootLayout.astro";
 
+import ArrowRightIcon from "../icons/arrow-right.svg";
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NextShowCallout from "~/components/NextShowCallout.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
@@ -94,7 +93,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
       }
     </ul>
     <a href="/shows" class="see_all_link text-peach">
-      See all shows <Icon name="arrow-right" />
+      See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
     </a>
   </section>
   <section
@@ -112,7 +111,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
       }
     </ul>
     <a href="/classes" class="see_all_link text-primary-purple">
-      See all classes <Icon name="arrow-right" />
+      See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
     </a>
   </section>
 </RootLayout>

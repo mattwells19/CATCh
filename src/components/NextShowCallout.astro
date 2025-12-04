@@ -1,9 +1,9 @@
 ---
-import { Icon } from "astro-icon/components";
-
 import type { ShowListing } from "~/api/getShowListings";
 import { formatEst } from "~/utils/formatEst";
 
+import CalendarIcon from "../icons/calendar.svg";
+import TicketIcon from "../icons/ticket.svg";
 import CoralButtonLink from "./CoralButtonLink.astro";
 import LinkedImage from "./LinkedImage.astro";
 
@@ -29,11 +29,11 @@ const showDateFormatted = (() => {
 >
   <div class="flex flex-col gap-8 px-4 lg:px-0">
     <div
-      class="flex items-center gap-2 border-b-2 border-light-purple w-fit mr-auto py-4"
+      class="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4"
     >
-      <Icon name="calendar" />
+      <CalendarIcon name="calendar" class="size-5" />
 
-      <p class="font-serif text-primary-purple font-semibold lg:text-xl">
+      <p class="font-serif font-semibold lg:text-xl">
         {showDateFormatted}
       </p>
     </div>
@@ -49,7 +49,7 @@ const showDateFormatted = (() => {
     }
 
     <CoralButtonLink href={nextShow.listingUrl}>
-      <Icon name="ticket" />Get Tickets
+      <TicketIcon name="ticket" class="size-5" />Get Tickets
     </CoralButtonLink>
   </div>
 

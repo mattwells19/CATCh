@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import {
   addMonths,
   parseISO,
@@ -18,6 +17,8 @@ import ShowDateTime from "~/components/ShowDateTime.astro";
 import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import LinkedImage from "~/components/LinkedImage.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
+import CalendarIcon from "~/icons/calendar.svg";
+import TicketIcon from "~/icons/ticket.svg";
 
 const fromDateParam = Astro.url.searchParams.get("from");
 
@@ -95,7 +96,7 @@ const nextMonthHref: URL = (() => {
     <h3
       class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
     >
-      <Icon name="calendar" class="inline" />
+      <CalendarIcon name="calendar" class="size-9" />
       <span>
         {format(fromDate, "MMMM")}
       </span>
@@ -133,7 +134,7 @@ const nextMonthHref: URL = (() => {
               {show.price}
             </p>
             <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
-              <Icon name="ticket" />
+              <TicketIcon name="ticket" />
               Get Tickets
             </CoralButtonLink>
           </div>
@@ -163,7 +164,7 @@ const nextMonthHref: URL = (() => {
           </p>
           <div class="w-4/5">
             <CoralButtonLink href={show.listingUrl}>
-              <Icon name="ticket" />
+              <TicketIcon name="ticket" />
               Get Tickets
             </CoralButtonLink>
           </div>
