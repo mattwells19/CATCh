@@ -1,0 +1,130 @@
+---
+import { subMinutes } from "date-fns";
+import * as z from "zod";
+import { actions } from "astro:actions";
+
+import { getListingVolunteers } from "~/api/volunteer";
+import { getShowListings } from "~/api/getShowListings";
+import { formatShowTime } from "~/utils/formatShowTime";
+import { formatEst } from "~/utils/formatEst";
+import RootLayout from "~/layouts/RootLayout.astro";
+
+const num = z.number({ coerce: true });
+
+const listingIdResult = num.safeParse(Astro.params.listingId);
+const listingId = listingIdResult.data;
+
+if (!listingId) {
+  return Astro.redirect("/internal/volunteer");
+}
+
+const upcomingShows = await getShowListings();
+const listing = upcomingShows.find((show) => show.id === listingId);
+if (!listing) {
+  return Astro.redirect("/internal/volunteer");
+}
+
+const listingVolunteers = await getListingVolunteers(listing.id);
+
+const arriveTime = (() => {
+  const fortyFiveMinutesBefore = subMinutes(listing.date, 45);
+  return formatEst(fortyFiveMinutesBefore, "h:mm a");
+})();
+
+const result = Astro.getActionResult(actions.volunteer);
+---
+
+<style>
+  form {
+    @apply flex flex-col gap-4 max-w-xl;
+  }
+
+  input,
+  select {
+    @apply block rounded px-3 py-2 border-2 border-primary-purple bg-white w-full;
+  }
+
+  button {
+    @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded mt-4;
+  }
+
+  .result-msg {
+    @apply px-4 py-2 border-2 text-black;
+  }
+</style>
+
+<meta name="robots" content="noindex" />
+<RootLayout
+  title={`Volunteer for ${listing.name}`}
+  class="max-w-xl m-auto p-6 lg:px-12 flex flex-col gap-12"
+>
+  <section>
+    <a
+      href="/internal/volunteer"
+      class="text-primary-purple underline block mb-4"
+    >
+      &lt; Back to show list
+    </a>
+    <h1 class="text-2xl font-bold">Volunteer for {listing.name}</h1>
+    <p class="m-2">
+      Show time is <span class="font-bold">{formatShowTime(listing.date)}</span>
+    </p>
+    <p class="m-2">
+      Please arrive by <span class="font-bold">{arriveTime}</span>
+    </p>
+  </section>
+  {
+    result ? (
+      <>
+        {result.data ? (
+          <p class="result-msg bg-green-200 border-green-800">Success!</p>
+        ) : null}
+        {result.error ? (
+          <p class="result-msg bg-red-200 border-red-800">
+            {result.error.message}
+          </p>
+        ) : null}
+      </>
+    ) : null
+  }
+  <section>
+    <h2 class="text-lg font-bold">Current Volunteers</h2>
+    <ul class="pl-8">
+      {
+        listingVolunteers.length > 0 ? (
+          listingVolunteers.map((volunteerInfo) => (
+            <li class="list-disc pt-2">
+              {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
+              <span class="capitalize">{` (${volunteerInfo.role})`}</span>
+            </li>
+          ))
+        ) : (
+          <li class="pt-2">~No one, but hopefully you 🙏~</li>
+        )
+      }
+    </ul>
+  </section>
+  <form method="POST" action={actions.volunteer} enctype="multipart/form-data">
+    <input type="hidden" type="number" name="listingId" value={listing.id} />
+    <div>
+      <label for="firstName">First Name</label>
+      <input name="firstName" name="firstName" type="text" required />
+    </div>
+    <div>
+      <label for="lastName">Last Name</label>
+      <input name="lastName" name="lastName" type="text" required />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input name="email" name="email" type="email" required />
+    </div>
+    <div>
+      <label for="role">Role</label>
+      <select id="role" name="role" required>
+        <option value="volunteer">Volunteer</option>
+        <option value="tech">Tech</option>
+      </select>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</RootLayout>

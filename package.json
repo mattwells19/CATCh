@@ -18,6 +18,7 @@
     "@contentful/rich-text-html-renderer": "^16.6.9",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@supabase/supabase-js": "^2.86.2",
     "astro": "^5.16.2",
     "astro-seo-metadata": "^0.6.0",
     "contentful": "^11.9.0",
