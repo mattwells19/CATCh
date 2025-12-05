@@ -1,14 +1,22 @@
 ---
-import { toDate as toDateTz } from "date-fns-tz";
 import { addMonths } from "date-fns";
 
 import { getShowListings } from "~/api/getShowListings";
+import {
+  getVolunteerCounts,
+  TECH_LIMIT,
+  VOLUNTEER_LIMIT,
+} from "~/api/volunteer";
 import { formatShowTime } from "~/utils/formatShowTime";
+import { getNow } from "~/utils/getNow";
 import RootLayout from "~/layouts/RootLayout.astro";
 
-const now = toDateTz(Date.now(), { timeZone: "America/New_York" });
+const now = getNow();
 const twoMonthsFromNow = addMonths(now, 2);
 const upcomingShows = await getShowListings({ end: twoMonthsFromNow });
+const volunteerCounts = await getVolunteerCounts(
+  upcomingShows.map((show) => show.id),
+);
 ---
 
 <meta name="robots" content="noindex" />
@@ -24,6 +32,12 @@ const upcomingShows = await getShowListings({ end: twoMonthsFromNow });
           >
             {show.name} - {formatShowTime(show.date)}
           </a>
+          <ul>
+            <li>
+              {`Volunteers: ${volunteerCounts[show.id].volunteer} / ${VOLUNTEER_LIMIT}`}
+            </li>
+            <li>{`Tech: ${volunteerCounts[show.id].tech} / ${TECH_LIMIT}`}</li>
+          </ul>
         </li>
       ))
     }

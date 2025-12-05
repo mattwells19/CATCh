@@ -3,7 +3,11 @@ import { subMinutes } from "date-fns";
 import * as z from "zod";
 import { actions } from "astro:actions";
 
-import { getListingVolunteers } from "~/api/volunteer";
+import {
+  getListingVolunteers,
+  VOLUNTEER_LIMIT,
+  TECH_LIMIT,
+} from "~/api/volunteer";
 import { getShowListings } from "~/api/getShowListings";
 import { formatShowTime } from "~/utils/formatShowTime";
 import { formatEst } from "~/utils/formatEst";
@@ -30,6 +34,29 @@ const arriveTime = (() => {
   const fortyFiveMinutesBefore = subMinutes(listing.date, 45);
   return formatEst(fortyFiveMinutesBefore, "h:mm a");
 })();
+
+const volunteerCount = listingVolunteers.reduce(
+  (acc, curr) => {
+    switch (curr.role) {
+      case "tech":
+        return {
+          ...acc,
+          tech: acc.tech + 1,
+        };
+      case "volunteer":
+        return {
+          ...acc,
+          volunteer: acc.volunteer + 1,
+        };
+      default:
+        return acc;
+    }
+  },
+  { volunteer: 0, tech: 0 },
+);
+const allSlotsFilled =
+  volunteerCount.tech >= TECH_LIMIT &&
+  volunteerCount.volunteer >= VOLUNTEER_LIMIT;
 
 const result = Astro.getActionResult(actions.volunteer);
 ---
@@ -87,6 +114,13 @@ const result = Astro.getActionResult(actions.volunteer);
       </>
     ) : null
   }
+  {
+    allSlotsFilled ? (
+      <p class="result-msg bg-yellow-200 border-yellow-800">
+        All volunteer slots for this event are filled.
+      </p>
+    ) : null
+  }
   <section>
     <h2 class="text-lg font-bold">Current Volunteers</h2>
     <ul class="pl-8">
@@ -108,23 +142,48 @@ const result = Astro.getActionResult(actions.volunteer);
     <input type="hidden" type="number" name="listingId" value={listing.id} />
     <div>
       <label for="firstName">First Name</label>
-      <input name="firstName" name="firstName" type="text" required />
+      <input
+        name="firstName"
+        name="firstName"
+        type="text"
+        required
+        disabled={allSlotsFilled}
+      />
     </div>
     <div>
       <label for="lastName">Last Name</label>
-      <input name="lastName" name="lastName" type="text" required />
+      <input
+        name="lastName"
+        name="lastName"
+        type="text"
+        required
+        disabled={allSlotsFilled}
+      />
     </div>
     <div>
       <label for="email">Email</label>
-      <input name="email" name="email" type="email" required />
+      <input
+        name="email"
+        name="email"
+        type="email"
+        required
+        disabled={allSlotsFilled}
+      />
     </div>
     <div>
       <label for="role">Role</label>
-      <select id="role" name="role" required>
-        <option value="volunteer">Volunteer</option>
-        <option value="tech">Tech</option>
+      <select id="role" name="role" required disabled={allSlotsFilled}>
+        <option
+          value="volunteer"
+          disabled={volunteerCount.volunteer >= VOLUNTEER_LIMIT}
+        >
+          Volunteer
+        </option>
+        <option value="tech" disabled={volunteerCount.tech >= TECH_LIMIT}>
+          Tech
+        </option>
       </select>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" disabled={allSlotsFilled}>Submit</button>
   </form>
 </RootLayout>
