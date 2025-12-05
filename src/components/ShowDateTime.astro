@@ -1,6 +1,6 @@
 ---
 import type { ShowListing } from "~/api/getShowListings";
-import { formatEst } from "~/utils/formatEst";
+import { formatShowTime } from "~/utils/formatShowTime";
 import CalendarIcon from "../icons/calendar.svg";
 
 type Props = {
@@ -10,13 +10,7 @@ type Props = {
 
 const { showDate, class: className } = Astro.props;
 
-const showDateFormatted = (() => {
-  const dayOfTheWeek = formatEst(showDate, "EEEE");
-  const time = formatEst(showDate, "h:mm a");
-  const day = formatEst(showDate, "LLL d");
-
-  return `${dayOfTheWeek}, ${day} at ${time}`;
-})();
+const showDateFormatted = formatShowTime(showDate);
 ---
 
 <div
