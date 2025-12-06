@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint 'src/**/*.{ts,tsx,astro}'"
+    "lint": "eslint 'src/**/*.{ts,tsx,astro}'",
+    "supatypes": "supabase gen types typescript --project-id lpnthtldjubiyszueuwp --schema public > ./src/lib/supabase/database.types.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -38,6 +39,7 @@
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",
     "eslint-plugin-astro": "^1.5.0",
-    "sass": "^1.94.2"
+    "sass": "^1.94.2",
+    "supabase": "^2.65.6"
   }
 }

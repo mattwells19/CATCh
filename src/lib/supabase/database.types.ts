@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      listing: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          show_datetime: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          show_datetime: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          show_datetime?: string
+        }
+        Relationships: []
+      }
       member: {
         Row: {
           created_at: string
@@ -58,6 +79,13 @@ export type Database = {
           role?: Database["public"]["Enums"]["Volunteer Role"]
         }
         Relationships: [
+          {
+            foreignKeyName: "signup_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listing"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "signup_member_id_fkey"
             columns: ["member_id"]

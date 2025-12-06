@@ -63,6 +63,8 @@ export const getVolunteerCounts = async (listingIds: Array<number>) => {
 
 export const volunteer = async (
   listingId: number,
+  listingName: string,
+  listingDate: string,
   firstName: string,
   lastName: string,
   email: string,
@@ -94,7 +96,7 @@ export const volunteer = async (
     .eq("email", email);
   const existingMemberId = existingMemberRecord?.at(0)?.id;
 
-  const { data, error: memberError } = await supabase
+  const memberUpsert = await supabase
     .from("member")
     .upsert({
       id: existingMemberId,
@@ -104,16 +106,26 @@ export const volunteer = async (
     })
     .select("id");
 
-  if (memberError) {
-    throw memberError;
+  if (memberUpsert.error) {
+    throw memberUpsert.error;
   }
 
-  const memberId = data?.at(0)?.id;
+  const memberId = memberUpsert.data?.at(0)?.id;
   if (!memberId) {
     throw new ActionError({
       code: "FAILED_DEPENDENCY",
       message: "Error adding member.",
     });
+  }
+
+  const listingUpsert = await supabase.from("listing").upsert({
+    id: listingId,
+    name: listingName,
+    show_datetime: listingDate,
+  });
+
+  if (listingUpsert.error) {
+    throw listingUpsert.error;
   }
 
   const { error: signupError } = await supabase.from("signup").upsert([

@@ -1,7 +1,7 @@
 ---
 import { subMinutes } from "date-fns";
 import * as z from "zod";
-import { actions } from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 
 import {
   getListingVolunteers,
@@ -58,7 +58,41 @@ const allSlotsFilled =
   volunteerCount.tech >= TECH_LIMIT &&
   volunteerCount.volunteer >= VOLUNTEER_LIMIT;
 
-const result = Astro.getActionResult(actions.volunteer);
+const actionResult = Astro.getActionResult(actions.volunteer);
+if (actionResult) {
+  const errorMessages = (() => {
+    if (!actionResult.error) {
+      return null;
+    }
+
+    if (isInputError(actionResult.error)) {
+      const fields = actionResult.error.fields;
+      return Object.keys(fields).map((field) =>
+        fields[field as keyof typeof fields]!.join(", "),
+      );
+    }
+
+    return [actionResult.error.message];
+  })();
+
+  const redirectUrl = new URL(Astro.url.pathname, Astro.url.origin);
+
+  if (errorMessages) {
+    errorMessages.forEach((errMsg) => {
+      redirectUrl.searchParams.append("error", errMsg);
+    });
+  } else {
+    redirectUrl.searchParams.append("success", "true");
+  }
+
+  return Astro.redirect(redirectUrl.toString());
+}
+
+const searchParams = Astro.url.searchParams;
+const success = searchParams.has("success");
+const errorMessages = searchParams.has("error")
+  ? searchParams.getAll("error")
+  : null;
 ---
 
 <style>
@@ -80,9 +114,9 @@ const result = Astro.getActionResult(actions.volunteer);
   }
 </style>
 
-<meta name="robots" content="noindex" />
 <RootLayout
   title={`Volunteer for ${listing.name}`}
+  noIndex
   class="max-w-xl m-auto p-6 lg:px-12 flex flex-col gap-12"
 >
   <section>
@@ -101,17 +135,21 @@ const result = Astro.getActionResult(actions.volunteer);
     </p>
   </section>
   {
-    result ? (
-      <>
-        {result.data ? (
-          <p class="result-msg bg-green-200 border-green-800">Success!</p>
-        ) : null}
-        {result.error ? (
-          <p class="result-msg bg-red-200 border-red-800">
-            {result.error.message}
-          </p>
-        ) : null}
-      </>
+    success ? (
+      <p class="result-msg bg-green-200 border-green-800">
+        Success! Thank you for your support!
+      </p>
+    ) : null
+  }
+  {
+    errorMessages ? (
+      <div class="result-msg bg-red-200 border-red-800">
+        <ul>
+          {errorMessages.map((errMsg) => (
+            <li>{errMsg}</li>
+          ))}
+        </ul>
+      </div>
     ) : null
   }
   {
@@ -133,13 +171,19 @@ const result = Astro.getActionResult(actions.volunteer);
             </li>
           ))
         ) : (
-          <li class="pt-2">~No one, but hopefully you 🙏~</li>
+          <li class="pt-2">~ No one, but hopefully you 🙏 ~</li>
         )
       }
     </ul>
   </section>
   <form method="POST" action={actions.volunteer} enctype="multipart/form-data">
-    <input type="hidden" type="number" name="listingId" value={listing.id} />
+    <input type="hidden" name="listingId" value={listing.id} />
+    <input type="hidden" name="listingName" value={listing.name} />
+    <input
+      type="hidden"
+      name="listingDate"
+      value={listing.date.toISOString()}
+    />
     <div>
       <label for="firstName">First Name</label>
       <input
