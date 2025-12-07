@@ -1,0 +1,54 @@
+---
+import { getPreshowSlideDecks } from "~/api/getPreshowSlides";
+import RootLayout from "~/layouts/RootLayout.astro";
+import { Slideshow } from "./_components/Slideshow";
+
+const preshowSlideDecks = await getPreshowSlideDecks();
+const selectedDeckTitle = Astro.url.searchParams.get("deck");
+
+const selectedDeck = selectedDeckTitle
+  ? preshowSlideDecks.find((deck) => deck.title === selectedDeckTitle)
+  : null;
+---
+
+<meta name="robots" content="noindex" />
+<RootLayout title="PreShow Slides" class="max-w-4xl px-12 m-auto">
+  <form method="GET">
+    <label for="deck" class="block">Select a preshow slide deck</label>
+    <select
+      id="deck"
+      name="deck"
+      required
+      class="rounded px-3 py-1 border-2 border-primary-purple bg-white w-full;"
+    >
+      <option value="">- Pick a deck -</option>
+      {
+        preshowSlideDecks.map((slideDeck) => (
+          <option
+            selected={selectedDeck?.title === slideDeck.title}
+            value={slideDeck.title}
+          >
+            {slideDeck.title}
+          </option>
+        ))
+      }
+    </select>
+    <button
+      type="submit"
+      class="px-3 py-1 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded"
+    >
+      Go
+    </button>
+  </form>
+  <section class="mt-4">
+    {
+      selectedDeck ? (
+        <Slideshow
+          client:load
+          slides={selectedDeck.slides}
+          secondsPerSlide={selectedDeck.secondsPerSlide}
+        />
+      ) : null
+    }
+  </section>
+</RootLayout>
