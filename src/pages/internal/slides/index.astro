@@ -1,9 +1,15 @@
 ---
-import { getPreshowSlideDecks } from "~/api/getPreshowSlides";
 import RootLayout from "~/layouts/RootLayout.astro";
+import { getPreshowSlideDecks } from "~/api/getPreshowSlides";
+import { getShowListings } from "~/api/getShowListings";
+import { getClassListings } from "~/api/getClassListings";
 import { Slideshow } from "./_components/Slideshow";
 
-const preshowSlideDecks = await getPreshowSlideDecks();
+const [upcomingShows, upcomingClasses, preshowSlideDecks] = await Promise.all([
+  getShowListings({ limit: 4 }),
+  getClassListings({ limit: 4 }),
+  getPreshowSlideDecks(),
+]);
 const selectedDeckTitle = Astro.url.searchParams.get("deck");
 
 const selectedDeck = selectedDeckTitle
@@ -47,6 +53,8 @@ const selectedDeck = selectedDeckTitle
           client:load
           slides={selectedDeck.slides}
           secondsPerSlide={selectedDeck.secondsPerSlide}
+          upcomingShows={upcomingShows}
+          upcomingClasses={upcomingClasses}
         />
       ) : null
     }
