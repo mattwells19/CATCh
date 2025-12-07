@@ -152,13 +152,6 @@ const errorMessages = searchParams.has("error")
       </div>
     ) : null
   }
-  {
-    allSlotsFilled ? (
-      <p class="result-msg bg-yellow-200 border-yellow-800">
-        All volunteer slots for this event are filled.
-      </p>
-    ) : null
-  }
   <section>
     <h2 class="text-lg font-bold">Current Volunteers</h2>
     <ul class="pl-8">
@@ -176,58 +169,73 @@ const errorMessages = searchParams.has("error")
       }
     </ul>
   </section>
-  <form method="POST" action={actions.volunteer} enctype="multipart/form-data">
-    <input type="hidden" name="listingId" value={listing.id} />
-    <input type="hidden" name="listingName" value={listing.name} />
-    <input
-      type="hidden"
-      name="listingDate"
-      value={listing.date.toISOString()}
-    />
-    <div>
-      <label for="firstName">First Name</label>
-      <input
-        name="firstName"
-        name="firstName"
-        type="text"
-        required
-        disabled={allSlotsFilled}
-      />
-    </div>
-    <div>
-      <label for="lastName">Last Name</label>
-      <input
-        name="lastName"
-        name="lastName"
-        type="text"
-        required
-        disabled={allSlotsFilled}
-      />
-    </div>
-    <div>
-      <label for="email">Email</label>
-      <input
-        name="email"
-        name="email"
-        type="email"
-        required
-        disabled={allSlotsFilled}
-      />
-    </div>
-    <div>
-      <label for="role">Role</label>
-      <select id="role" name="role" required disabled={allSlotsFilled}>
-        <option
-          value="volunteer"
-          disabled={volunteerCount.volunteer >= VOLUNTEER_LIMIT}
-        >
-          Volunteer
-        </option>
-        <option value="tech" disabled={volunteerCount.tech >= TECH_LIMIT}>
-          Tech
-        </option>
-      </select>
-    </div>
-    <button type="submit" disabled={allSlotsFilled}>Submit</button>
-  </form>
+
+  {
+    allSlotsFilled ? (
+      <p class="result-msg bg-amber-100 border-amber-400">
+        All volunteer slots for this event are filled.
+      </p>
+    ) : (
+      <form
+        method="POST"
+        action={actions.volunteer}
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="listingId" value={listing.id} />
+        <input type="hidden" name="listingName" value={listing.name} />
+        <input
+          type="hidden"
+          name="listingDate"
+          value={listing.date.toISOString()}
+        />
+        <div>
+          <label for="firstName">First Name</label>
+          <input
+            name="firstName"
+            name="firstName"
+            type="text"
+            required
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="lastName">Last Name</label>
+          <input
+            name="lastName"
+            name="lastName"
+            type="text"
+            required
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input
+            name="email"
+            name="email"
+            type="email"
+            required
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="role">Role</label>
+          <select id="role" name="role" required disabled={allSlotsFilled}>
+            <option
+              value="volunteer"
+              disabled={volunteerCount.volunteer >= VOLUNTEER_LIMIT}
+            >
+              Volunteer
+            </option>
+            <option value="tech" disabled={volunteerCount.tech >= TECH_LIMIT}>
+              Tech
+            </option>
+          </select>
+        </div>
+        <button type="submit" disabled={allSlotsFilled}>
+          Submit
+        </button>
+      </form>
+    )
+  }
 </RootLayout>
