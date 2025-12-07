@@ -28,10 +28,10 @@ export const UpcomingShowSlides = ({
       <p className="text-3xl font-serif font-bold text-primary-purple mb-5">
         Check out our upcoming shows!
       </p>
-      <ul className="flex flex-nowrap gap-5">
+      <ul className="grid grid-cols-4 grid-rows-1 gap-5">
         {showListings.map((showListing) => (
           <li key={showListing.id}>
-            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]">
+            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
               <img
                 src={showListing.image}
                 alt={showListing.name}
@@ -40,7 +40,7 @@ export const UpcomingShowSlides = ({
                 className="w-full"
               />
 
-              <div className="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
+              <div className="flex flex-col gap-4 px-2 text-lg">
                 <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
                   <CalendarIcon name="calendar" className="size-5" />
 
@@ -80,10 +80,10 @@ export const UpcomingClassSlides = ({
       <p className="text-3xl font-serif font-bold text-primary-purple mb-5">
         Check out our upcoming classes!
       </p>
-      <ul className="flex flex-nowrap gap-5">
+      <ul className="grid grid-cols-4 grid-rows-1 gap-5">
         {classListings.map((classListing) => (
           <li key={classListing.id}>
-            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]">
+            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
               <img
                 src={classListing.image}
                 alt={classListing.name}
@@ -92,7 +92,7 @@ export const UpcomingClassSlides = ({
                 className="w-full"
               />
 
-              <div className="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
+              <div className="flex flex-col gap-4 px-2 text-lg">
                 <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
                   <CalendarIcon name="calendar" className="size-5" />
 
