@@ -13,6 +13,7 @@ export const getListingVolunteers = async (listingId: number) => {
     listing_id,
     role,
     member (
+      id,
       first_name,
       last_name
     )
@@ -25,6 +26,7 @@ export const getListingVolunteers = async (listingId: number) => {
   }
 
   return data.map((row) => ({
+    id: row.member.id,
     firstName: row.member.first_name,
     lastName: row.member.last_name,
     role: row.role,
@@ -138,6 +140,38 @@ export const volunteer = async (
 
   if (signupError) {
     throw signupError;
+  }
+
+  return getListingVolunteers(listingId);
+};
+
+export const removeSignUp = async (
+  listingId: number,
+  memberId: number,
+  email: string,
+) => {
+  const { data: memberIdRow } = await supabase
+    .from("member")
+    .select("id")
+    .eq("email", email);
+
+  const memberIdDB = memberIdRow?.at(0)?.id;
+  if (memberIdDB !== memberId) {
+    throw new ActionError({
+      code: "BAD_REQUEST",
+    });
+  }
+
+  const { status } = await supabase
+    .from("signup")
+    .delete()
+    .eq("listing_id", listingId)
+    .eq("member_id", memberId);
+
+  if (status !== 204) {
+    throw new ActionError({
+      code: "NOT_FOUND",
+    });
   }
 
   return getListingVolunteers(listingId);

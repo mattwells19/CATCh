@@ -12,6 +12,7 @@ import { getShowListings } from "~/api/getShowListings";
 import { formatShowTime } from "~/utils/formatShowTime";
 import { formatEst } from "~/utils/formatEst";
 import RootLayout from "~/layouts/RootLayout.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
 
 const num = z.number({ coerce: true });
 
@@ -105,14 +106,53 @@ const errorMessages = searchParams.has("error")
     @apply block rounded px-3 py-2 border-2 border-primary-purple bg-white w-full;
   }
 
-  button {
+  button[type="submit"] {
     @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded mt-4;
+  }
+
+  button[data-action="remove-volunteer"] {
+    @apply p-0.5 border border-coral rounded hover:bg-coral transition-colors;
   }
 
   .result-msg {
     @apply px-4 py-2 border-2 text-black;
   }
 </style>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document
+    .querySelectorAll('button[data-action="remove-volunteer"]')
+    .forEach((removeVolunteerBtn) => {
+      removeVolunteerBtn.addEventListener("click", () => {
+        const listingId = removeVolunteerBtn.getAttribute("data-listingId");
+        const memberId = removeVolunteerBtn.getAttribute("data-memberId");
+        if (!listingId || !memberId) return;
+
+        const email = prompt(
+          "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
+        );
+        if (!email) return;
+
+        const formData = new FormData();
+        formData.set("listingId", listingId);
+        formData.set("memberId", memberId);
+        formData.set("email", email);
+
+        actions.unvolunteer(formData).then((result) => {
+          if (result.error) {
+            alert(
+              `Unable to remove sign up.\n\nThere was either an error or the email you entered did not match the email used when you signed up.\n\nFeel free to try again.`,
+            );
+          } else {
+            alert(`You have successfully unvolunteered.`);
+            window.location.href = `/internal/volunteer/${listingId}`;
+          }
+        });
+      });
+    });
+</script>
 
 <RootLayout
   title={`Volunteer for ${listing.name}`}
@@ -159,8 +199,19 @@ const errorMessages = searchParams.has("error")
         listingVolunteers.length > 0 ? (
           listingVolunteers.map((volunteerInfo) => (
             <li class="list-disc pt-2">
-              {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
-              <span class="capitalize">{` (${volunteerInfo.role})`}</span>
+              <div class="flex justify-between items-center">
+                <p>
+                  {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
+                  <span class="capitalize">{` (${volunteerInfo.role})`}</span>
+                </p>
+                <button
+                  data-action="remove-volunteer"
+                  data-listingId={listingId}
+                  data-memberId={volunteerInfo.id}
+                >
+                  <RemixIcon icon="close" height="24" width="24" />
+                </button>
+              </div>
             </li>
           ))
         ) : (

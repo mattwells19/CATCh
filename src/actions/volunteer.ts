@@ -1,6 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { volunteer as signUp } from "../api/volunteer";
+import { removeSignUp, volunteer as signUp } from "../api/volunteer";
 
 export const volunteer = {
   volunteer: defineAction({
@@ -24,5 +24,15 @@ export const volunteer = {
         input.email,
         input.role,
       ),
+  }),
+  unvolunteer: defineAction({
+    accept: "form",
+    input: z.object({
+      listingId: z.number(),
+      memberId: z.number(),
+      email: z.string().email(),
+    }),
+    handler: (input) =>
+      removeSignUp(input.listingId, input.memberId, input.email),
   }),
 };
