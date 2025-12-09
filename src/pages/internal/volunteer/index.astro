@@ -9,7 +9,7 @@ import {
 } from "~/api/volunteer";
 import { formatShowTime } from "~/utils/formatShowTime";
 import { getNow } from "~/utils/getNow";
-import RootLayout from "~/layouts/RootLayout.astro";
+import InternalLayout from "~/layouts/InternalLayout.astro";
 
 const now = getNow();
 const twoMonthsFromNow = addMonths(now, 2);
@@ -19,7 +19,7 @@ const volunteerCounts = await getVolunteerCounts(
 );
 ---
 
-<RootLayout title="Volunteer" noIndex class="max-w-4xl px-12">
+<InternalLayout title="Volunteer" class="max-w-4xl px-12">
   <h1 class="text-2xl font-bold">Upcoming Shows</h1>
   <ul class="pl-8">
     {
@@ -41,4 +41,4 @@ const volunteerCounts = await getVolunteerCounts(
       ))
     }
   </ul>
-</RootLayout>
+</InternalLayout>

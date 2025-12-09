@@ -11,7 +11,7 @@ import {
 import { getShowListings } from "~/api/getShowListings";
 import { formatShowTime } from "~/utils/formatShowTime";
 import { formatEst } from "~/utils/formatEst";
-import RootLayout from "~/layouts/RootLayout.astro";
+import InternalLayout from "~/layouts/InternalLayout.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
 
 const num = z.number({ coerce: true });
@@ -154,9 +154,8 @@ const errorMessages = searchParams.has("error")
     });
 </script>
 
-<RootLayout
+<InternalLayout
   title={`Volunteer for ${listing.name}`}
-  noIndex
   class="max-w-xl m-auto p-6 lg:px-12 flex flex-col gap-12"
 >
   <section>
@@ -289,4 +288,4 @@ const errorMessages = searchParams.has("error")
       </form>
     )
   }
-</RootLayout>
+</InternalLayout>

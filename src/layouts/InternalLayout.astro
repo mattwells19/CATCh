@@ -1,7 +1,6 @@
 ---
 import { SEOMetadata } from "astro-seo-metadata";
 import LaughingDotImage from "../images/laughing-dot.png";
-import Tracking from "~/components/Tracking.astro";
 import Header from "~/components/Header/Header.astro";
 import Footer from "~/components/Footer/Footer.astro";
 import "~/styles/custom-rules.scss";
@@ -14,20 +13,20 @@ type Props = {
 
 const { title, class: className } = Astro.props;
 
-const GTM_ID = "GTM-WQRTM3H3";
-
-Astro.response.headers.set(
-  "Cache-Control",
-  // 30 minutes
-  "public, max-age=0, s-maxage=1800, must-revalidate",
-);
+Astro.response.headers.set("Cache-Control", "no-cache");
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="preload" as="font" type="font/ttf" href="/fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/ttf"
+      href="/fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf"
+      crossorigin
+    />
 
     <SEOMetadata
       siteName="Comedy Arts Theater of Charlotte"
@@ -40,10 +39,8 @@ Astro.response.headers.set(
       type="website"
       astroGenerator
     />
-    {import.meta.env.PROD ? (
-    <meta property="fb:app_id" content="1788375124760247" />
-    <Tracking GTM_ID={GTM_ID} />
-    ) : null}
+
+    <meta name="robots" content="noindex" />
   </head>
   <body>
     <Header />
@@ -51,17 +48,5 @@ Astro.response.headers.set(
       <slot />
     </main>
     <Footer />
-
-    {import.meta.env.PROD ? (
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    ) : null}
   </body>
 </html>
