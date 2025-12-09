@@ -131,7 +131,7 @@ const errorMessages = searchParams.has("error")
         if (!listingId || !memberId) return;
 
         const email = prompt(
-          "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
+          "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used the last time you signed up to volunteer.",
         );
         if (!email) return;
 
@@ -245,6 +245,8 @@ const errorMessages = searchParams.has("error")
             name="firstName"
             type="text"
             required
+            minlength="1"
+            maxlength="35"
             disabled={allSlotsFilled}
           />
         </div>
@@ -255,6 +257,8 @@ const errorMessages = searchParams.has("error")
             name="lastName"
             type="text"
             required
+            minlength="1"
+            maxlength="35"
             disabled={allSlotsFilled}
           />
         </div>
@@ -265,6 +269,7 @@ const errorMessages = searchParams.has("error")
             name="email"
             type="email"
             required
+            maxlength="254"
             disabled={allSlotsFilled}
           />
         </div>
