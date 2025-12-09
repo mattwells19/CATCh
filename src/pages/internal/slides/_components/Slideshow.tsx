@@ -75,52 +75,62 @@ interface UpcomingClassSlidesProps {
 export const UpcomingClassSlides = ({
   classListings,
 }: UpcomingClassSlidesProps) => {
+  const classGroupings = classListings.reduce((acc, classListing) => {
+    const listings = acc.get(classListing.eventId) ?? [];
+    acc.set(classListing.id, [...listings, classListing]);
+    return acc;
+  }, new Map<number, Array<ClassListing>>());
+
   return (
     <div className="bg-peach p-5">
       <p className="text-3xl font-serif font-bold text-primary-purple mb-5">
         Check out our upcoming classes!
       </p>
       <ul className="grid grid-cols-4 grid-rows-1 gap-5">
-        {classListings.map((classListing) => (
-          <li key={classListing.id}>
-            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
-              <img
-                src={classListing.image}
-                alt={classListing.name}
-                width={724}
-                height={407}
-                className="w-full"
-              />
+        {Array.from(classGroupings, ([classEventId, classListings]) => {
+          const classDetails = classListings[0];
 
-              <div className="flex flex-col gap-4 px-2 text-lg">
-                <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
-                  <CalendarIcon name="calendar" className="size-5" />
+          return (
+            <li key={classEventId}>
+              <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
+                <img
+                  src={classDetails.image}
+                  alt={classDetails.name}
+                  width={724}
+                  height={407}
+                  className="w-full"
+                />
 
-                  <p className="font-serif font-semibold">
-                    {formatClassDateRange(classListing)}
-                  </p>
+                <div className="flex flex-col gap-4 px-2 text-lg">
+                  <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
+                    <CalendarIcon name="calendar" className="size-5" />
+
+                    <p className="font-serif font-semibold">
+                      {formatClassDateRange(classDetails)}
+                    </p>
+                  </div>
+
+                  {classDetails.classHeader ? (
+                    <p className="font-serif font-bold text-xl mb-2">
+                      {classDetails.classHeader}
+                    </p>
+                  ) : null}
+
+                  {classDetails.classDescription ? (
+                    <div
+                      className="wysiwyg overflow-auto"
+                      dangerouslySetInnerHTML={{
+                        __html: documentToHtmlString(
+                          classDetails.classDescription,
+                        ),
+                      }}
+                    />
+                  ) : null}
                 </div>
-
-                {classListing.classHeader ? (
-                  <p className="font-serif font-bold text-xl mb-2">
-                    {classListing.classHeader}
-                  </p>
-                ) : null}
-
-                {classListing.classDescription ? (
-                  <div
-                    className="wysiwyg overflow-auto"
-                    dangerouslySetInnerHTML={{
-                      __html: documentToHtmlString(
-                        classListing.classDescription,
-                      ),
-                    }}
-                  />
-                ) : null}
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
