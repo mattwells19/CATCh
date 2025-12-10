@@ -214,7 +214,7 @@ export const Slideshow = ({
       <UpcomingClassSlides classListings={upcomingClasses} />,
       <UpcomingShowSlides showListings={upcomingShows} />,
     ],
-    [slides, upcomingClasses],
+    [slides, upcomingClasses, upcomingShows],
   );
   const activeSlide = allSlides.at(activeSlideIndex);
 
