@@ -104,7 +104,7 @@ const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
 
   return (
     <div className="bg-peach p-5 w-full aspect-video flex flex-col justify-between">
-      <p className="text-4xl font-serif font-bold text-primary-purple mb-8">
+      <p className="text-4xl font-serif font-bold text-primary-purple mb-6">
         Check out our upcoming classes!
       </p>
       <ul className="grid grid-cols-2 gap-5">
@@ -148,7 +148,7 @@ const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
             );
           })}
       </ul>
-      <p className="text-xl font-serif text-primary-purple mt-8">
+      <p className="text-xl font-serif text-primary-purple mt-6">
         Learn more at{" "}
         <span className="font-bold">https://catch.theater/classes</span>
       </p>
