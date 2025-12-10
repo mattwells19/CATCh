@@ -7,63 +7,84 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 import type { ClassListing } from "~/api/getClassListings";
 import type { PreshowSlides } from "~/api/getPreshowSlides";
 import type { ShowListing } from "~/api/getShowListings";
 import { CalendarIcon } from "~/icons/CalendarIcon";
 import { formatClassDateRange } from "~/utils/formatClassTime";
-import { formatShowTime } from "~/utils/formatShowTime";
+import { formatEst } from "~/utils/formatEst";
 
 interface UpcomingShowSlidesProps {
   showListings: Array<ShowListing>;
 }
 
-export const UpcomingShowSlides = ({
-  showListings,
-}: UpcomingShowSlidesProps) => {
+const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
+  const showGroupings = showListings.reduce((acc, showListing) => {
+    const showDay = new Date(
+      showListing.date.getFullYear(),
+      showListing.date.getMonth(),
+      showListing.date.getDate(),
+    );
+
+    const listings = acc.get(showDay) ?? [];
+    acc.set(showDay, [...listings, showListing]);
+    return acc;
+  }, new Map<Date, Array<ShowListing>>());
+
   return (
-    <div className="bg-peach p-5">
-      <p className="text-3xl font-serif font-bold text-primary-purple mb-5">
+    <div className="bg-peach p-5 w-full aspect-video flex flex-col justify-between">
+      <p className="text-4xl font-serif font-bold text-primary-purple mb-8">
         Check out our upcoming shows!
       </p>
-      <ul className="grid grid-cols-4 grid-rows-1 gap-5">
-        {showListings.map((showListing) => (
-          <li key={showListing.id}>
-            <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
-              <img
-                src={showListing.image}
-                alt={showListing.name}
-                width={724}
-                height={407}
-                className="w-full"
-              />
+      <ul className="flex flex-col gap-12">
+        {Array.from(showGroupings)
+          .sort(([aDay], [bDay]) => aDay.getTime() - bDay.getTime())
+          .map(([day, showListings]) => (
+            <li key={day.toISOString()}>
+              <p className="text-2xl text-primary-purple font-serif font-bold border-b border-primary-purple">
+                {formatEst(day, "EEEE',' LLL do")}
+              </p>
+              <ul className="flex flex-wrap gap-4 py-4 px-2">
+                {showListings.map((showListing) => (
+                  <li
+                    key={showListing.id}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="flex gap-4 items-center">
+                      <img
+                        src={showListing.image}
+                        alt={showListing.name}
+                        width={280}
+                        height={158}
+                        className="w-[240px] flex-shrink-0"
+                      />
 
-              <div className="flex flex-col gap-4 px-2 text-lg">
-                <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
-                  <CalendarIcon name="calendar" className="size-5" />
-
-                  <p className="font-serif font-semibold">
-                    {formatShowTime(showListing.date)}
-                  </p>
-                </div>
-
-                {showListing.showDescription ? (
-                  <div
-                    className="wysiwyg overflow-auto"
-                    dangerouslySetInnerHTML={{
-                      __html: documentToHtmlString(showListing.showDescription),
-                    }}
-                  />
-                ) : null}
-              </div>
-
-              <p className="font-bold px-2">{showListing.price}</p>
-            </div>
-          </li>
-        ))}
+                      <div className="flex flex-col gap-2 text-primary-purple">
+                        <p className="text-xl font-serif font-bold border-b-2 border-light-purple">
+                          {showListing.name}
+                        </p>
+                        <div className="flex justify-between">
+                          <p className="text-lg font-serif font-semibold">
+                            {formatEst(showListing.date, "h:mm a")}
+                          </p>
+                          <p className="font-serif font-bold text-primary-purple px-2">
+                            {showListing.price}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
       </ul>
+
+      <p className="text-xl font-serif text-primary-purple mt-8">
+        Get tickets at{" "}
+        <span className="font-bold">https://catch.theater/shows</span>
+      </p>
     </div>
   );
 };
@@ -72,27 +93,35 @@ interface UpcomingClassSlidesProps {
   classListings: Array<ClassListing>;
 }
 
-export const UpcomingClassSlides = ({
-  classListings,
-}: UpcomingClassSlidesProps) => {
-  const classGroupings = classListings.reduce((acc, classListing) => {
-    const listings = acc.get(classListing.eventId) ?? [];
-    acc.set(classListing.id, [...listings, classListing]);
-    return acc;
-  }, new Map<number, Array<ClassListing>>());
+const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
+  const classGroupings = classListings
+    .sort((aClass, bClass) => aClass.date.getTime() - bClass.date.getTime())
+    .reduce((acc, classListing) => {
+      const listings = acc.get(classListing.eventId) ?? [];
+      acc.set(classListing.eventId, [...listings, classListing]);
+      return acc;
+    }, new Map<number, Array<ClassListing>>());
 
   return (
-    <div className="bg-peach p-5">
-      <p className="text-3xl font-serif font-bold text-primary-purple mb-5">
+    <div className="bg-peach p-5 w-full aspect-video flex flex-col justify-between">
+      <p className="text-4xl font-serif font-bold text-primary-purple mb-8">
         Check out our upcoming classes!
       </p>
-      <ul className="grid grid-cols-4 grid-rows-1 gap-5">
-        {Array.from(classGroupings, ([classEventId, classListings]) => {
-          const classDetails = classListings[0];
+      <ul className="grid grid-cols-2 gap-5">
+        {Array.from(classGroupings)
+          .slice(0, 4)
+          .map(([classEventId, classListings]) => {
+            const classDetails = classListings[0];
 
-          return (
-            <li key={classEventId}>
-              <div className="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1">
+            return (
+              <li
+                key={classEventId}
+                className="rounded overflow-hidden border border-primary-purple p-4 bg-peach flex flex-col justify-evenly gap-4"
+              >
+                <p className="text-xl text-primary-purple font-serif font-bold">
+                  {classDetails.name}
+                </p>
+
                 <img
                   src={classDetails.image}
                   alt={classDetails.name}
@@ -101,37 +130,28 @@ export const UpcomingClassSlides = ({
                   className="w-full"
                 />
 
-                <div className="flex flex-col gap-4 px-2 text-lg">
-                  <div className="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4">
-                    <CalendarIcon name="calendar" className="size-5" />
+                <ul>
+                  {classListings.map((classListing) => (
+                    <li
+                      key={classListing.id}
+                      className="flex items-center gap-3 p-2"
+                    >
+                      <CalendarIcon name="calendar" className="size-5" />
 
-                    <p className="font-serif font-semibold">
-                      {formatClassDateRange(classDetails)}
-                    </p>
-                  </div>
-
-                  {classDetails.classHeader ? (
-                    <p className="font-serif font-bold text-xl mb-2">
-                      {classDetails.classHeader}
-                    </p>
-                  ) : null}
-
-                  {classDetails.classDescription ? (
-                    <div
-                      className="wysiwyg overflow-auto"
-                      dangerouslySetInnerHTML={{
-                        __html: documentToHtmlString(
-                          classDetails.classDescription,
-                        ),
-                      }}
-                    />
-                  ) : null}
-                </div>
-              </div>
-            </li>
-          );
-        })}
+                      <p className="font-serif font-semibold">
+                        {formatClassDateRange(classListing)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
       </ul>
+      <p className="text-xl font-serif text-primary-purple mt-8">
+        Learn more at{" "}
+        <span className="font-bold">https://catch.theater/classes</span>
+      </p>
     </div>
   );
 };

@@ -1,13 +1,19 @@
 ---
+import { addWeeks } from "date-fns";
+
 import RootLayout from "~/layouts/RootLayout.astro";
 import { getPreshowSlideDecks } from "~/api/getPreshowSlides";
 import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
+import { getNow } from "~/utils/getNow";
+
 import { Slideshow } from "./_components/Slideshow";
 
+const weekFromNow = addWeeks(getNow(), 1);
+
 const [upcomingShows, upcomingClasses, preshowSlideDecks] = await Promise.all([
-  getShowListings({ limit: 4 }),
-  getClassListings({ limit: 4 }),
+  getShowListings({ end: weekFromNow }),
+  getClassListings(),
   getPreshowSlideDecks(),
 ]);
 const selectedDeckTitle = Astro.url.searchParams.get("deck");
