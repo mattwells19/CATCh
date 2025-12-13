@@ -126,8 +126,11 @@ const errorMessages = searchParams.has("error")
     .querySelectorAll('button[data-action="remove-volunteer"]')
     .forEach((removeVolunteerBtn) => {
       removeVolunteerBtn.addEventListener("click", () => {
-        const listingId = removeVolunteerBtn.getAttribute("data-listingId");
         const memberId = removeVolunteerBtn.getAttribute("data-memberId");
+        const listingId = new URLPattern({
+          pathname: "/internal/volunteer/:listingId",
+        }).exec(location.href)?.pathname.groups.listingId;
+
         if (!listingId || !memberId) return;
 
         const email = prompt(
@@ -205,7 +208,6 @@ const errorMessages = searchParams.has("error")
                 </p>
                 <button
                   data-action="remove-volunteer"
-                  data-listingId={listingId}
                   data-memberId={volunteerInfo.id}
                 >
                   <RemixIcon icon="close" height="24" width="24" />
@@ -231,19 +233,13 @@ const errorMessages = searchParams.has("error")
         action={actions.volunteer}
         enctype="multipart/form-data"
       >
-        <input type="hidden" name="listingId" value={listing.id} />
-        <input type="hidden" name="listingName" value={listing.name} />
-        <input
-          type="hidden"
-          name="listingDate"
-          value={listing.date.toISOString()}
-        />
         <div>
           <label for="firstName">First Name</label>
           <input
             name="firstName"
             name="firstName"
             type="text"
+            autocomplete="given-name"
             required
             minlength="1"
             maxlength="35"
@@ -256,6 +252,7 @@ const errorMessages = searchParams.has("error")
             name="lastName"
             name="lastName"
             type="text"
+            autocomplete="family-name"
             required
             minlength="1"
             maxlength="35"
@@ -268,6 +265,7 @@ const errorMessages = searchParams.has("error")
             name="email"
             name="email"
             type="email"
+            autocomplete="email"
             required
             maxlength="254"
             disabled={allSlotsFilled}

@@ -1,6 +1,7 @@
 import { ActionError } from "astro/actions/runtime/shared.js";
 import type { Database } from "~/lib/supabase/database.types";
 import { supabase } from "~/lib/supabase";
+import { getShowListings } from "./getShowListings";
 
 export const VOLUNTEER_LIMIT = 3;
 export const TECH_LIMIT = 1;
@@ -65,8 +66,6 @@ export const getVolunteerCounts = async (listingIds: Array<number>) => {
 
 export const volunteer = async (
   listingId: number,
-  listingName: string,
-  listingDate: string,
   firstName: string,
   lastName: string,
   email: string,
@@ -89,6 +88,16 @@ export const volunteer = async (
         message: `The maximum number of people have already signed up for this role: ${role}.`,
       });
     }
+  }
+
+  const listingDetails = await getShowListings().then((showListings) =>
+    showListings.find((listing) => listing.id === listingId),
+  );
+  if (!listingDetails) {
+    throw new ActionError({
+      code: "FAILED_DEPENDENCY",
+      message: `Could not find listing with ID ${listingId}.`,
+    });
   }
 
   // update/create member signing up
@@ -122,8 +131,8 @@ export const volunteer = async (
 
   const listingUpsert = await supabase.from("listing").upsert({
     id: listingId,
-    name: listingName,
-    show_datetime: listingDate,
+    name: listingDetails.name,
+    show_datetime: listingDetails.date.toISOString(),
   });
 
   if (listingUpsert.error) {
