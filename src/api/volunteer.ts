@@ -154,32 +154,30 @@ export const volunteer = async (
   return getListingVolunteers(listingId);
 };
 
-export const removeSignUp = async (
-  listingId: number,
-  memberId: number,
-  email: string,
-) => {
+export const removeSignUp = async (listingId: number, email: string) => {
   const { data: memberIdRow } = await supabase
     .from("member")
     .select("id")
     .eq("email", email);
 
-  const memberIdDB = memberIdRow?.at(0)?.id;
-  if (memberIdDB !== memberId) {
+  const memberId = memberIdRow?.at(0)?.id;
+  if (memberId === undefined) {
     throw new ActionError({
       code: "BAD_REQUEST",
     });
   }
 
-  const { status } = await supabase
+  const { data } = await supabase
     .from("signup")
     .delete()
     .eq("listing_id", listingId)
-    .eq("member_id", memberId);
+    .eq("member_id", memberId)
+    .select("listing_id");
 
-  if (status !== 204) {
+  if (data?.at(0)?.listing_id !== listingId) {
     throw new ActionError({
       code: "NOT_FOUND",
+      message: "No member with that email was signed up for this event.",
     });
   }
 

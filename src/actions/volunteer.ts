@@ -60,7 +60,6 @@ export const volunteer = {
     accept: "form",
     input: z.object({
       listingId: z.number(),
-      memberId: z.number(),
       email: z
         .string()
         .trim()
@@ -68,7 +67,6 @@ export const volunteer = {
         .toLowerCase()
         .max(254, "Email addresses cannot be longer than 254 characters."),
     }),
-    handler: (input) =>
-      removeSignUp(input.listingId, input.memberId, input.email),
+    handler: (input) => removeSignUp(input.listingId, input.email),
   }),
 };

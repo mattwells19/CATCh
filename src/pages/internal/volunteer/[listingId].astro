@@ -111,7 +111,7 @@ const errorMessages = searchParams.has("error")
   }
 
   button[data-action="remove-volunteer"] {
-    @apply p-0.5 border border-coral rounded hover:bg-coral transition-colors;
+    @apply px-3 py-1 mt-4 ml-auto border border-coral rounded hover:bg-coral transition-colors;
   }
 
   .result-msg {
@@ -126,12 +126,11 @@ const errorMessages = searchParams.has("error")
     .querySelectorAll('button[data-action="remove-volunteer"]')
     .forEach((removeVolunteerBtn) => {
       removeVolunteerBtn.addEventListener("click", () => {
-        const memberId = removeVolunteerBtn.getAttribute("data-memberId");
         const listingId = new URLPattern({
           pathname: "/internal/volunteer/:listingId",
         }).exec(location.href)?.pathname.groups.listingId;
 
-        if (!listingId || !memberId) return;
+        if (!listingId) return;
 
         const email = prompt(
           "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
@@ -140,7 +139,6 @@ const errorMessages = searchParams.has("error")
 
         const formData = new FormData();
         formData.set("listingId", listingId);
-        formData.set("memberId", memberId);
         formData.set("email", email);
 
         actions.unvolunteer(formData).then((result) => {
@@ -194,25 +192,15 @@ const errorMessages = searchParams.has("error")
       </div>
     ) : null
   }
-  <section>
+  <section class="flex flex-col w-full">
     <h2 class="text-lg font-bold">Current Volunteers</h2>
     <ul class="pl-8">
       {
         listingVolunteers.length > 0 ? (
           listingVolunteers.map((volunteerInfo) => (
             <li class="list-disc pt-2">
-              <div class="flex justify-between items-center">
-                <p>
-                  {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
-                  <span class="capitalize">{` (${volunteerInfo.role})`}</span>
-                </p>
-                <button
-                  data-action="remove-volunteer"
-                  data-memberId={volunteerInfo.id}
-                >
-                  <RemixIcon icon="close" height="24" width="24" />
-                </button>
-              </div>
+              {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
+              <span class="capitalize">{` (${volunteerInfo.role})`}</span>
             </li>
           ))
         ) : (
@@ -220,6 +208,11 @@ const errorMessages = searchParams.has("error")
         )
       }
     </ul>
+    {
+      listingVolunteers.length > 0 ? (
+        <button data-action="remove-volunteer">Remove sign up</button>
+      ) : null
+    }
   </section>
 
   {
@@ -236,7 +229,7 @@ const errorMessages = searchParams.has("error")
         <div>
           <label for="firstName">First Name</label>
           <input
-            name="firstName"
+            id="firstName"
             name="firstName"
             type="text"
             autocomplete="given-name"
@@ -249,7 +242,7 @@ const errorMessages = searchParams.has("error")
         <div>
           <label for="lastName">Last Name</label>
           <input
-            name="lastName"
+            id="lastName"
             name="lastName"
             type="text"
             autocomplete="family-name"
@@ -262,7 +255,7 @@ const errorMessages = searchParams.has("error")
         <div>
           <label for="email">Email</label>
           <input
-            name="email"
+            id="email"
             name="email"
             type="email"
             autocomplete="email"
