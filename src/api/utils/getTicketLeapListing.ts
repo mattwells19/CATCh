@@ -1,5 +1,6 @@
 import { toDate } from "date-fns-tz";
 import LRUCache from "quick-lru";
+import { getNow } from "~/utils/getNow";
 import type {
   TicketLeapEventsResponse,
   TicketLeapListing,
@@ -49,7 +50,7 @@ export async function getTicketLeapEventListings(
   type: "shows" | "classes",
   limit?: number,
 ): Promise<Array<TicketLeapListing> | null> {
-  const now = toDate(Date.now(), { timeZone: "America/New_York" });
+  const now = getNow();
 
   const event = await fetchWithCache(eventId, type).then((res) => {
     const eventData = res.data;

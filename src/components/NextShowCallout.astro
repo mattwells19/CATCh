@@ -1,6 +1,6 @@
 ---
 import type { ShowListing } from "~/api/getShowListings";
-import { formatEst } from "~/utils/formatEst";
+import { formatShowTime } from "~/utils/formatShowTime";
 
 import CalendarIcon from "../icons/calendar.svg";
 import TicketIcon from "../icons/ticket.svg";
@@ -13,15 +13,7 @@ type Props = {
 
 const { nextShow } = Astro.props;
 
-const showDateFormatted = (() => {
-  const showTime = nextShow.date;
-
-  const dayOfTheWeek = formatEst(showTime, "EEEE");
-  const time = formatEst(showTime, "h:mm a");
-  const day = formatEst(showTime, "LLL d");
-
-  return `${dayOfTheWeek}, ${day} at ${time}`;
-})();
+const showDateFormatted = formatShowTime(nextShow.date);
 ---
 
 <section

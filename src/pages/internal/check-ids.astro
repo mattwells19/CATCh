@@ -1,6 +1,6 @@
 ---
 import type { TicketLeapEventsResponse } from "~/api/utils/getTicketLeapListings";
-import RootLayout from "~/layouts/RootLayout.astro";
+import InternalLayout from "~/layouts/InternalLayout.astro";
 
 const showsP = fetch(
   "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
@@ -43,8 +43,7 @@ const classesP = await fetch(
 const [shows, classes] = await Promise.all([showsP, classesP]);
 ---
 
-<meta name="robots" content="noindex" />
-<RootLayout title="Check Events" class="max-w-4xl px-12">
+<InternalLayout title="Check Events" class="max-w-4xl px-12">
   <h1 class="text-2xl font-bold">Check Events</h1>
   <h2 class="text-xl mt-4 font-bold">Shows</h2>
   <ul class="pl-8">
@@ -84,4 +83,4 @@ const [shows, classes] = await Promise.all([showsP, classesP]);
       ))
     }
   </ul>
-</RootLayout>
+</InternalLayout>

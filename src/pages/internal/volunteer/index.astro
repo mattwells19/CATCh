@@ -1,0 +1,44 @@
+---
+import { addMonths } from "date-fns";
+
+import { getShowListings } from "~/api/getShowListings";
+import {
+  getVolunteerCounts,
+  TECH_LIMIT,
+  VOLUNTEER_LIMIT,
+} from "~/api/volunteer";
+import { formatShowTime } from "~/utils/formatShowTime";
+import { getNow } from "~/utils/getNow";
+import InternalLayout from "~/layouts/InternalLayout.astro";
+
+const now = getNow();
+const twoMonthsFromNow = addMonths(now, 2);
+const upcomingShows = await getShowListings({ end: twoMonthsFromNow });
+const volunteerCounts = await getVolunteerCounts(
+  upcomingShows.map((show) => show.id),
+);
+---
+
+<InternalLayout title="Volunteer" class="max-w-4xl px-12">
+  <h1 class="text-2xl font-bold">Upcoming Shows</h1>
+  <ul class="pl-8">
+    {
+      upcomingShows.map((show) => (
+        <li class="pt-4 list-disc">
+          <a
+            href={`/internal/volunteer/${show.id}`}
+            class="text-primary-purple underline"
+          >
+            {show.name} - {formatShowTime(show.date)}
+          </a>
+          <ul>
+            <li>
+              {`Volunteers: ${volunteerCounts[show.id].volunteer} / ${VOLUNTEER_LIMIT}`}
+            </li>
+            <li>{`Tech: ${volunteerCounts[show.id].tech} / ${TECH_LIMIT}`}</li>
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</InternalLayout>
