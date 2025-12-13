@@ -12,13 +12,11 @@ import { getShowListings } from "~/api/getShowListings";
 import { formatShowTime } from "~/utils/formatShowTime";
 import { formatEst } from "~/utils/formatEst";
 import InternalLayout from "~/layouts/InternalLayout.astro";
-import RemixIcon from "~/components/RemixIcon.astro";
 
 const num = z.number({ coerce: true });
 
 const listingIdResult = num.safeParse(Astro.params.listingId);
 const listingId = listingIdResult.data;
-
 if (!listingId) {
   return Astro.redirect("/internal/volunteer");
 }

@@ -1,12 +1,22 @@
-import { ActionError } from "astro/actions/runtime/shared.js";
-import type { Database } from "~/lib/supabase/database.types";
-import { supabase } from "~/lib/supabase";
+import { ActionError } from "astro:actions";
+import { supabase, type Database } from "~/lib/supabase";
 import { getShowListings } from "./getShowListings";
 
 export const VOLUNTEER_LIMIT = 3;
 export const TECH_LIMIT = 1;
 
-export const getListingVolunteers = async (listingId: number) => {
+export interface ListingVolunteer {
+  id: number;
+  firstName: string;
+  lastName: string;
+  role: Database["public"]["Enums"]["Volunteer Role"];
+}
+
+export type ListingVolunteers = ReadonlyArray<Readonly<ListingVolunteer>>;
+
+export const getListingVolunteers = async (
+  listingId: number,
+): Promise<ListingVolunteers> => {
   const { data } = await supabase
     .from("signup")
     .select(
@@ -34,7 +44,13 @@ export const getListingVolunteers = async (listingId: number) => {
   }));
 };
 
-export const getVolunteerCounts = async (listingIds: Array<number>) => {
+export type VolunteerCounts = Readonly<
+  Record<number, Readonly<{ volunteer: number; tech: number }>>
+>;
+
+export const getVolunteerCounts = async (
+  listingIds: Array<number>,
+): Promise<VolunteerCounts> => {
   const { data, error } = await supabase
     .from("signup")
     .select("listing_id, role")
@@ -47,6 +63,7 @@ export const getVolunteerCounts = async (listingIds: Array<number>) => {
   const signUpSummariesMap = new Map<
     number,
     { volunteer: number; tech: number }
+    // initializing the map ensures each listing has a default object even if it's not in the DB
   >(listingIds.map((listingId) => [listingId, { volunteer: 0, tech: 0 }]));
 
   for (const row of data) {
@@ -70,7 +87,7 @@ export const volunteer = async (
   lastName: string,
   email: string,
   role: Database["public"]["Enums"]["Volunteer Role"],
-) => {
+): Promise<ListingVolunteers> => {
   // validate role is available
   const { count: roleCount } = await supabase
     .from("signup")
@@ -154,14 +171,17 @@ export const volunteer = async (
   return getListingVolunteers(listingId);
 };
 
-export const removeSignUp = async (listingId: number, email: string) => {
+export const removeSignUp = async (
+  listingId: number,
+  email: string,
+): Promise<ListingVolunteers> => {
   const { data: memberIdRow } = await supabase
     .from("member")
     .select("id")
     .eq("email", email);
 
   const memberId = memberIdRow?.at(0)?.id;
-  if (memberId === undefined) {
+  if (!memberId) {
     throw new ActionError({
       code: "BAD_REQUEST",
     });
