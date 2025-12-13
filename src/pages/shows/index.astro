@@ -13,16 +13,21 @@ import { toDate as toDateTz } from "date-fns-tz";
 import { getShowListings } from "~/api/getShowListings";
 
 import RootLayout from "~/layouts/RootLayout.astro";
-import ShowDateTime from "~/components/ShowDateTime.astro";
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
-import LinkedImage from "~/components/LinkedImage.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
 import CalendarIcon from "~/icons/calendar.svg";
-import TicketIcon from "~/icons/ticket.svg";
+
+import MobileListView from "./_views/MobileListView.astro";
+import DesktopListView from "./_views/DesktopListView.astro";
+import CalendarView from "./_views/CalendarView.astro";
 
 const fromDateParam = Astro.url.searchParams.get("from");
 
 if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
+  return Astro.redirect("/shows");
+}
+
+const view = Astro.url.searchParams.get("view");
+if (view && view !== "calendar") {
   return Astro.redirect("/shows");
 }
 
@@ -71,6 +76,16 @@ const nextMonthHref: URL = (() => {
   destinationUrl.searchParams.set("from", format(nextMonth, "yyyy-MM-dd"));
   return destinationUrl;
 })();
+
+const changeViewHref = (() => {
+  const destinationUrl = new URL(Astro.url);
+  if (view && view === "calendar") {
+    destinationUrl.searchParams.delete("view");
+  } else {
+    destinationUrl.searchParams.set("view", "calendar");
+  }
+  return destinationUrl;
+})();
 ---
 
 <RootLayout title="Upcoming Shows" class="lg:px-16">
@@ -79,97 +94,62 @@ const nextMonthHref: URL = (() => {
   >
     <a href="/shows">Calendar</a>
   </h1>
-  <nav
-    class="lg:border-b-2 border-light-purple pb-12 px-4 flex items-center gap-2"
-  >
-    {
-      isSameMonth(fromDate, now) ? null : (
-        <a
-          href={prevMonthHref}
-          aria-label="View the previous month's shows"
-          class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
-        >
-          <RemixIcon icon="arrow-left-s" variant="line" />
-        </a>
-      )
-    }
-    <h3
-      class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
-    >
-      <CalendarIcon name="calendar" class="size-9" />
-      <span>
-        {format(fromDate, "MMMM")}
-      </span>
-    </h3>
+  <nav class="pb-12 px-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      {
+        isSameMonth(fromDate, now) ? null : (
+          <a
+            href={prevMonthHref}
+            aria-label="View the previous month's shows"
+            class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+          >
+            <RemixIcon icon="arrow-left-s" variant="line" />
+          </a>
+        )
+      }
+      <h3
+        class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
+      >
+        <CalendarIcon name="calendar" class="size-9" />
+        <span>
+          {format(fromDate, "MMMM")}
+        </span>
+      </h3>
+      <a
+        name="from"
+        href={nextMonthHref}
+        aria-label="View next month's shows"
+        class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+      >
+        <RemixIcon icon="arrow-right-s" variant="line" />
+      </a>
+    </div>
     <a
-      name="from"
-      href={nextMonthHref}
-      aria-label="View next month's shows"
-      class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+      href={changeViewHref}
+      class="hidden lg:inline-block bg-coral hover:bg-[#B7433C] w-fit rounded-sm px-3 py-1 text-peach font-serif"
     >
-      <RemixIcon icon="arrow-right-s" variant="line" />
+      {view === "calendar" ? "View as list" : "View in calendar"}
     </a>
   </nav>
   <!-- desktop view -->
-  <ul class="hidden flex-col lg:flex">
+  <section
+    class="hidden lg:block"
+    class:list={{ "border-t-2 border-light-purple": view !== "calendar" }}
+  >
     {
-      upcomingShows.map((show) => (
-        <li class="flex items-center justify-between gap-24 px-6 py-12 border-b-2 border-light-purple">
-          <div class="flex gap-12 items-center">
-            <LinkedImage
-              listingImageSrc={show.image}
-              listingTitle={show.name}
-              href={show.listingUrl}
-              width={280}
-              height={158}
-              class="w-[280px] flex-shrink-0"
-            />
-            <div class="flex flex-col gap-4">
-              <ShowDateTime showDate={show.date} class="w-fit pb-2" />
-              <p class="font-serif text-3xl text-primary-purple">{show.name}</p>
-            </div>
-          </div>
-          <div class="flex gap-12 items-center">
-            <p class="font-serif text-primary-purple font-bold text-2xl">
-              {show.price}
-            </p>
-            <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
-              <TicketIcon name="ticket" />
-              Get Tickets
-            </CoralButtonLink>
-          </div>
-        </li>
-      ))
+      view === "calendar" ? (
+        <CalendarView
+          visibleMonth={fromDate.getMonth()}
+          visibleYear={fromDate.getFullYear()}
+          upcomingShows={upcomingShows}
+        />
+      ) : (
+        <DesktopListView upcomingShows={upcomingShows} />
+      )
     }
-  </ul>
+  </section>
   <!-- mobile view -->
-  <ul class="flex flex-col gap-20 lg:hidden">
-    {
-      upcomingShows.map((show) => (
-        <li class="flex flex-col items-center gap-6">
-          <LinkedImage
-            listingImageSrc={show.image}
-            listingTitle={show.name}
-            href={show.listingUrl}
-            width={1280}
-            height={720}
-            class="w-full"
-          />
-          <div class="flex flex-col gap-4 px-4 self-start">
-            <ShowDateTime showDate={show.date} class="w-fit pb-2" />
-            <p class="font-serif text-3xl text-primary-purple">{show.name}</p>
-          </div>
-          <p class="font-serif text-primary-purple font-bold text-2xl">
-            {show.price}
-          </p>
-          <div class="w-4/5">
-            <CoralButtonLink href={show.listingUrl}>
-              <TicketIcon name="ticket" />
-              Get Tickets
-            </CoralButtonLink>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="lg:hidden">
+    <MobileListView upcomingShows={upcomingShows} />
+  </section>
 </RootLayout>

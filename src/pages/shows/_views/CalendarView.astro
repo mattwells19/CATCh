@@ -1,0 +1,118 @@
+---
+import { getDaysInMonth, getWeeksInMonth, getDay, isSameDay } from "date-fns";
+import { toDate as toDateTz } from "date-fns-tz";
+import type { ShowListing } from "~/api/getShowListings";
+import { formatEst } from "~/utils/formatEst";
+
+type Props = {
+  visibleMonth: number;
+  visibleYear: number;
+  upcomingShows: Array<ShowListing>;
+};
+
+const { visibleMonth, visibleYear, upcomingShows } = Astro.props;
+
+const now = toDateTz(Date.now(), { timeZone: "America/New_York" });
+
+const monthDate = new Date(visibleYear, visibleMonth);
+const numOfDaysInMonth = getDaysInMonth(monthDate);
+
+const dayOfWeekForFirstDay = getDay(monthDate);
+const numWeeksInMonth = getWeeksInMonth(monthDate);
+
+const calendarDays: Array<Array<number>> = (() => {
+  const availableDates = Array.from(
+    { length: numOfDaysInMonth },
+    (_, index) => index + 1,
+  );
+
+  const daysAccumulator: Array<Array<number>> = Array.from(
+    { length: numWeeksInMonth },
+    () => Array.from({ length: 7 }, () => -1),
+  );
+
+  for (let weekCnt = 0; weekCnt < numWeeksInMonth; weekCnt++) {
+    for (let dayCnt = 0; dayCnt < 7; dayCnt++) {
+      if (
+        (weekCnt === 0 && dayCnt < dayOfWeekForFirstDay) ||
+        availableDates.length === 0
+      ) {
+        daysAccumulator[weekCnt][dayCnt] = -1;
+      } else {
+        // !! This mutates the array so watch out !!
+        const dateToAdd = availableDates.shift();
+        if (!dateToAdd) throw new Error("Got nothing to add");
+        daysAccumulator[weekCnt][dayCnt] = dateToAdd;
+      }
+    }
+  }
+
+  return daysAccumulator;
+})();
+---
+
+<style>
+  th {
+    @apply py-4;
+  }
+</style>
+
+<table class="w-full table-fixed">
+  <thead>
+    <tr>
+      <th>Sunday</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      calendarDays.map((weekInMonth) => (
+        <tr>
+          {weekInMonth.map((dayInWeek) => {
+            const dayDate = new Date(visibleYear, visibleMonth, dayInWeek);
+            const dayListings = upcomingShows.filter((show) =>
+              isSameDay(dayDate, show.date),
+            );
+
+            return dayInWeek === -1 ? (
+              <td />
+            ) : (
+              <td
+                class="w-[14%] h-40 align-top p-2 border"
+                class:list={{
+                  "bg-violet-100": isSameDay(dayDate, now),
+                }}
+              >
+                <span
+                  title={formatEst(dayDate, "MMMM do, yyyy")}
+                  class:list={{
+                    "font-bold": isSameDay(dayDate, now),
+                  }}
+                >
+                  {dayInWeek}
+                </span>
+                <ul>
+                  {dayListings.map((listing) => (
+                    <li>
+                      <a
+                        href={listing.listingUrl}
+                        class="block bg-primary-purple text-white py-0.5 px-1 rounded my-1"
+                      >
+                        {listing.name} ({formatEst(listing.date, "h:mm a")})
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            );
+          })}
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
