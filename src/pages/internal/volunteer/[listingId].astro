@@ -13,10 +13,10 @@ import { formatShowTime } from "~/utils/formatShowTime";
 import { formatEst } from "~/utils/formatEst";
 import InternalLayout from "~/layouts/InternalLayout.astro";
 
-const num = z.number({ coerce: true });
+const { data: listingId } = z
+  .number({ coerce: true })
+  .safeParse(Astro.params.listingId);
 
-const listingIdResult = num.safeParse(Astro.params.listingId);
-const listingId = listingIdResult.data;
 if (!listingId) {
   return Astro.redirect("/internal/volunteer");
 }
@@ -57,9 +57,10 @@ const allSlotsFilled =
   volunteerCount.tech >= TECH_LIMIT &&
   volunteerCount.volunteer >= VOLUNTEER_LIMIT;
 
+// actionResult is defined if the form was just submitted
 const actionResult = Astro.getActionResult(actions.volunteer);
 if (actionResult) {
-  const errorMessages = (() => {
+  const errorMessages: Array<string> | null = (() => {
     if (!actionResult.error) {
       return null;
     }
@@ -108,7 +109,7 @@ const errorMessages = searchParams.has("error")
     @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded mt-4;
   }
 
-  button[data-action="remove-volunteer"] {
+  button[id="remove-volunteer-btn"] {
     @apply px-3 py-1 mt-4 ml-auto border border-coral rounded hover:bg-coral transition-colors;
   }
 
@@ -121,34 +122,32 @@ const errorMessages = searchParams.has("error")
   import { actions } from "astro:actions";
 
   document
-    .querySelectorAll('button[data-action="remove-volunteer"]')
-    .forEach((removeVolunteerBtn) => {
-      removeVolunteerBtn.addEventListener("click", () => {
-        const listingId = new URLPattern({
-          pathname: "/internal/volunteer/:listingId",
-        }).exec(location.href)?.pathname.groups.listingId;
+    .getElementById("remove-volunteer-btn")
+    ?.addEventListener("click", () => {
+      const listingId = new URLPattern({
+        pathname: "/internal/volunteer/:listingId",
+      }).exec(location.href)?.pathname.groups.listingId;
 
-        if (!listingId) return;
+      if (!listingId) return;
 
-        const email = prompt(
-          "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
-        );
-        if (!email) return;
+      const email = prompt(
+        "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
+      );
+      if (!email) return;
 
-        const formData = new FormData();
-        formData.set("listingId", listingId);
-        formData.set("email", email);
+      const formData = new FormData();
+      formData.set("listingId", listingId);
+      formData.set("email", email);
 
-        actions.unvolunteer(formData).then((result) => {
-          if (result.error) {
-            alert(
-              `Unable to remove sign up.\n\nThere was either an error or the email you entered did not match the email used when you signed up.\n\nFeel free to try again.`,
-            );
-          } else {
-            alert(`You have successfully unvolunteered.`);
-            window.location.href = `/internal/volunteer/${listingId}`;
-          }
-        });
+      actions.unvolunteer(formData).then((result) => {
+        if (result.error) {
+          alert(
+            `Unable to remove sign up.\n\nThere was either an error or the email you entered did not match the email used when you signed up.\n\nFeel free to try again.`,
+          );
+        } else {
+          alert(`You have successfully unvolunteered.`);
+          window.location.href = `/internal/volunteer/${listingId}`;
+        }
       });
     });
 </script>
@@ -208,7 +207,7 @@ const errorMessages = searchParams.has("error")
     </ul>
     {
       listingVolunteers.length > 0 ? (
-        <button data-action="remove-volunteer">Remove sign up</button>
+        <button id="remove-volunteer-btn">Remove sign up</button>
       ) : null
     }
   </section>
