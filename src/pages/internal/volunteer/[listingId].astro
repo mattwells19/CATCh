@@ -116,10 +116,6 @@ const errorMessages = searchParams.has("error")
 ---
 
 <style>
-  form {
-    @apply flex flex-col gap-4 max-w-xl;
-  }
-
   input,
   select {
     @apply block rounded px-3 py-2 border-2 border-primary-purple bg-white w-full;
@@ -219,16 +215,15 @@ const errorMessages = searchParams.has("error")
         enctype="multipart/form-data"
         class="flex flex-col gap-4"
       >
-        <h2 class="text-xl font-bold">Are you sure?</h2>
+        <h2 class="text-2xl font-bold">Are you sure?</h2>
+        <p>
+          Are you sure you want to remove your volunteer sign up for this event?
+        </p>
+
         <div class="flex flex-col gap-2">
-          <p>
-            Are you sure you want to remove your volunteer sign up for this
-            event?
-          </p>
-          <p>If so, please type the email you used to sign up.</p>
-        </div>
-        <div>
-          <label for="unvolunteer-email">Email</label>
+          <label for="unvolunteer-email">
+            If so, please type the email you used to sign up.
+          </label>
           <input
             id="unvolunteer-email"
             name="email"
@@ -267,6 +262,7 @@ const errorMessages = searchParams.has("error")
         method="POST"
         action={actions.volunteer}
         enctype="multipart/form-data"
+        class="flex flex-col gap-4 max-w-xl"
       >
         <div>
           <label for="firstName">First Name</label>
@@ -321,7 +317,7 @@ const errorMessages = searchParams.has("error")
           </select>
         </div>
         <div
-          class="cf-turnstile mt-4"
+          class="cf-turnstile"
           data-sitekey={import.meta.env.TURNSTILE_SITE_KEY}
           data-theme="light"
           data-appearance="interaction-only"

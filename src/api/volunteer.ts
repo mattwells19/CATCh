@@ -202,7 +202,8 @@ export const removeSignUp = async (
   const memberId = memberIdRow?.at(0)?.id;
   if (!memberId) {
     throw new ActionError({
-      code: "BAD_REQUEST",
+      code: "NOT_FOUND",
+      message: "No member with that email is signed up for this event.",
     });
   }
 
@@ -216,7 +217,7 @@ export const removeSignUp = async (
   if (data?.at(0)?.listing_id !== listingId) {
     throw new ActionError({
       code: "NOT_FOUND",
-      message: "No member with that email was signed up for this event.",
+      message: "No member with that email is signed up for this event.",
     });
   }
 
