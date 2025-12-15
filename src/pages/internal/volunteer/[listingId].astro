@@ -1,0 +1,284 @@
+---
+import { subMinutes } from "date-fns";
+import * as z from "zod";
+import { actions, isInputError } from "astro:actions";
+
+import {
+  getListingVolunteers,
+  VOLUNTEER_LIMIT,
+  TECH_LIMIT,
+} from "~/api/volunteer";
+import { getShowListings } from "~/api/getShowListings";
+import { formatShowTime } from "~/utils/formatShowTime";
+import { formatEst } from "~/utils/formatEst";
+import InternalLayout from "~/layouts/InternalLayout.astro";
+
+const { data: listingId } = z
+  .number({ coerce: true })
+  .safeParse(Astro.params.listingId);
+
+if (!listingId) {
+  return Astro.redirect("/internal/volunteer");
+}
+
+const upcomingShows = await getShowListings();
+const listing = upcomingShows.find((show) => show.id === listingId);
+if (!listing) {
+  return Astro.redirect("/internal/volunteer");
+}
+
+const listingVolunteers = await getListingVolunteers(listing.id);
+
+const arriveTime = (() => {
+  const fortyFiveMinutesBefore = subMinutes(listing.date, 45);
+  return formatEst(fortyFiveMinutesBefore, "h:mm a");
+})();
+
+const volunteerCount = listingVolunteers.reduce(
+  (acc, curr) => {
+    switch (curr.role) {
+      case "tech":
+        return {
+          ...acc,
+          tech: acc.tech + 1,
+        };
+      case "volunteer":
+        return {
+          ...acc,
+          volunteer: acc.volunteer + 1,
+        };
+      default:
+        return acc;
+    }
+  },
+  { volunteer: 0, tech: 0 },
+);
+const allSlotsFilled =
+  volunteerCount.tech >= TECH_LIMIT &&
+  volunteerCount.volunteer >= VOLUNTEER_LIMIT;
+
+// actionResult is defined if the form was just submitted
+const actionResult = Astro.getActionResult(actions.volunteer);
+if (actionResult) {
+  const errorMessages: Array<string> | null = (() => {
+    if (!actionResult.error) {
+      return null;
+    }
+
+    if (isInputError(actionResult.error)) {
+      const fields = actionResult.error.fields;
+      return Object.keys(fields).map((field) =>
+        fields[field as keyof typeof fields]!.join(", "),
+      );
+    }
+
+    return [actionResult.error.message];
+  })();
+
+  const redirectUrl = new URL(Astro.url.pathname, Astro.url.origin);
+
+  if (errorMessages) {
+    errorMessages.forEach((errMsg) => {
+      redirectUrl.searchParams.append("error", errMsg);
+    });
+  } else {
+    redirectUrl.searchParams.append("success", "true");
+  }
+
+  return Astro.redirect(redirectUrl.toString());
+}
+
+const searchParams = Astro.url.searchParams;
+const success = searchParams.has("success");
+const errorMessages = searchParams.has("error")
+  ? searchParams.getAll("error")
+  : null;
+---
+
+<style>
+  form {
+    @apply flex flex-col gap-4 max-w-xl;
+  }
+
+  input,
+  select {
+    @apply block rounded px-3 py-2 border-2 border-primary-purple bg-white w-full;
+  }
+
+  button[type="submit"] {
+    @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded mt-4;
+  }
+
+  button[id="remove-volunteer-btn"] {
+    @apply px-3 py-1 mt-4 ml-auto border border-coral rounded hover:bg-coral transition-colors;
+  }
+
+  .result-msg {
+    @apply px-4 py-2 border-2 text-black;
+  }
+</style>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document
+    .getElementById("remove-volunteer-btn")
+    ?.addEventListener("click", () => {
+      const listingId = new URLPattern({
+        pathname: "/internal/volunteer/:listingId",
+      }).exec(location.href)?.pathname.groups.listingId;
+
+      if (!listingId) return;
+
+      const email = prompt(
+        "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
+      );
+      if (!email) return;
+
+      const formData = new FormData();
+      formData.set("listingId", listingId);
+      formData.set("email", email);
+
+      actions.unvolunteer(formData).then((result) => {
+        if (result.error) {
+          alert(
+            `Unable to remove sign up.\n\nThere was either an error or the email you entered did not match the email used when you signed up.\n\nFeel free to try again.`,
+          );
+        } else {
+          alert(`You have successfully unvolunteered.`);
+          window.location.href = `/internal/volunteer/${listingId}`;
+        }
+      });
+    });
+</script>
+
+<InternalLayout
+  title={`Volunteer for ${listing.name}`}
+  class="max-w-xl m-auto p-6 lg:px-12 flex flex-col gap-12"
+>
+  <section>
+    <a
+      href="/internal/volunteer"
+      class="text-primary-purple underline block mb-4"
+    >
+      &lt; Back to show list
+    </a>
+    <h1 class="text-2xl font-bold">Volunteer for {listing.name}</h1>
+    <p class="m-2">
+      Show time is <span class="font-bold">{formatShowTime(listing.date)}</span>
+    </p>
+    <p class="m-2">
+      Please arrive by <span class="font-bold">{arriveTime}</span>
+    </p>
+  </section>
+  {
+    success ? (
+      <p class="result-msg bg-green-200 border-green-800">
+        Success! Thank you for your support!
+      </p>
+    ) : null
+  }
+  {
+    errorMessages ? (
+      <div class="result-msg bg-red-200 border-red-800">
+        <ul>
+          {errorMessages.map((errMsg) => (
+            <li>{errMsg}</li>
+          ))}
+        </ul>
+      </div>
+    ) : null
+  }
+  <section class="flex flex-col w-full">
+    <h2 class="text-lg font-bold">Current Volunteers</h2>
+    <ul class="pl-8">
+      {
+        listingVolunteers.length > 0 ? (
+          listingVolunteers.map((volunteerInfo) => (
+            <li class="list-disc pt-2">
+              {`${volunteerInfo.firstName} ${volunteerInfo.lastName}`}
+              <span class="capitalize">{` (${volunteerInfo.role})`}</span>
+            </li>
+          ))
+        ) : (
+          <li class="pt-2">~ No one, but hopefully you 🙏 ~</li>
+        )
+      }
+    </ul>
+    {
+      listingVolunteers.length > 0 ? (
+        <button id="remove-volunteer-btn">Remove sign up</button>
+      ) : null
+    }
+  </section>
+
+  {
+    allSlotsFilled ? (
+      <p class="result-msg bg-amber-100 border-amber-400">
+        All volunteer slots for this event are filled.
+      </p>
+    ) : (
+      <form
+        method="POST"
+        action={actions.volunteer}
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="firstName">First Name</label>
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            autocomplete="given-name"
+            required
+            minlength="1"
+            maxlength="35"
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="lastName">Last Name</label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            autocomplete="family-name"
+            required
+            minlength="1"
+            maxlength="35"
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            maxlength="254"
+            disabled={allSlotsFilled}
+          />
+        </div>
+        <div>
+          <label for="role">Role</label>
+          <select id="role" name="role" required disabled={allSlotsFilled}>
+            <option
+              value="volunteer"
+              disabled={volunteerCount.volunteer >= VOLUNTEER_LIMIT}
+            >
+              Volunteer
+            </option>
+            <option value="tech" disabled={volunteerCount.tech >= TECH_LIMIT}>
+              Tech
+            </option>
+          </select>
+        </div>
+        <button type="submit" disabled={allSlotsFilled}>
+          Submit
+        </button>
+      </form>
+    )
+  }
+</InternalLayout>
