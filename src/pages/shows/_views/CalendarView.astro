@@ -1,8 +1,10 @@
 ---
 import { getDaysInMonth, getWeeksInMonth, getDay, isSameDay } from "date-fns";
-import { toDate as toDateTz } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
+
 import type { ShowListing } from "~/api/getShowListings";
 import { formatEst } from "~/utils/formatEst";
+import { getNow } from "~/utils/getNow";
 
 type Props = {
   visibleMonth: number;
@@ -12,9 +14,12 @@ type Props = {
 
 const { visibleMonth, visibleYear, upcomingShows } = Astro.props;
 
-const now = toDateTz(Date.now(), { timeZone: "America/New_York" });
+const now = getNow();
 
-const monthDate = new Date(visibleYear, visibleMonth);
+const monthDate = toZonedTime(
+  new Date(visibleYear, visibleMonth),
+  "America/New_York",
+);
 const numOfDaysInMonth = getDaysInMonth(monthDate);
 
 const dayOfWeekForFirstDay = getDay(monthDate);
@@ -74,7 +79,10 @@ const calendarDays: Array<Array<number>> = (() => {
       calendarDays.map((weekInMonth) => (
         <tr>
           {weekInMonth.map((dayInWeek) => {
-            const dayDate = new Date(visibleYear, visibleMonth, dayInWeek);
+            const dayDate = toZonedTime(
+              new Date(visibleYear, visibleMonth, dayInWeek),
+              "America/New_York",
+            );
             const dayListings = upcomingShows.filter((show) =>
               isSameDay(dayDate, show.date),
             );
