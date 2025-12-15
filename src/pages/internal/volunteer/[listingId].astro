@@ -57,9 +57,15 @@ const allSlotsFilled =
   volunteerCount.tech >= TECH_LIMIT &&
   volunteerCount.volunteer >= VOLUNTEER_LIMIT;
 
-// actionResult is defined if the form was just submitted
-const actionResult = Astro.getActionResult(actions.volunteer);
-if (actionResult) {
+const volunteerActionResult = Astro.getActionResult(actions.volunteer);
+const unvolunteerActionResult = Astro.getActionResult(actions.unvolunteer);
+
+const handleActionResult = (
+  actionResult: NonNullable<
+    typeof volunteerActionResult | typeof unvolunteerActionResult
+  >,
+  successMsg: string,
+): Response => {
   const errorMessages: Array<string> | null = (() => {
     if (!actionResult.error) {
       return null;
@@ -82,14 +88,28 @@ if (actionResult) {
       redirectUrl.searchParams.append("error", errMsg);
     });
   } else {
-    redirectUrl.searchParams.append("success", "true");
+    redirectUrl.searchParams.append("success", successMsg);
   }
 
   return Astro.redirect(redirectUrl.toString());
+};
+
+if (volunteerActionResult) {
+  return handleActionResult(
+    volunteerActionResult,
+    "Success! Thank you for your support!",
+  );
+}
+
+if (unvolunteerActionResult) {
+  return handleActionResult(
+    unvolunteerActionResult,
+    "You have successfully unvolunteered.",
+  );
 }
 
 const searchParams = Astro.url.searchParams;
-const success = searchParams.has("success");
+const successMessage = searchParams.get("success");
 const errorMessages = searchParams.has("error")
   ? searchParams.getAll("error")
   : null;
@@ -106,7 +126,7 @@ const errorMessages = searchParams.has("error")
   }
 
   button[type="submit"] {
-    @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded mt-4;
+    @apply px-5 py-2 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded;
   }
 
   button[id="remove-volunteer-btn"] {
@@ -118,37 +138,21 @@ const errorMessages = searchParams.has("error")
   }
 </style>
 
+<script
+  is:inline
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer></script>
+
 <script>
-  import { actions } from "astro:actions";
+  const unvolunteerDialog = document.getElementById(
+    "unvolunteer-dialog",
+  ) as HTMLDialogElement | null;
 
   document
     .getElementById("remove-volunteer-btn")
     ?.addEventListener("click", () => {
-      const listingId = new URLPattern({
-        pathname: "/internal/volunteer/:listingId",
-      }).exec(location.href)?.pathname.groups.listingId;
-
-      if (!listingId) return;
-
-      const email = prompt(
-        "Are you sure you want to remove your volunteer sign up for this event?\n\nIf so, please type the email you used to sign up.",
-      );
-      if (!email) return;
-
-      const formData = new FormData();
-      formData.set("listingId", listingId);
-      formData.set("email", email);
-
-      actions.unvolunteer(formData).then((result) => {
-        if (result.error) {
-          alert(
-            `Unable to remove sign up.\n\nThere was either an error or the email you entered did not match the email used when you signed up.\n\nFeel free to try again.`,
-          );
-        } else {
-          alert(`You have successfully unvolunteered.`);
-          window.location.href = `/internal/volunteer/${listingId}`;
-        }
-      });
+      unvolunteerDialog?.showModal();
     });
 </script>
 
@@ -172,10 +176,8 @@ const errorMessages = searchParams.has("error")
     </p>
   </section>
   {
-    success ? (
-      <p class="result-msg bg-green-200 border-green-800">
-        Success! Thank you for your support!
-      </p>
+    successMessage ? (
+      <p class="result-msg bg-green-200 border-green-800">{successMessage}</p>
     ) : null
   }
   {
@@ -210,6 +212,49 @@ const errorMessages = searchParams.has("error")
         <button id="remove-volunteer-btn">Remove sign up</button>
       ) : null
     }
+    <dialog id="unvolunteer-dialog" class="bg-peach p-4 rounded-md">
+      <form
+        method="POST"
+        action={actions.unvolunteer}
+        enctype="multipart/form-data"
+        class="flex flex-col gap-4"
+      >
+        <h2 class="text-xl font-bold">Are you sure?</h2>
+        <div class="flex flex-col gap-2">
+          <p>
+            Are you sure you want to remove your volunteer sign up for this
+            event?
+          </p>
+          <p>If so, please type the email you used to sign up.</p>
+        </div>
+        <div>
+          <label for="unvolunteer-email">Email</label>
+          <input
+            id="unvolunteer-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            maxlength="254"
+          />
+        </div>
+
+        <div
+          class="cf-turnstile"
+          data-sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-appearance="interaction-only"
+        >
+        </div>
+
+        <div role="group" class="flex gap-4 ml-auto">
+          <button formmethod="dialog" formnovalidate class="px-5 py-2">
+            Cancel
+          </button>
+          <button type="submit">Confirm</button>
+        </div>
+      </form>
+    </dialog>
   </section>
 
   {
@@ -275,6 +320,12 @@ const errorMessages = searchParams.has("error")
             </option>
           </select>
         </div>
+        <div
+          class="cf-turnstile mt-4"
+          data-sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-appearance="interaction-only"
+        />
         <button type="submit" disabled={allSlotsFilled}>
           Submit
         </button>

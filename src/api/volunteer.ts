@@ -1,6 +1,7 @@
 import { ActionError } from "astro:actions";
 import { supabase, type Database } from "~/lib/supabase";
 import { getShowListings } from "./getShowListings";
+import { validateTurnstileToken } from "./cloudflare";
 
 export const VOLUNTEER_LIMIT = 3;
 export const TECH_LIMIT = 1;
@@ -83,11 +84,20 @@ export const getVolunteerCounts = async (
 
 export const volunteer = async (
   listingId: number,
+  turnstileResponse: string,
   firstName: string,
   lastName: string,
   email: string,
   role: Database["public"]["Enums"]["Volunteer Role"],
 ): Promise<ListingVolunteers> => {
+  const isValid = await validateTurnstileToken(turnstileResponse);
+  if (!isValid) {
+    throw new ActionError({
+      code: "PRECONDITION_FAILED",
+      message: "CAPTCHA validation failed",
+    });
+  }
+
   // validate role is available
   const { count: roleCount } = await supabase
     .from("signup")
@@ -173,8 +183,17 @@ export const volunteer = async (
 
 export const removeSignUp = async (
   listingId: number,
+  turnstileResponse: string,
   email: string,
 ): Promise<ListingVolunteers> => {
+  const isValid = await validateTurnstileToken(turnstileResponse);
+  if (!isValid) {
+    throw new ActionError({
+      code: "PRECONDITION_FAILED",
+      message: "CAPTCHA validation failed",
+    });
+  }
+
   const { data: memberIdRow } = await supabase
     .from("member")
     .select("id")

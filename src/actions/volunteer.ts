@@ -23,6 +23,9 @@ export const volunteer = {
   volunteer: defineAction({
     accept: "form",
     input: z.object({
+      "cf-turnstile-response": z.string({
+        message: "Please complete the CAPTCHA validation.",
+      }),
       firstName: z
         .string()
         .trim()
@@ -50,6 +53,7 @@ export const volunteer = {
     handler: (input, ctx) =>
       signUp(
         getListingIdParam(ctx),
+        input["cf-turnstile-response"],
         input.firstName,
         input.lastName,
         input.email,
@@ -59,7 +63,9 @@ export const volunteer = {
   unvolunteer: defineAction({
     accept: "form",
     input: z.object({
-      listingId: z.number(),
+      "cf-turnstile-response": z.string({
+        message: "Please complete the CAPTCHA validation.",
+      }),
       email: z
         .string()
         .trim()
@@ -67,6 +73,11 @@ export const volunteer = {
         .toLowerCase()
         .max(254, "Email addresses cannot be longer than 254 characters."),
     }),
-    handler: (input) => removeSignUp(input.listingId, input.email),
+    handler: (input, ctx) =>
+      removeSignUp(
+        getListingIdParam(ctx),
+        input["cf-turnstile-response"],
+        input.email,
+      ),
   }),
 };
