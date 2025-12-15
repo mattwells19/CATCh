@@ -8,10 +8,10 @@ import {
   setDate,
   isMatch,
 } from "date-fns";
-import { toDate as toDateTz } from "date-fns-tz";
 
 import { getShowListings } from "~/api/getShowListings";
 
+import { getNow } from "~/utils/getNow";
 import RootLayout from "~/layouts/RootLayout.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
 import CalendarIcon from "~/icons/calendar.svg";
@@ -31,7 +31,7 @@ if (view && view !== "calendar") {
   return Astro.redirect("/shows");
 }
 
-const now = toDateTz(Date.now(), { timeZone: "America/New_York" });
+const now = getNow();
 
 const fromDate: Date = (() => {
   const startDate = fromDateParam ? parseISO(fromDateParam) : null;
