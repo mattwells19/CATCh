@@ -14,6 +14,8 @@ import type { ShowListing } from "~/api/getShowListings";
 import { CalendarIcon } from "~/icons/CalendarIcon";
 import { formatClassDateRange } from "~/utils/formatClassTime";
 import { formatEst } from "~/utils/formatEst";
+import UtSGraduationImage from "~/images/UtSGraduatingClass.png";
+import UtSQRCode from "~/images/UtSQRCode.png";
 
 interface UpcomingShowSlidesProps {
   showListings: Array<ShowListing>;
@@ -94,64 +96,60 @@ interface UpcomingClassSlidesProps {
 }
 
 const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
-  const classGroupings = classListings
-    .sort((aClass, bClass) => aClass.date.getTime() - bClass.date.getTime())
-    .reduce((acc, classListing) => {
-      const listings = acc.get(classListing.eventId) ?? [];
-      acc.set(classListing.eventId, [...listings, classListing]);
-      return acc;
-    }, new Map<number, Array<ClassListing>>());
+  const sortedClassListings = classListings.sort(
+    (aClass, bClass) => aClass.date.getTime() - bClass.date.getTime(),
+  );
 
   return (
-    <div className="bg-peach p-5 w-full aspect-video flex flex-col justify-between">
-      <p className="text-4xl font-serif font-bold text-primary-purple mb-6">
-        Check out our upcoming classes!
+    <div className="bg-peach pl-[4vw] pt-[4vh] w-full aspect-video overflow-hidden">
+      <h1 className="text-primary-purple font-black text-7xl font-serif">
+        Unlocking the Self: Improv Skills for life
+      </h1>
+      <p className="text-4xl mt-[2vh]">
+        Grow your personal skills and meet people through improv
       </p>
-      <ul className="grid grid-cols-2 gap-5">
-        {Array.from(classGroupings)
-          .slice(0, 4)
-          .map(([classEventId, classListings]) => {
-            const classDetails = classListings[0];
-
-            return (
-              <li
-                key={classEventId}
-                className="rounded overflow-hidden border border-primary-purple p-4 bg-peach flex flex-col justify-evenly gap-4"
-              >
-                <p className="text-xl text-primary-purple font-serif font-bold">
-                  {classDetails.name}
-                </p>
-
-                <img
-                  src={classDetails.image}
-                  alt={classDetails.name}
-                  width={724}
-                  height={407}
-                  className="w-full"
-                />
-
-                <ul>
-                  {classListings.map((classListing) => (
-                    <li
-                      key={classListing.id}
-                      className="flex items-center gap-3 p-2"
-                    >
-                      <CalendarIcon name="calendar" className="size-5" />
-
-                      <p className="font-serif font-semibold">
-                        {formatClassDateRange(classListing)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            );
-          })}
-      </ul>
-      <p className="text-xl font-serif text-primary-purple mt-6">
-        Learn more at{" "}
-        <span className="font-bold">https://catch.theater/classes</span>
-      </p>
+      <div className="grid grid-cols-3 mt-[8vh] gap-[4vw]">
+        <div className="col-span-1">
+          <div className="border-y-2 border-light-purple flex-1 py-[3vh]">
+            <h2 className="font-serif font-black text-3xl text-primary-purple mb-[3vh]">
+              Upcoming beginner classes:
+            </h2>
+            <ul>
+              {sortedClassListings.map((classListing) => (
+                <li
+                  key={classListing.id}
+                  className="font-serif text-primary-purple text-3xl flex items-center gap-2 mt-[2vh]"
+                >
+                  <CalendarIcon />
+                  {formatClassDateRange(classListing)}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex gap-3 mt-[2vh] justify-center items-center">
+            <img
+              alt="QR code to https://catch.theater/classes"
+              src={UtSQRCode.src}
+              className="w-2/5"
+            />
+            <div className="flex flex-col gap-2 text-lg font-serif font-bold text-center">
+              <p className="bg-coral  text-peach shadow-sm py-4 rounded-md  w-[14vw]">
+                Register today!
+              </p>
+              <p>catch.theater/classes</p>
+            </div>
+          </div>
+        </div>
+        <div id="uts-graduation-img" className="col-span-2 relative">
+          <img
+            alt="An Unlocking the Self class takes a silly photo after they graduated!"
+            src={UtSGraduationImage.src}
+            height={UtSGraduationImage.height}
+            width={UtSGraduationImage.width}
+            className="w-full"
+          />
+        </div>
+      </div>
     </div>
   );
 };

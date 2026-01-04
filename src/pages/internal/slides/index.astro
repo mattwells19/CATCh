@@ -7,13 +7,17 @@ import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
 import { getNow } from "~/utils/getNow";
 
+import { ClassIDs } from "~/pages/classes/class-ids";
 import { Slideshow } from "./_components/Slideshow";
+import "./_styles/slides.css";
 
 const weekFromNow = addWeeks(getNow(), 1);
 
 const [upcomingShows, upcomingClasses, preshowSlideDecks] = await Promise.all([
   getShowListings({ end: weekFromNow }),
-  getClassListings(),
+  getClassListings({
+    eventId: ClassIDs.UnlockingTheSelf,
+  }),
   getPreshowSlideDecks(),
 ]);
 const selectedDeckTitle = Astro.url.searchParams.get("deck");
