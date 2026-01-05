@@ -29,29 +29,29 @@ const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
       showListing.date.getDate(),
     );
 
-    const listings = acc.get(showDay) ?? [];
-    acc.set(showDay, [...listings, showListing]);
+    const listings = acc.get(showDay.getTime()) ?? [];
+    acc.set(showDay.getTime(), [...listings, showListing]);
     return acc;
-  }, new Map<Date, Array<ShowListing>>());
+  }, new Map<number, Array<ShowListing>>());
 
   return (
-    <div className="bg-peach p-5 w-full aspect-video flex flex-col justify-between">
-      <p className="text-4xl font-serif font-bold text-primary-purple mb-8">
+    <div className="bg-peach px-[4vw] py-[4vh] w-full aspect-video overflow-hidden">
+      <p className="text-primary-purple font-black text-7xl font-serif">
         Check out our upcoming shows!
       </p>
-      <ul className="flex flex-col gap-12">
+      <ul className="flex gap-[4vw] mt-[5vh]">
         {Array.from(showGroupings)
-          .sort(([aDay], [bDay]) => aDay.getTime() - bDay.getTime())
+          .sort()
           .map(([day, showListings]) => (
-            <li key={day.toISOString()}>
-              <p className="text-2xl text-primary-purple font-serif font-bold border-b border-primary-purple">
+            <li key={day} className="flex-1">
+              <p className="text-4xl text-primary-purple font-serif font-bold border-b-2 pb-4 border-light-purple">
                 {formatEst(day, "EEEE',' LLL do")}
               </p>
               <ul className="flex flex-wrap gap-4 py-4 px-2">
                 {showListings.map((showListing) => (
                   <li
                     key={showListing.id}
-                    className="flex items-center justify-between gap-4"
+                    className="flex items-center justify-between gap-4 mt-[2vh]"
                   >
                     <div className="flex gap-4 items-center">
                       <img
@@ -59,21 +59,15 @@ const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
                         alt={showListing.name}
                         width={280}
                         height={158}
-                        className="w-[240px] flex-shrink-0"
+                        className="w-2/5"
                       />
 
-                      <div className="flex flex-col gap-2 text-primary-purple">
-                        <p className="text-xl font-serif font-bold border-b-2 border-light-purple">
-                          {showListing.name}
-                        </p>
-                        <div className="flex justify-between">
-                          <p className="text-lg font-serif font-semibold">
-                            {formatEst(showListing.date, "h:mm a")}
-                          </p>
-                          <p className="font-serif font-bold text-primary-purple px-2">
-                            {showListing.price}
-                          </p>
-                        </div>
+                      <div className="text-primary-purple text-2xl font-serif">
+                        <span className="font-bold">{showListing.name}</span>
+                        <span>
+                          &nbsp;&ndash;&nbsp;
+                          {formatEst(showListing.date, "h:mm a")}
+                        </span>
                       </div>
                     </div>
                   </li>
@@ -83,10 +77,12 @@ const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
           ))}
       </ul>
 
-      <p className="text-xl font-serif text-primary-purple mt-8">
-        Get tickets at{" "}
-        <span className="font-bold">https://catch.theater/shows</span>
-      </p>
+      <div className="flex flex-col gap-2 text-lg font-serif font-bold text-center w-fit mt-[4vh]">
+        <p className="bg-coral  text-peach shadow-sm py-4 rounded-md  w-[14vw]">
+          Get tickets today!
+        </p>
+        <p>catch.theater/shows</p>
+      </div>
     </div>
   );
 };
