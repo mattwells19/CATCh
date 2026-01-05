@@ -1,7 +1,7 @@
 ---
 import { addWeeks } from "date-fns";
 
-import RootLayout from "~/layouts/RootLayout.astro";
+import InternalLayout from "~/layouts/InternalLayout.astro";
 import { getPreshowSlideDecks } from "~/api/getPreshowSlides";
 import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
@@ -27,8 +27,7 @@ const selectedDeck = selectedDeckTitle
   : null;
 ---
 
-<meta name="robots" content="noindex" />
-<RootLayout title="Preshow Slides" class="max-w-4xl px-12 m-auto">
+<InternalLayout title="Preshow Slides" class="max-w-4xl px-12 m-auto">
   <form method="GET">
     <label for="deck" class="block">Select a preshow slide deck</label>
     <select
@@ -69,4 +68,4 @@ const selectedDeck = selectedDeckTitle
       ) : null
     }
   </section>
-</RootLayout>
+</InternalLayout>
