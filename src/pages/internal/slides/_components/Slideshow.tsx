@@ -16,6 +16,7 @@ import { formatClassDateRange } from "~/utils/formatClassTime";
 import { formatEst } from "~/utils/formatEst";
 import UtSGraduationImage from "~/images/UtSGraduatingClass.png";
 import UtSQRCode from "~/images/UtSQRCode.png";
+import { ClickHereIcon } from "./ClickHereIcon.tsx";
 
 interface UpcomingShowSlidesProps {
   showListings: Array<ShowListing>;
@@ -81,7 +82,12 @@ const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
         <p className="bg-coral  text-peach shadow-sm py-4 rounded-md  w-[14vw]">
           Get tickets today!
         </p>
-        <p>catch.theater/shows</p>
+        <div className="relative">
+          <p>catch.theater/shows</p>
+          <div className="absolute -right-[1vw] -bottom-full">
+            <ClickHereIcon />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -114,7 +120,7 @@ const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
               {sortedClassListings.map((classListing) => (
                 <li
                   key={classListing.id}
-                  className="font-serif text-primary-purple text-3xl flex items-center gap-2 mt-[2vh]"
+                  className="font-serif text-primary-purple text-3xl whitespace-nowrap flex items-center gap-2 mt-[2vh]"
                 >
                   <CalendarIcon />
                   {formatClassDateRange(classListing)}
@@ -132,7 +138,12 @@ const UpcomingClassSlides = ({ classListings }: UpcomingClassSlidesProps) => {
               <p className="bg-coral  text-peach shadow-sm py-4 rounded-md  w-[14vw]">
                 Register today!
               </p>
-              <p>catch.theater/classes</p>
+              <div className="relative">
+                <p>catch.theater/classes</p>
+                <div className="absolute -right-[1vw] -bottom-full">
+                  <ClickHereIcon />
+                </div>
+              </div>
             </div>
           </div>
         </div>
