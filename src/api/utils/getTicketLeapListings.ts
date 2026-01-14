@@ -109,9 +109,7 @@ export async function getTicketLeapListings(
       .map((listing) => {
         let imageUrl = event.image ?? event.listing_settings.header_image;
         if (imageUrl) {
-          imageUrl = imageUrl.startsWith("//")
-            ? `https:${event.listing_settings.header_image}`
-            : imageUrl;
+          imageUrl = imageUrl.startsWith("//") ? `https:${imageUrl}` : imageUrl;
         } else {
           imageUrl = "/images/CATCh-Placeholder.jpg";
         }
