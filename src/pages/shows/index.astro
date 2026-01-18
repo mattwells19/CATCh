@@ -27,7 +27,7 @@ if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
 }
 
 const view = Astro.url.searchParams.get("view");
-if (view && view !== "calendar") {
+if (view && view !== "list") {
   return Astro.redirect("/shows");
 }
 
@@ -79,10 +79,10 @@ const nextMonthHref: URL = (() => {
 
 const changeViewHref = (() => {
   const destinationUrl = new URL(Astro.url);
-  if (view && view === "calendar") {
+  if (view && view === "list") {
     destinationUrl.searchParams.delete("view");
   } else {
-    destinationUrl.searchParams.set("view", "calendar");
+    destinationUrl.searchParams.set("view", "list");
   }
   return destinationUrl;
 })();
@@ -128,23 +128,23 @@ const changeViewHref = (() => {
       href={changeViewHref}
       class="hidden lg:inline-block bg-coral hover:bg-[#B7433C] w-fit rounded-sm px-3 py-1 text-peach font-serif"
     >
-      {view === "calendar" ? "View as list" : "View in calendar"}
+      {view === "list" ? "View in calendar" : "View as list"}
     </a>
   </nav>
   <!-- desktop view -->
   <section
     class="hidden lg:block"
-    class:list={{ "border-t-2 border-light-purple": view !== "calendar" }}
+    class:list={{ "border-t-2 border-light-purple": view === "list" }}
   >
     {
-      view === "calendar" ? (
+      view === "list" ? (
+        <DesktopListView upcomingShows={upcomingShows} />
+      ) : (
         <CalendarView
           visibleMonth={fromDate.getMonth()}
           visibleYear={fromDate.getFullYear()}
           upcomingShows={upcomingShows}
         />
-      ) : (
-        <DesktopListView upcomingShows={upcomingShows} />
       )
     }
   </section>

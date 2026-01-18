@@ -5,6 +5,7 @@ import { toZonedTime } from "date-fns-tz";
 import type { ShowListing } from "~/api/getShowListings";
 import { formatEst } from "~/utils/formatEst";
 import { getNow } from "~/utils/getNow";
+import ShowPreview from "../_components/ShowPreview.astro";
 
 type Props = {
   visibleMonth: number;
@@ -60,6 +61,23 @@ const calendarDays: Array<Array<number>> = (() => {
   th {
     @apply py-4;
   }
+
+  .hover-card-root {
+    position: relative;
+  }
+
+  .hover-card-content {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+
+  .hover-card-root:hover .hover-card-content,
+  .hover-card-trigger:focus + .hover-card-content {
+    visibility: visible;
+  }
 </style>
 
 <table class="w-full table-fixed">
@@ -86,6 +104,7 @@ const calendarDays: Array<Array<number>> = (() => {
             const dayListings = upcomingShows.filter((show) =>
               isSameDay(dayDate, show.date),
             );
+            const dayOfWeek = getDay(dayDate);
 
             return dayInWeek === -1 ? (
               <td />
@@ -106,13 +125,23 @@ const calendarDays: Array<Array<number>> = (() => {
                 </span>
                 <ul>
                   {dayListings.map((listing) => (
-                    <li>
+                    <li class="hover-card-root">
                       <a
                         href={listing.listingUrl}
-                        class="block bg-primary-purple text-white py-0.5 px-1 rounded my-1"
+                        class="block bg-primary-purple text-white py-0.5 px-1 rounded my-1 hover-card-trigger"
                       >
                         {listing.name} ({formatEst(listing.date, "h:mm a")})
                       </a>
+                      <div
+                        class="hover-card-content"
+                        class:list={{
+                          // 4 = Wednesday
+                          "left-full": dayOfWeek < 4,
+                          "right-full": dayOfWeek >= 4,
+                        }}
+                      >
+                        <ShowPreview showListing={listing} />
+                      </div>
                     </li>
                   ))}
                 </ul>
