@@ -1,0 +1,13 @@
+#uts-graduation-img img {
+  position: relative;
+  z-index: 1;
+}
+
+#uts-graduation-img::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  clip-path: inset(0 0 0 0 round 600px 0px 0px 600px);
+  inset: 55% 0% -4.5% -4rem;
+  background-color: #f2b63f;
+}
