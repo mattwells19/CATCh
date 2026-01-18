@@ -95,8 +95,10 @@ const calendarDays: Array<Array<number>> = (() => {
       calendarDays.map((weekInMonth) => (
         <tr>
           {weekInMonth.map((dayInWeek) => {
-            const dayDate = toZonedTime(
-              new Date(visibleYear, visibleMonth, dayInWeek),
+            const dayDate = new TZDateMini(
+              visibleYear,
+              visibleMonth,
+              dayInWeek,
               "America/New_York",
             );
             const dayListings = upcomingShows.filter((show) =>
