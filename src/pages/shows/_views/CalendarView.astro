@@ -1,5 +1,6 @@
 ---
 import { getDaysInMonth, getWeeksInMonth, getDay, isSameDay } from "date-fns";
+import { TZDateMini } from "@date-fns/tz";
 import { toZonedTime } from "date-fns-tz";
 
 import type { ShowListing } from "~/api/getShowListings";
@@ -17,10 +18,7 @@ const { visibleMonth, visibleYear, upcomingShows } = Astro.props;
 
 const now = getNow();
 
-const monthDate = toZonedTime(
-  new Date(visibleYear, visibleMonth),
-  "America/New_York",
-);
+const monthDate = new TZDateMini(visibleYear, visibleMonth, "America/New_York");
 const numOfDaysInMonth = getDaysInMonth(monthDate);
 
 const dayOfWeekForFirstDay = getDay(monthDate);
