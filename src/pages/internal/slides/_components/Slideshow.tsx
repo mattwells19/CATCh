@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { TZDateMini } from "@date-fns/tz";
 
 import type { ClassListing } from "~/api/getClassListings";
 import type { PreshowSlides } from "~/api/getPreshowSlides";
@@ -24,10 +25,11 @@ interface UpcomingShowSlidesProps {
 
 const UpcomingShowSlides = ({ showListings }: UpcomingShowSlidesProps) => {
   const showGroupings = showListings.reduce((acc, showListing) => {
-    const showDay = new Date(
+    const showDay = new TZDateMini(
       showListing.date.getFullYear(),
       showListing.date.getMonth(),
       showListing.date.getDate(),
+      "America/New_York",
     );
 
     const listings = acc.get(showDay.getTime()) ?? [];

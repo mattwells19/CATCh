@@ -1,0 +1,45 @@
+---
+import type { ShowListing } from "~/api/getShowListings";
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+import LinkedImage from "~/components/LinkedImage.astro";
+import ShowDateTime from "~/components/ShowDateTime.astro";
+import TicketIcon from "~/icons/ticket.svg";
+
+type Props = {
+  upcomingShows: Array<ShowListing>;
+};
+
+const { upcomingShows } = Astro.props;
+---
+
+<ul class="flex-col lg:flex">
+  {
+    upcomingShows.map((show) => (
+      <li class="flex items-center justify-between gap-24 px-6 py-12 border-b-2 border-light-purple">
+        <div class="flex gap-12 items-center">
+          <LinkedImage
+            listingImageSrc={show.image}
+            listingTitle={show.name}
+            href={show.listingUrl}
+            width={280}
+            height={158}
+            class="w-[280px] flex-shrink-0"
+          />
+          <div class="flex flex-col gap-4">
+            <ShowDateTime showDate={show.date} class="w-fit pb-2" />
+            <p class="font-serif text-3xl text-primary-purple">{show.name}</p>
+          </div>
+        </div>
+        <div class="flex gap-12 items-center">
+          <p class="font-serif text-primary-purple font-bold text-2xl">
+            {show.price}
+          </p>
+          <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
+            <TicketIcon name="ticket" />
+            Get Tickets
+          </CoralButtonLink>
+        </div>
+      </li>
+    ))
+  }
+</ul>

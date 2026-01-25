@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
+import type { ShowListing } from "~/api/getShowListings";
+import ShowDateTime from "~/components/ShowDateTime.astro";
+
+type Props = {
+  showListing: ShowListing;
+};
+
+const { showListing } = Astro.props;
+---
+
+<div
+  class="rounded overflow-hidden shadow-xl p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
+>
+  <!-- Borrowed from LinkedImage.astro -->
+  <div class="block group relative bg-black bg-opacity-10 w-full">
+    <span
+      class="text-center absolute z-10 inset-0 h-fit m-auto px-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+    >
+      {showListing.name}
+    </span>
+    <Image
+      src={showListing.image}
+      alt={showListing.name}
+      width={724}
+      height={407}
+      class="group-hover:opacity-20 transition-opacity w-full"
+    />
+  </div>
+
+  <div class="flex flex-col gap-4 px-2 text-lg max-h-[500px]">
+    <ShowDateTime showDate={showListing.date} class="w-fit mr-auto py-4" />
+
+    {
+      showListing.showDescription ? (
+        <div
+          class="wysiwyg overflow-auto"
+          set:html={documentToHtmlString(showListing.showDescription)}
+        />
+      ) : null
+    }
+  </div>
+
+  <p class="font-bold px-2 pb-4">
+    {showListing.price}
+  </p>
+</div>
