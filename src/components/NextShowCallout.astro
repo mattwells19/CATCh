@@ -40,7 +40,7 @@ const showDateFormatted = formatShowTime(nextShow.date);
       ) : null
     }
 
-    <CoralButtonLink href={nextShow.listingUrl}>
+    <CoralButtonLink href={nextShow.listingUrl} isSoldOut={nextShow.isSoldOut}>
       <TicketIcon name="ticket" class="size-5" />Get Tickets
     </CoralButtonLink>
   </div>

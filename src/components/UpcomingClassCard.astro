@@ -60,7 +60,11 @@ const formattedClassDate = formatClassDateRange(classListing);
     }
   </div>
 
-  <CoralButtonLink href={classListing.listingUrl} class="w-full min-w-full">
+  <CoralButtonLink
+    href={classListing.listingUrl}
+    isSoldOut={classListing.isSoldOut}
+    class="w-full min-w-full"
+  >
     Learn More
   </CoralButtonLink>
 </div>

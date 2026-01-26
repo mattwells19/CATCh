@@ -19,8 +19,8 @@ const EventPriceSchema = z.array(
         price: z.object({
           amount: z.number(),
         }),
-        inventory: z.number(),
-        tickets_sold: z.number(),
+        inventory: z.number().nullable(),
+        tickets_sold: z.number().nullable(),
       }),
     }),
   }),
@@ -64,7 +64,9 @@ export async function getTicketLeapPrice(
       const eventPrice: TicketLeapEventPrice = {
         price: priceFormatter.format(priceLevelDetails.price.amount / 100),
         isSoldOut:
-          priceLevelDetails.tickets_sold >= priceLevelDetails.inventory,
+          priceLevelDetails.tickets_sold && priceLevelDetails.inventory
+            ? priceLevelDetails.tickets_sold >= priceLevelDetails.inventory
+            : false,
       };
 
       localCache.set(eventId, eventPrice);
