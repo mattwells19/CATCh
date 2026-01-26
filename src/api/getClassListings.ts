@@ -5,11 +5,14 @@ import {
   type GetTicketLeapListingsOptions,
   type TicketLeapListing,
 } from "./utils/getTicketLeapListings";
-import { getTicketLeapPrice } from "./utils/getTicketLeapPrice";
+import {
+  EMPTY_EVENT_PRICE,
+  getTicketLeapPrice,
+  type TicketLeapEventPrice,
+} from "./utils/getTicketLeapPrice";
 
-export interface TicketLeapClassListing extends TicketLeapListing {
-  price: string;
-}
+export interface TicketLeapClassListing
+  extends TicketLeapListing, TicketLeapEventPrice {}
 
 export type ClassListing = TicketLeapClassListing & Nullable<Class>;
 
@@ -48,12 +51,12 @@ export async function getClassListings({
 
   return classListings.map((classListing) => {
     const details = classDetailsMap.get(classListing.eventId) ?? EMPTY_CLASS;
-    const price = eventPriceMap.get(classListing.eventId) ?? "";
+    const price = eventPriceMap.get(classListing.eventId) ?? EMPTY_EVENT_PRICE;
 
     return {
       ...classListing,
       ...details,
-      price,
+      ...price,
     };
   });
 }

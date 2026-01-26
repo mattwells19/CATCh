@@ -1,3 +1,4 @@
+import cn from "classnames";
 import type { ClassListing } from "~/api/getClassListings";
 import { formatClassDateRange } from "~/utils/formatClassTime";
 import { CalendarIcon } from "~/icons/CalendarIcon";
@@ -28,9 +29,14 @@ export const UpcomingClassItem = ({ classListing }: Props) => {
 
         <a
           href={classListing.listingUrl}
-          className="bg-coral hover:bg-[#B7433C] w-fit rounded-sm px-5 py-3 min-w-[200px] text-peach font-bold font-serif shadow-md text-lg flex items-center justify-center gap-3 transition-colors"
+          className={cn(
+            "w-fit rounded-sm px-5 py-3 min-w-[200px] font-bold font-serif shadow-md text-lg flex items-center justify-center gap-3 transition-colors",
+            classListing.isSoldOut
+              ? "bg-peach text-coral"
+              : "bg-coral hover:bg-[#B7433C] text-peach",
+          )}
         >
-          Enroll
+          {classListing.isSoldOut ? "SOLD OUT" : "Enroll"}
         </a>
       </div>
     </div>

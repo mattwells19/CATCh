@@ -34,7 +34,11 @@ const { upcomingShows } = Astro.props;
           <p class="font-serif text-primary-purple font-bold text-2xl">
             {show.price}
           </p>
-          <CoralButtonLink href={show.listingUrl} class="w-fit pb-2">
+          <CoralButtonLink
+            href={show.listingUrl}
+            isSoldOut={show.isSoldOut}
+            class="w-fit pb-2"
+          >
             <TicketIcon name="ticket" />
             Get Tickets
           </CoralButtonLink>

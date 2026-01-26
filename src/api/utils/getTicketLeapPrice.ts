@@ -1,20 +1,45 @@
 import LRUCache from "quick-lru";
+import { z } from "zod";
 
 const priceFormatter = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
 
-const localCache = new LRUCache<number, string>({
+const localCache = new LRUCache<number, TicketLeapEventPrice>({
   maxSize: 50,
-  // 1 hour
-  maxAge: 1000 * 60 * 60 * 1,
+  // 5 minutes
+  maxAge: 1000 * 60 * 5,
 });
+
+const EventPriceSchema = z.array(
+  z.object({
+    data: z.object({
+      attributes: z.object({
+        price: z.object({
+          amount: z.number(),
+        }),
+        inventory: z.number().nullable(),
+        tickets_sold: z.number().nullable(),
+      }),
+    }),
+  }),
+);
+
+export interface TicketLeapEventPrice {
+  price: string;
+  isSoldOut: boolean;
+}
+
+export const EMPTY_EVENT_PRICE: TicketLeapEventPrice = {
+  price: "",
+  isSoldOut: false,
+};
 
 export async function getTicketLeapPrice(
   type: "shows" | "classes",
   eventId: number,
-): Promise<string> {
+): Promise<TicketLeapEventPrice> {
   const cacheHit = localCache.get(eventId);
   if (cacheHit) {
     return Promise.resolve(cacheHit);
@@ -32,14 +57,21 @@ export async function getTicketLeapPrice(
     },
   )
     .then((res) => res.json())
+    .then(EventPriceSchema.parseAsync)
     .then((res) => {
-      const eventPrice = priceFormatter.format(
-        res[0].data.attributes.price.amount / 100,
-      );
+      const priceLevelDetails = res[0].data.attributes;
+
+      const eventPrice: TicketLeapEventPrice = {
+        price: priceFormatter.format(priceLevelDetails.price.amount / 100),
+        isSoldOut:
+          priceLevelDetails.tickets_sold && priceLevelDetails.inventory
+            ? priceLevelDetails.tickets_sold >= priceLevelDetails.inventory
+            : false,
+      };
 
       localCache.set(eventId, eventPrice);
 
       return eventPrice;
     })
-    .catch(() => "");
+    .catch(() => EMPTY_EVENT_PRICE);
 }
