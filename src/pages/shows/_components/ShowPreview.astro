@@ -44,7 +44,13 @@ const { showListing } = Astro.props;
     }
   </div>
 
-  <p class="font-bold px-2 pb-4">
-    {showListing.price}
-  </p>
+  {
+    showListing.isSoldOut ? (
+      <p class="text-coral font-bold font-serif text-center px-2 pb-4">
+        SOLD OUT
+      </p>
+    ) : (
+      <p class="font-bold px-2 pb-4">{showListing.price}</p>
+    )
+  }
 </div>
