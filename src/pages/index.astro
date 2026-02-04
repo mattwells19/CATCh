@@ -22,6 +22,8 @@ const [upcomingShows, upcomingClasses] = await Promise.all([
 ]);
 
 const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
+
+console.log(upcomingShows, upcomingClasses);
 ---
 
 <style lang="scss">

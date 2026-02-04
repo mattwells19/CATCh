@@ -1,0 +1,144 @@
+[
+    {
+        "data": {
+            "id": "4001701",
+            "type": "price-levels",
+            "attributes": {
+                "name": "General Admission",
+                "price": {
+                    "amount": 1000,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "box_office_price": {
+                    "amount": 1000,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "minimum_price": {
+                    "amount": null,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "description": "",
+                "inventory": null,
+                "settings": {
+                    "transaction_limit": null,
+                    "minimum_purchase_limit": null,
+                    "hide_online": false,
+                    "hide_box_office": true,
+                    "start_date": null,
+                    "end_date": null,
+                    "reserved_seating_label": null,
+                    "badge_label": null
+                },
+                "ticket_layout_id": null,
+                "is_seated": false,
+                "event_id": 2048750,
+                "ticket_type": "Fixed Price",
+                "tickets_left": null,
+                "tickets_sold": 0,
+                "parent_id": null,
+                "is_seated_venue": false
+            },
+            "relationships": {
+                "schedules": {
+                    "links": {
+                        "self": "/price-levels/4001701/relationships/schedules",
+                        "related": "/price-levels/4001701/schedules"
+                    }
+                },
+                "event": {
+                    "links": {
+                        "self": "/price-levels/4001701/relationships/event",
+                        "related": "/price-levels/4001701/event"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/price-levels/4001701/relationships/questions",
+                        "related": "/price-levels/4001701/questions"
+                    }
+                },
+                "section-price-levels": {
+                    "links": {
+                        "self": "/price-levels/4001701/relationships/section-price-levels",
+                        "related": "/price-levels/4001701/section-price-levels"
+                    }
+                }
+            },
+            "dependents": []
+        }
+    },
+    {
+        "data": {
+            "id": "4001702",
+            "type": "price-levels",
+            "attributes": {
+                "name": "Box Office",
+                "price": {
+                    "amount": 1500,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "box_office_price": {
+                    "amount": 1500,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "minimum_price": {
+                    "amount": null,
+                    "currency": "USD",
+                    "symbol": "$"
+                },
+                "description": "",
+                "inventory": null,
+                "settings": {
+                    "transaction_limit": null,
+                    "minimum_purchase_limit": null,
+                    "hide_online": true,
+                    "hide_box_office": false,
+                    "start_date": null,
+                    "end_date": null,
+                    "reserved_seating_label": null,
+                    "badge_label": null
+                },
+                "ticket_layout_id": null,
+                "is_seated": false,
+                "event_id": 2048750,
+                "ticket_type": "Fixed Price",
+                "tickets_left": null,
+                "tickets_sold": 0,
+                "parent_id": null,
+                "is_seated_venue": false
+            },
+            "relationships": {
+                "schedules": {
+                    "links": {
+                        "self": "/price-levels/4001702/relationships/schedules",
+                        "related": "/price-levels/4001702/schedules"
+                    }
+                },
+                "event": {
+                    "links": {
+                        "self": "/price-levels/4001702/relationships/event",
+                        "related": "/price-levels/4001702/event"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/price-levels/4001702/relationships/questions",
+                        "related": "/price-levels/4001702/questions"
+                    }
+                },
+                "section-price-levels": {
+                    "links": {
+                        "self": "/price-levels/4001702/relationships/section-price-levels",
+                        "related": "/price-levels/4001702/section-price-levels"
+                    }
+                }
+            },
+            "dependents": []
+        }
+    }
+]

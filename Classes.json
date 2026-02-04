@@ -1,0 +1,2875 @@
+{
+    "data": [
+        {
+            "id": "1222",
+            "type": "events",
+            "attributes": {
+                "name": "Performance Track 2: Improv Stagecraft & Techniques",
+                "description": "<p>In the second class of CATCh's Performance Track, you will master the essential elements of long-form improv such as openings, game, edits, tag-outs, beats, call-backs, etc.</p>\n<p><strong>Class Schedule</strong></p>\n<p>The class will meet once a week from 7:00-9:30pm on the same night for six weeks. There is no end of class performance for this particular level.</p>\n<p><strong>Location Description</strong></p>\n<p>When you're on South Blvd., you'll see a giant 4200 sign with an arrow. Pull into that business park and head towards the back building on the right side of the complex. We're the corner unit with a sign featuring our logo above a green awning and CATCh on the door.</p>\n<p>For reference, other tenants in the complex include Kung Fu Tea, Tony's Pizza, and Kebab2Go.</p>\n<p>Park anywhere you find a spot! If you arrive late, please ring our doorbell to the right of the front door.</p>",
+                "ticket_note": "",
+                "start": "2023-07-13T19:00:00-04:00",
+                "end": "2026-03-05T19:00:00-05:00",
+                "sales_open": "2025-11-05T00:00:00-05:00",
+                "sales_close": "2026-03-05T18:59:00-05:00",
+                "doors_open_time": null,
+                "created": "2023-04-11T07:27:04-04:00",
+                "inventory": 16,
+                "category": "Improv & Sketch Comedy",
+                "categories": [
+                    "168"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/16c7e63c-fd5b-4d13-a9d6-e1b844667987_resize.jpg",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "18",
+                "buyer_fee_split": 100,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "tl_buttons__custom_text_register",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/16c7e63c-fd5b-4d13-a9d6-e1b844667987_resize.jpg",
+                    "accent_color": "a050ae",
+                    "slug": "catch-u/performance-track-2-improv-stagecraft-techniques",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/performance-track-2-improv-stagecraft-techniques",
+                    "id": "353",
+                    "listing_type": "standard",
+                    "calendar_type": "list",
+                    "show_sold_out": false,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Tuesdays starting Oct 14"
+                    },
+                    "background_color": "F5F5F5",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/performance-track-2-improv-stagecraft-techniques",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2025-11-05T08:57:00-05:00",
+                "slug": "catch-u/performance-track-2-improv-stagecraft-techniques",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2002202",
+                        "start": "2026-03-05 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 144,
+                "tickets_sold": 64,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": false,
+                "event_dates": [
+                    "2026-03-05"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/1222/relationships/seller",
+                        "related": "/events/1222/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/1222/relationships/venue",
+                        "related": "/events/1222/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/1222/relationships/active_price_levels",
+                        "related": "/events/1222/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/1222/relationships/scheme",
+                        "related": "/events/1222/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/1222/relationships/bundles",
+                        "related": "/events/1222/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/1222/relationships/ticket_layout",
+                        "related": "/events/1222/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/1222/relationships/listings",
+                        "related": "/events/1222/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/1222/relationships/tags",
+                        "related": "/events/1222/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/1222/relationships/coupon-offers",
+                        "related": "/events/1222/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/1222/relationships/price-levels",
+                        "related": "/events/1222/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/1222/relationships/sales",
+                        "related": "/events/1222/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/1222/relationships/questions",
+                        "related": "/events/1222/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/1222/relationships/fee-configurations",
+                        "related": "/events/1222/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/1222/relationships/product-listings",
+                        "related": "/events/1222/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/1222/relationships/question-maps",
+                        "related": "/events/1222/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/1222/relationships/schedule",
+                        "related": "/events/1222/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/1222/relationships/picker-levels",
+                        "related": "/events/1222/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "3729",
+            "type": "events",
+            "attributes": {
+                "name": "Whose Class is it Anyway?: Intro to Improv Games",
+                "description": "<h3><strong><em>Whose Class is it Anyway?: An Introduction to Improv Games</em></strong> is a brand new class at CATCh for those looking to do their best Wayne Brady or Colin Mochrie impressions. </h3>\n<p>Each month, CATCh puts on its Improv Game Night show to packed houses. It's our most popular recurring show. Which makes sense, because it is so damn fun. If you have a desire to get up on stage and play bold and silly characters, all while making an audience laugh...this class is for you.</p>\n<p>Each week, students will be introduced to improv games, many of which you have seen on <em>Whose Line is it Anyway? </em>In addition to learning the games, students will play big characters, understand the importance of topical references, and build skills to host and edit games! This is also a great way to potentially be placed on the Game Night team roster.</p>\n<h3>Class Schedule:</h3>\n<ul>\n<li dir=\"auto\">Every Wednesday starting Feb 18 through April 1, from </li>\n<li dir=\"auto\">7:00 PM - 9:30 PM</li>\n</ul>\n<h3>Student Show:</h3>\n<p>Saturday, April 4 @ 6:30 PM</p>\n<p>Please ensure you are available for the show in addition to the classes. Performance is an important part of the course.</p>\n<h3>Prerequisites:</h3>\n<p>This is a performance class, so <em>some</em> experience is required. In order to take this class, we ask that you fit into at least one of the following categories:</p>\n<ul>\n<li dir=\"auto\">You have completed our Unlocking the Self: Improv Skills for Life course and have received approval to sign up. (email <a rel=\"nofollow noopener noreferrer ugc\" target=\"_self\" href=\"mailto:info@catch.theater\">info@CATCh.theater</a>)  </li>\n<li dir=\"auto\">You were or are currently a performer at CATCh or any other theater whether as an improviser or an actor.</li>\n<li dir=\"auto\">You have completed our Stand-up Comedy class or have prior stand-up experience.</li>\n</ul>\n<p><em>If you do not meet these requirements, please reach out with any questions. Our Unlocking the Self class may be the best place to start learning some improv fundamentals and build confidence.</em></p>",
+                "ticket_note": "",
+                "start": "2023-07-27T19:00:00-04:00",
+                "end": "2026-02-18T19:00:00-05:00",
+                "sales_open": "2023-07-11T00:00:00-04:00",
+                "sales_close": "2026-02-18T18:59:00-05:00",
+                "doors_open_time": null,
+                "created": "2023-07-11T09:24:39-04:00",
+                "inventory": 16,
+                "category": "Improv & Sketch Comedy",
+                "categories": [
+                    "168"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/37/3729/aeec0cdf95083cb1e835b10cdab2260e15b0a83c17bc4291ba1de4c194e75b7d/8fbdcc90-2b31-401a-8f78-0e2ca30237a2.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 100,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": null,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "tl_buttons__custom_text_register",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/37/3729/aeec0cdf95083cb1e835b10cdab2260e15b0a83c17bc4291ba1de4c194e75b7d/8fbdcc90-2b31-401a-8f78-0e2ca30237a2.png",
+                    "accent_color": "5c1592",
+                    "slug": "catch-u/whose-class-is-it-anyway-intro-to-improv-games",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/whose-class-is-it-anyway-intro-to-improv-games",
+                    "id": "2472",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": false,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Wednesdays, starting Feb 18"
+                    },
+                    "background_color": "ffffff",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/whose-class-is-it-anyway-intro-to-improv-games",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-07T03:36:08-05:00",
+                "slug": "catch-u/whose-class-is-it-anyway-intro-to-improv-games",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2038971",
+                        "start": "2026-02-18 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 80,
+                "tickets_sold": 55,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": false,
+                "event_dates": [
+                    "2026-02-18"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/3729/relationships/seller",
+                        "related": "/events/3729/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/3729/relationships/venue",
+                        "related": "/events/3729/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/3729/relationships/active_price_levels",
+                        "related": "/events/3729/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/3729/relationships/scheme",
+                        "related": "/events/3729/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/3729/relationships/bundles",
+                        "related": "/events/3729/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/3729/relationships/ticket_layout",
+                        "related": "/events/3729/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/3729/relationships/listings",
+                        "related": "/events/3729/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/3729/relationships/tags",
+                        "related": "/events/3729/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/3729/relationships/coupon-offers",
+                        "related": "/events/3729/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/3729/relationships/price-levels",
+                        "related": "/events/3729/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/3729/relationships/sales",
+                        "related": "/events/3729/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/3729/relationships/questions",
+                        "related": "/events/3729/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/3729/relationships/fee-configurations",
+                        "related": "/events/3729/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/3729/relationships/product-listings",
+                        "related": "/events/3729/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/3729/relationships/question-maps",
+                        "related": "/events/3729/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/3729/relationships/schedule",
+                        "related": "/events/3729/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/3729/relationships/picker-levels",
+                        "related": "/events/3729/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "3980",
+            "type": "events",
+            "attributes": {
+                "name": "zz_AccountCredit",
+                "description": "<p></p>",
+                "ticket_note": "",
+                "start": "2029-12-31T09:30:00-05:00",
+                "end": null,
+                "sales_open": "2023-07-24T00:00:00-04:00",
+                "sales_close": "2029-12-31T09:29:00-05:00",
+                "doors_open_time": null,
+                "created": "2023-07-24T09:17:48-04:00",
+                "inventory": 1000,
+                "category": "Other",
+                "categories": [],
+                "image": null,
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": null,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": true,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": true,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": true,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "",
+                    "accent_color": "081f37",
+                    "slug": "catch-u/zz-accountcredit",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/zz-accountcredit",
+                    "id": "2593",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": false,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": true,
+                        "datetime": ""
+                    },
+                    "background_color": "F5F5F5",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/zz-accountcredit",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2024-08-12T09:43:46-04:00",
+                "slug": "catch-u/zz-accountcredit",
+                "parent": null,
+                "skip_venue": true,
+                "dates": [
+                    {
+                        "event_id": "3981",
+                        "start": "2029-12-31 09:30:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 1000,
+                "tickets_sold": 6,
+                "is_free": true,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2029-12-31"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/3980/relationships/seller",
+                        "related": "/events/3980/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/3980/relationships/venue",
+                        "related": "/events/3980/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/3980/relationships/active_price_levels",
+                        "related": "/events/3980/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/3980/relationships/scheme",
+                        "related": "/events/3980/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/3980/relationships/bundles",
+                        "related": "/events/3980/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/3980/relationships/ticket_layout",
+                        "related": "/events/3980/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/3980/relationships/listings",
+                        "related": "/events/3980/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/3980/relationships/tags",
+                        "related": "/events/3980/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/3980/relationships/coupon-offers",
+                        "related": "/events/3980/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/3980/relationships/price-levels",
+                        "related": "/events/3980/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/3980/relationships/sales",
+                        "related": "/events/3980/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/3980/relationships/questions",
+                        "related": "/events/3980/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/3980/relationships/fee-configurations",
+                        "related": "/events/3980/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/3980/relationships/product-listings",
+                        "related": "/events/3980/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/3980/relationships/question-maps",
+                        "related": "/events/3980/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/3980/relationships/schedule",
+                        "related": "/events/3980/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/3980/relationships/picker-levels",
+                        "related": "/events/3980/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "13458",
+            "type": "events",
+            "attributes": {
+                "name": "Gift Certificates",
+                "description": "<h2 style=\"text-align:center;\">Gift Certificates for<br />improv, stand-up, & storytelling!</h2>\n<p style=\"text-align:center;\">🌟 Unleash Laughter and Creativity with CATCh Gift Certificates! 🌟</p>\n<p>Classes at CATCh are the perfect blend of entertainment and skill-building, offering an unforgettable experience for beginners of any age (18+) and skill level</p>\n<h3 style=\"text-align:left;\">🎉 WHY GIVE THE GIFT OF IMPROV? 🎉</h3>\n<p><strong>Unleash Creativity:</strong> Watch as your friends or family discover the thrill of thinking on their feet and expressing themselves in new, imaginative ways.</p>\n<p><strong>Build Confidence:</strong> Our classes provide a supportive environment for individuals to step out of their comfort zones, boosting confidence both on and off the stage.</p>\n<p><strong>Forge Connections:</strong> Build relationships through the shared experience of laughter and collaboration, creating lasting memories together.</p>\n<p><strong>Stress Relief:</strong> Laughter is the best medicine! Gift the antidote to stress with a dose of hilarity that will leave your loved ones smiling for days.</p>\n<p style=\"text-align:left;\">Recipients can choose from a range of schedules to fit their lifestyle, making it easy to dive in at their own convenience.</p>\n<h3 style=\"text-align:center;\">Give the gift of laughter, connection, and creativity – because the best memories are made when we're having fun together!</h3>\n",
+                "ticket_note": "",
+                "start": "2026-12-31T23:30:00-05:00",
+                "end": null,
+                "sales_open": "2023-11-23T00:00:00-05:00",
+                "sales_close": "2024-12-31T23:29:00-05:00",
+                "doors_open_time": null,
+                "created": "2023-11-23T09:40:39-05:00",
+                "inventory": 1000,
+                "category": "Other",
+                "categories": [
+                    "168"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/70703604-026f-4b3d-99af-e67869bfde9b_resize.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": null,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": true,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": true,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": true,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "tl_buttons__custom_text_buy_now",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "Please allow 2-3 business days to receive your digital gift certificate. It will be sent to the email used on the order. Contact us at info@CATCh.theater with any questions.",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "info@catch.theater",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/70703604-026f-4b3d-99af-e67869bfde9b_resize.png",
+                    "accent_color": "bf180d",
+                    "slug": "catch-u/gift-certificates",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/gift-certificates",
+                    "id": "8406",
+                    "listing_type": "standard",
+                    "calendar_type": "list",
+                    "show_sold_out": false,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Thu, Dec 31st, 2026 11:30 PM"
+                    },
+                    "background_color": "F5F5F5",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/gift-certificates",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2024-12-01T16:29:52-05:00",
+                "slug": "catch-u/gift-certificates",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "13459",
+                        "start": "2026-12-31 23:30:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 1000,
+                "tickets_sold": 0,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-12-31"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/13458/relationships/seller",
+                        "related": "/events/13458/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/13458/relationships/venue",
+                        "related": "/events/13458/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/13458/relationships/active_price_levels",
+                        "related": "/events/13458/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/13458/relationships/scheme",
+                        "related": "/events/13458/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/13458/relationships/bundles",
+                        "related": "/events/13458/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/13458/relationships/ticket_layout",
+                        "related": "/events/13458/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/13458/relationships/listings",
+                        "related": "/events/13458/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/13458/relationships/tags",
+                        "related": "/events/13458/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/13458/relationships/coupon-offers",
+                        "related": "/events/13458/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/13458/relationships/price-levels",
+                        "related": "/events/13458/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/13458/relationships/sales",
+                        "related": "/events/13458/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/13458/relationships/questions",
+                        "related": "/events/13458/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/13458/relationships/fee-configurations",
+                        "related": "/events/13458/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/13458/relationships/product-listings",
+                        "related": "/events/13458/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/13458/relationships/question-maps",
+                        "related": "/events/13458/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/13458/relationships/schedule",
+                        "related": "/events/13458/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/13458/relationships/picker-levels",
+                        "related": "/events/13458/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "1472015",
+            "type": "events",
+            "attributes": {
+                "name": "Unlocking the Self: Improv Skills for Life",
+                "description": "<h2><strong>Improv for Beginners</strong></h2>\n<p>Now is the time to unlock your creative potential and dive into the world of improv. This 6 week course consists of fun physical and mental exercises, group activities, engaging open discussions on how to apply improv to life, and plenty of laughter. </p>\n<p><strong>TO REGISTER: Use the Calendar to the right to select the session you want to sign up for, by clicking on the start date for that session (shown in purple).</strong></p>\n<p><em><ins>NOTE:</ins></em> </p>\n<ul>\n<li dir=\"auto\"><strong>Cost: </strong>$295 for the entire 6-week session</li>\n<li dir=\"auto\"><strong>Sessions </strong>begin throughout the year. Click the <em>Register </em>button to see the start dates for our currently-scheduled sessions.</li>\n<li dir=\"auto\">Classes meet<strong> once a week, on the same night</strong>. Only the first night in the 6-week session is shown when you register. That will be your class night for the full session. </li>\n<li dir=\"auto\">For example, if the first class is listed as being on a Tuesday, you will meet every Tuesday at the same time for 6 weeks.</li>\n<li dir=\"auto\">Each class goes from <strong>7:00 PM - 9:30 PM</strong></li>\n<li dir=\"auto\">The tuition covers all 6 class nights.</li>\n</ul>\n<p>In each 2.5 hour class, students will learn the foundations of improv such as; saying “yes, and…,” active listening, staying present in the moment, collaboration, and empowering the self. In this class, there are no mistakes and everything is a gift as we reinvigorate our sense of play!</p>\n<p><em>These valuable lessons in improv are great for the stage and even better for life.</em></p>\n<p><strong>ADDED BONUS!</strong></p>\n<p>Join the fun today! In addition to 6 weeks of class, your tuition also gives you FREE tickets to come see our shows. That’s right, FREE shows for you to any of our non-sold-out performances while you’re a student.</p>\n<p><strong>Class Schedule</strong></p>\n<p>The class will meet once a week from 7:00-9:30pm on the same night for six weeks. </p>\n<p><strong>Location Description</strong></p>\n<p>When you're on South Blvd., you'll see a giant 4200 sign with an arrow. Pull into that business park and head towards the back building on the right side of the complex. We're the corner unit with a sign featuring our logo above a green awning and CATCh on the door.</p>\n<p>For reference, other tenants in the complex include Kung Fu Tea, Tony's Pizza, and Kebab2Go.</p>\n<p>Park anywhere you find a spot! If you arrive late, please ring our doorbell to the right of the front door.</p>",
+                "ticket_note": "",
+                "start": "2025-07-08T19:00:00-04:00",
+                "end": "2026-05-27T19:00:00-04:00",
+                "sales_open": "2025-11-20T00:00:00-05:00",
+                "sales_close": "2026-05-27T18:59:00-04:00",
+                "doors_open_time": null,
+                "created": "2025-05-12T07:21:07-04:00",
+                "inventory": 16,
+                "category": "Improv & Sketch Comedy",
+                "categories": [
+                    "168",
+                    "209"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/37/1472015/b8f96e5090e26d06ada8e77da1e7beaf4174aff5845b27a4ff343741322d9e4f/43e3a372-08a4-4f69-9f20-ec9a6b287121.jpg",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "18",
+                "buyer_fee_split": 100,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": true,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 100,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "tl_buttons__custom_text_register",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "Thank you so much for Being Bold and Saying Yes to yourself, to improv, and to CATCh. Please make sure to keep an eye out for a welcome email with more information closer to the start date.",
+                        "confirmation_email_text_enabled": true,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "info@catch.theater",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "//tlt-events.s3.amazonaws.com/479a8cd1-dfdd-4b0f-9277-2fbacb8b7973_resize.jpg",
+                    "header_image": "//tlt-events.s3.amazonaws.com/37/1472015/b8f96e5090e26d06ada8e77da1e7beaf4174aff5845b27a4ff343741322d9e4f/43e3a372-08a4-4f69-9f20-ec9a6b287121.jpg",
+                    "accent_color": "8514de",
+                    "slug": "catch-u/unlocking-the-self-beginner-improv",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/unlocking-the-self-beginner-improv",
+                    "id": "665793",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-list",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Periodically throughout the year"
+                    },
+                    "background_color": "ffffff",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/unlocking-the-self-beginner-improv",
+                "behavior": {
+                    "registration": true,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-27T07:50:32-05:00",
+                "slug": "catch-u/unlocking-the-self-beginner-improv",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2012654",
+                        "start": "2026-02-18 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    },
+                    {
+                        "event_id": "2012655",
+                        "start": "2026-03-31 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    },
+                    {
+                        "event_id": "2053729",
+                        "start": "2026-05-27 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 160,
+                "tickets_sold": 91,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": false,
+                "event_dates": [
+                    "2026-02-18",
+                    "2026-03-31",
+                    "2026-05-27"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/1472015/relationships/seller",
+                        "related": "/events/1472015/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/1472015/relationships/venue",
+                        "related": "/events/1472015/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/1472015/relationships/active_price_levels",
+                        "related": "/events/1472015/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/1472015/relationships/scheme",
+                        "related": "/events/1472015/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/1472015/relationships/bundles",
+                        "related": "/events/1472015/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/1472015/relationships/ticket_layout",
+                        "related": "/events/1472015/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/1472015/relationships/listings",
+                        "related": "/events/1472015/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/1472015/relationships/tags",
+                        "related": "/events/1472015/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/1472015/relationships/coupon-offers",
+                        "related": "/events/1472015/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/1472015/relationships/price-levels",
+                        "related": "/events/1472015/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/1472015/relationships/sales",
+                        "related": "/events/1472015/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/1472015/relationships/questions",
+                        "related": "/events/1472015/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/1472015/relationships/fee-configurations",
+                        "related": "/events/1472015/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/1472015/relationships/product-listings",
+                        "related": "/events/1472015/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/1472015/relationships/question-maps",
+                        "related": "/events/1472015/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/1472015/relationships/schedule",
+                        "related": "/events/1472015/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/1472015/relationships/picker-levels",
+                        "related": "/events/1472015/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "1818285",
+            "type": "events",
+            "attributes": {
+                "name": "Duo Delight Intensive",
+                "description": "<p><strong>1-Day Intensive with show at 7pm!</strong></p>\n<p><strong><em>Wanna perform IMPROV as a duo and PERFORM? Don't know where to get started? Need a Partner & a stage? Then grab your favorite improviser and sign up for this one-day intensive workshop taught by International Teaching Artist Karla Dingle. </em></strong></p>\n<p><strong><em>Overview</em></strong></p>\n<p>•\tYou’ll be introduced to 3 forms, share insights on being a giving scene partner, coach to your skill set and set your duo up for success. </p>\n<p>•\tPerform at 7pm that night!</p>\n<p>•\tThe intensive workshop is 4.5 hours long and will prepare duos for the stage.</p>\n<p>•\tYou’ll learn how to support and play with only one partner.</p>\n<p>•\tYou’ll discover how to balance multiple characters.</p>\n<p>•\tSign up for one intensive to sign up for both dates and double your duo class time.</p>\n<p></p>\n<p><strong><em>But wait there’s more…</em></strong></p>\n<p><em>You can even sign up for a private coaching session as a follow-up to this duo intensive. Plus, duos will be featured during the Dramatic Improv Shows beginning in December. More opportunities to perform.</em></p>\n<p></p>\n<p><strong><em>Who Should Join</em></strong></p>\n<p><em>Perfect for improvisers with some performance or classroom experience who have someone they’d like to explore the stage with as a twosome.</em></p>\n<p><strong><em>Prerequisites:</em></strong></p>\n<ul>\n<li dir=\"auto\"><em>At least one acting or improv class completed</em></li>\n<li dir=\"auto\"><em>Willingness to take risks, explore emotions, and be vulnerable</em></li>\n<li dir=\"auto\"><em>Understanding that scenes may involve sensitive topics</em></li>\n<li dir=\"auto\"><em>If you’re unsure whether this is the right fit, email: dingledrama@gmail.com</em></li>\n</ul>\n<p><strong><em>Bonus!</em></strong></p>\n<p><em>Your tuition includes a FREE ticket to see an As Seen on TV Improv Show, featuring two dramatic improv teams—Pillow Talk and Cul-de-Sac Improv.</em></p>\n<p><strong><em>Location</em></strong></p>\n<p>You’ll find us on South Blvd. at the business park with the giant 4200 sign and arrow. Pull into the park and head to the back building on the right side. We’re the corner unit with a green awning and the CATCh sign on the door. Nearby businesses include Kung Fu Tea, Tony’s Pizza, and Kebab2Go.</p>\n<p><em>Parking is available anywhere you find a spot. Late? Ring the doorbell to the right of the front door if it is locked.</em></p>\n<p><strong><em>About Karla:</em></strong></p>\n<p>Karla Dingle, a lifelong theater artist with a B.A. in Theater from the University of Georgia, has been performing and teaching improv since 2009. Based in Charlotte, NC, she is Education Director at Queen City Comedy, Improv Director at a local studio, and performs with multiple ensembles including Now Are the Foxes. Karla has taught students across six continents, led workshops at international festivals, and was a 2023 Theater IDA Artist-in-Residence in Zurich. In 2025, she joined The Improv Boost’s Sudden Impact program as an international instructor. Her students have booked work with Apple TV, Netflix, Amazon Prime, and more.<strong><em> Learn more about her at dingledrama.com</em></strong></p>\n",
+                "ticket_note": "",
+                "start": "2026-02-15T13:00:00-05:00",
+                "end": "2026-02-15T17:30:00-05:00",
+                "sales_open": "2026-01-29T00:00:00-05:00",
+                "sales_close": "2026-02-15T17:29:00-05:00",
+                "doors_open_time": null,
+                "created": "2025-08-28T18:46:20-04:00",
+                "inventory": 10,
+                "category": "Other",
+                "categories": [
+                    "218",
+                    "168",
+                    "161"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/db5b00d1-da2c-4ee4-9299-6ea11192bf7e_resize.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/db5b00d1-da2c-4ee4-9299-6ea11192bf7e_resize.png",
+                    "accent_color": "f9a7c7",
+                    "slug": "catch-u/duo-delight-intensive-1845332831",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/duo-delight-intensive-1845332831",
+                    "id": "780239",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": true,
+                        "datetime": ""
+                    },
+                    "background_color": "090000",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/duo-delight-intensive-1845332831",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-29T09:10:41-05:00",
+                "slug": "catch-u/duo-delight-intensive-1845332831",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "1818286",
+                        "start": "2026-02-15 13:00:00",
+                        "end": "2026-02-15 17:30:00",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 10,
+                "tickets_sold": 7,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-02-15"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/1818285/relationships/seller",
+                        "related": "/events/1818285/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/1818285/relationships/venue",
+                        "related": "/events/1818285/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/1818285/relationships/active_price_levels",
+                        "related": "/events/1818285/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/1818285/relationships/scheme",
+                        "related": "/events/1818285/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/1818285/relationships/bundles",
+                        "related": "/events/1818285/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/1818285/relationships/ticket_layout",
+                        "related": "/events/1818285/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/1818285/relationships/listings",
+                        "related": "/events/1818285/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/1818285/relationships/tags",
+                        "related": "/events/1818285/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/1818285/relationships/coupon-offers",
+                        "related": "/events/1818285/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/1818285/relationships/price-levels",
+                        "related": "/events/1818285/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/1818285/relationships/sales",
+                        "related": "/events/1818285/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/1818285/relationships/questions",
+                        "related": "/events/1818285/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/1818285/relationships/fee-configurations",
+                        "related": "/events/1818285/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/1818285/relationships/product-listings",
+                        "related": "/events/1818285/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/1818285/relationships/question-maps",
+                        "related": "/events/1818285/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/1818285/relationships/schedule",
+                        "related": "/events/1818285/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/1818285/relationships/picker-levels",
+                        "related": "/events/1818285/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "1995162",
+            "type": "events",
+            "attributes": {
+                "name": "🎬 Take A Note!",
+                "description": "<p><strong>Do scenes. Get feedback. Level up.</strong></p>\n<p><strong>One-Day Improv & Acting Workshop</strong></p>\n<p>A feedback-driven workshop for actors and improvisers who want to grow fast. Spend the day diving into your scene work through focused, personalized feedback and active exploration. This hands-on workshop gives you the opportunity to perform, receive direct notes, and refine your instincts as a performer. Discover how you show up in your scenes — through your choices, patterns, and presence — and learn how subtle “nudges” can elevate your authenticity and connection on stage.</p>\n<p><strong>Course Overview</strong></p>\n<p>In this workshop, you’ll explore how to make bolder, more grounded choices and deepen your emotional awareness in every scene. You’ll receive detailed feedback on your performance, gain insight into your personal tendencies, and learn strategies to strengthen your listening, responsiveness, and truthfulness in the moment.</p>\n<p><strong>Who Should Join?</strong></p>\n<p>Ideal for actors and improvisers looking to enhance their scene work through honest, constructive feedback and individualized coaching.</p>\n<p><strong>Prerequisites:</strong></p>\n<p>• Minimum 3 months of performance or improv experience</p>\n<p>• Willingness to take feedback and apply adjustments</p>\n<p>• Openness to exploring emotion and vulnerability</p>\n<p>If you’re unsure whether this class is right for you, email: dingledrama@gmail.com</p>\n<p><strong>Schedule & Format</strong></p>\n<p>• Date: Nov 23, Jan 3 & Feb 1</p>\n<p>• Time: 1-4:30pm</p>\n<p>• Format: In-person intensive with group feedback and side coaching</p>\n<p><strong>Tuition</strong></p>\n<p>$65 for one class, $110 for two classes, $150 for all three classes</p>\n<p><strong>Location</strong></p>\n<p>Comedy Arts Theater of Charlotte</p>\n<p>4128 South Blvd, Suite B</p>\n<p>Charlotte, NC 28209</p>\n<p>Located in the business park with the large 4200 sign. Head to the back right building with the green awning and CATCh sign. Free parking is available throughout the lot.</p>\n<p><strong>About Your Instructor: Karla Dingle (she/her)</strong></p>\n<p>Karla Dingle is an internationally recognized Teaching Artist and performer who has taught and performed across the U.S., Europe, and India. Her training includes Second City, The Groundlings, Hoopla Impro, and Theatrical Intimacy Education. Karla is known for her insightful coaching style that helps artists unlock vulnerability, clarity, and connection in every scene. Learn more at dingledrama.com.</p>\n<p><strong>Presented In Partnership With</strong></p>\n<p>Dingle Drama • Queen City Comedy • Comedy Arts Theater of Charlotte</p>\n<p> </p>\n<p></p>\n<p></p>",
+                "ticket_note": "",
+                "start": "2025-11-23T13:00:00-05:00",
+                "end": "2026-02-01T13:00:00-05:00",
+                "sales_open": "2026-01-24T00:00:00-05:00",
+                "sales_close": "2026-02-01T12:59:00-05:00",
+                "doors_open_time": null,
+                "created": "2025-10-25T00:44:53-04:00",
+                "inventory": 14,
+                "category": "Other",
+                "categories": [
+                    "218",
+                    "168",
+                    "161"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/eb72bad3-fcfa-4430-9a9c-356b2ded25cf_resize.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/eb72bad3-fcfa-4430-9a9c-356b2ded25cf_resize.png",
+                    "accent_color": "d4336e",
+                    "slug": "catch-u/notes",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/notes",
+                    "id": "823905",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": true,
+                        "datetime": ""
+                    },
+                    "background_color": "090000",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/notes",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-24T16:04:31-05:00",
+                "slug": "catch-u/notes",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "1995171",
+                        "start": "2026-02-01 13:00:00",
+                        "end": "2026-02-01 16:30:00",
+                        "status": "paused"
+                    }
+                ],
+                "inventory_effective": 42,
+                "tickets_sold": 2,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": false,
+                "event_dates": [
+                    "2026-02-01"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/1995162/relationships/seller",
+                        "related": "/events/1995162/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/1995162/relationships/venue",
+                        "related": "/events/1995162/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/1995162/relationships/active_price_levels",
+                        "related": "/events/1995162/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/1995162/relationships/scheme",
+                        "related": "/events/1995162/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/1995162/relationships/bundles",
+                        "related": "/events/1995162/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/1995162/relationships/ticket_layout",
+                        "related": "/events/1995162/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/1995162/relationships/listings",
+                        "related": "/events/1995162/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/1995162/relationships/tags",
+                        "related": "/events/1995162/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/1995162/relationships/coupon-offers",
+                        "related": "/events/1995162/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/1995162/relationships/price-levels",
+                        "related": "/events/1995162/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/1995162/relationships/sales",
+                        "related": "/events/1995162/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/1995162/relationships/questions",
+                        "related": "/events/1995162/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/1995162/relationships/fee-configurations",
+                        "related": "/events/1995162/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/1995162/relationships/product-listings",
+                        "related": "/events/1995162/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/1995162/relationships/question-maps",
+                        "related": "/events/1995162/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/1995162/relationships/schedule",
+                        "related": "/events/1995162/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/1995162/relationships/picker-levels",
+                        "related": "/events/1995162/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "2027129",
+            "type": "events",
+            "attributes": {
+                "name": "The Moment is Now: Meisner for Improvisers & Actors",
+                "description": "<h2 style=\"text-align:center;\">Master the art of being “in the moment” in our first ever Meisner acting course taught by award-winning artist Brooke McCarthy. </h2>\n<h3><strong>Overview:</strong></h3>\n<p>Do you want to master the art of being “in the moment”? Are you ready to take your performance skills to the next level? Using Sanford Meisner’s approach, you will cultivate stage presence while exploring what it is like to live truthfully in every moment. Whether you’re an improviser looking to sharpen your acting skills or a theater artist looking to hone your authentic response, this course will offer a transformative journey into the heart of really being in the moment. </p>\n<p>Sanford Meisner’s approach to acting is the perfect blend of acting technique mixed with the spontaneity of improvisation. Through a series of interactive exercises, ensemble activities, and scene work, we’ll explore:</p>\n<ul>\n<li dir=\"auto\"><strong>Living in the Now</strong>: Learn practices that will help you stay sharp and present on and off stage.</li>\n<li dir=\"auto\"><strong>Active Listening</strong>: Hone your ability to truly listen and respond, allowing each moment to unfold naturally without any preconceived ideas; thus, making each performance fresh.</li>\n<li dir=\"auto\"><strong>Authentic Character Development</strong>: Develop rich characters grounded in the reality of you. Discover how to craft characters that are authentic to you.</li>\n<li dir=\"auto\"><strong>Emotional Prep</strong>: Explore safe ways of emotional preparation to activate any scene. </li>\n<li dir=\"auto\"><strong>Scene Work</strong>: Apply Meisner’s techniques to improvised scenarios and scripted scenes, sharpening your ability to embody characters while truly acting in the moment.</li>\n</ul>\n<h3>Perform:</h3>\n<p>The course will culminate in a showcase of rehearsed scenes from class.  </p>\n<h3>Who Should Join:</h3>\n<p>Improvisers seeking to enhance their spontaneity, emotional depth, and connection with scene partners.</p>\n<p>Theater enthusiasts eager to refine their craft, explore new approaches to character development, and deepen their understanding of truthful acting.</p>\n<p>Actors of all levels looking to break free from habits, unleash their creativity, and unlock their potential for powerful, compelling, and authentic performances.</p>\n<h3>Prerequisites:</h3>\n<p>No prior experience is required. Participants should come to the course with an open mind, a willingness to take risks, and a commitment to active participation.</p>\n<h3>Schedule and Format:</h3>\n<p>Meets Tuesdays from 6:30 PM - 9:00 PM on the following dates</p>\n<ul>\n<li dir=\"auto\">Feb 3</li>\n<li dir=\"auto\">Feb 10</li>\n<ul>\n<li dir=\"auto\">SKIPPED WEEK</li>\n</ul>\n<li dir=\"auto\">Feb 24</li>\n<li dir=\"auto\">Mar 3</li>\n<ul>\n<li dir=\"auto\">SKIPPED WEEK</li>\n</ul>\n<li dir=\"auto\">Mar 17</li>\n<li dir=\"auto\">Mar 24</li>\n<li dir=\"auto\">STUDENT SHOWCASE: Saturday, March 28</li>\n</ul>\n<h3>Cost:</h3>\n<p>$295</p>\n<h3>Join Us!</h3>\n<p>Whether you’re drawn to comedy, theater, or both, Meisner’s method offers a powerful toolkit for unlocking your true potential as a unique actor. Enroll today and let your authenticity shine on stage! </p>",
+                "ticket_note": "",
+                "start": "2026-02-03T18:30:00-05:00",
+                "end": "2026-02-03T18:30:00-05:00",
+                "sales_open": "2024-04-01T00:00:00-04:00",
+                "sales_close": "2026-02-03T18:29:00-05:00",
+                "doors_open_time": null,
+                "created": "2025-12-15T10:18:51-05:00",
+                "inventory": 10,
+                "category": "Theater",
+                "categories": [
+                    "218"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/37/2027129/ad66b67be63b34bd9327211d00eb6028dde8dc5179a131ac309daca9c1ae62f8/d7df9f64-4dd6-470e-90f4-a76bcea828cb.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "18",
+                "buyer_fee_split": 100,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": null,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": false,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "tl_buttons__custom_text_register",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/37/2027129/ad66b67be63b34bd9327211d00eb6028dde8dc5179a131ac309daca9c1ae62f8/d7df9f64-4dd6-470e-90f4-a76bcea828cb.png",
+                    "accent_color": "132f4b",
+                    "slug": "catch-u/the-moment-is-now-meisner-for-improvisers-actors-2026feb",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/the-moment-is-now-meisner-for-improvisers-actors-2026feb",
+                    "id": "834930",
+                    "listing_type": "standard",
+                    "calendar_type": "list",
+                    "show_sold_out": false,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Starts Tuesday, Feb 3, 2026 (see schedule below)"
+                    },
+                    "background_color": "F5F5F5",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/the-moment-is-now-meisner-for-improvisers-actors-2026feb",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2025-12-15T10:24:03-05:00",
+                "slug": "catch-u/the-moment-is-now-meisner-for-improvisers-actors-2026feb",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2027130",
+                        "start": "2026-02-03 18:30:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 10,
+                "tickets_sold": 3,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-02-03"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/2027129/relationships/seller",
+                        "related": "/events/2027129/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/2027129/relationships/venue",
+                        "related": "/events/2027129/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/2027129/relationships/active_price_levels",
+                        "related": "/events/2027129/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/2027129/relationships/scheme",
+                        "related": "/events/2027129/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/2027129/relationships/bundles",
+                        "related": "/events/2027129/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/2027129/relationships/ticket_layout",
+                        "related": "/events/2027129/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/2027129/relationships/listings",
+                        "related": "/events/2027129/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/2027129/relationships/tags",
+                        "related": "/events/2027129/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/2027129/relationships/coupon-offers",
+                        "related": "/events/2027129/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/2027129/relationships/price-levels",
+                        "related": "/events/2027129/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/2027129/relationships/sales",
+                        "related": "/events/2027129/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/2027129/relationships/questions",
+                        "related": "/events/2027129/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/2027129/relationships/fee-configurations",
+                        "related": "/events/2027129/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/2027129/relationships/product-listings",
+                        "related": "/events/2027129/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/2027129/relationships/question-maps",
+                        "related": "/events/2027129/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/2027129/relationships/schedule",
+                        "related": "/events/2027129/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/2027129/relationships/picker-levels",
+                        "related": "/events/2027129/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "2042600",
+            "type": "events",
+            "attributes": {
+                "name": "Stage Movement & Picture Workshop",
+                "description": "<p><strong>🎭 Stage Picture & Movement</strong></p>\n<p>One-Day Improv & Acting Workshop For Actors & Improvisers</p>\n<p><strong>✨ Explore how meaning is shaped through physicality.</strong></p>\n<p>This hands-on workshop focuses on stage picture, movement, and visual storytelling. You’ll investigate how space, relationship, and composition influence the audience’s understanding of a scene. Through guided exercises and scene work, performers will learn to create clear, dynamic, and compelling stage images that support story, emotion, and character.</p>\n<p>This session is ideal for artists who want their scenes to feel more alive, intentional, and visually grounded — not just talked.</p>\n<p><br /></p>\n<p><strong>📘 Course Overview</strong></p>\n<p>In this workshop, you’ll explore how physical choices communicate meaning before words are ever spoken. You’ll work on:</p>\n<p>🎯 Using space to define relationship and status</p>\n<p>🖼 Creating strong, readable stage pictures</p>\n<p>🕺 Making movement intentional rather than habitual</p>\n<p>🎭 Building visual storytelling that supports emotion and narrative</p>\n<p>👀 Strengthening composition, balance, and focus on stage</p>\n<p>Expect a mix of physical exploration, partner and group work, and coached scenes.</p>\n<p></p>\n<p></p>\n<p><strong>👥 Who Should Join?</strong></p>\n<p>Ideal for actors and improvisers who want to strengthen their physical awareness, deepen their stage presence, and build clearer, more engaging visual scenes.</p>\n<p><strong>Great for performers who feel “stuck in their heads” and want their bodies and environment to do more of the storytelling.</strong></p>\n<p></p>\n<p></p>\n<p><strong>✅ Prerequisites</strong></p>\n<p>• Some prior improv or acting experience recommended</p>\n<p>• Willingness to move, explore space, and try new physical approaches</p>\n<p>• Openness to feedback and experimentation</p>\n<p><strong>If you’re unsure whether this class is right for you, email: dingledrama@gmail.com</strong></p>\n<p></p>\n<p></p>\n<p><strong>🗓 Schedule & Format</strong></p>\n<p><strong>📅 </strong>Date: March 22</p>\n<p>⏰ Time: 12:30–5:00 PM</p>\n<p>📍 Format: In-person intensive workshop</p>\n<p></p>\n<p></p>\n<p><strong>📍 Location</strong></p>\n<p>Comedy Arts Theater of Charlotte</p>\n<p>4128 South Blvd, Suite B</p>\n<p>Charlotte, NC 28209</p>\n<p>Located in the business park with the large 4200 sign. Head to the back right building with the green awning and CATCh sign. Free parking is available throughout the lot.</p>\n<p></p>\n<p><strong>🎓 About Your Instructor - Karla Dingle (she/her)</strong></p>\n<p>Karla Dingle is an internationally recognized teaching artist and performer who has taught and performed across the U.S., Europe, and India. Her training includes Second City, The Groundlings, Hoopla Impro, and Theatrical Intimacy Education. Karla is known for her physically grounded, emotionally driven approach to performance that helps artists create clear, compelling, and honest work on stage.</p>\n<p><strong>🌍 Learn more at dingledrama.com</strong></p>\n<p><strong>🤝 Presented in Partnership With Dingle Drama • Queen City Comedy • Comedy Arts Theater of Charlotte</strong></p>",
+                "ticket_note": "",
+                "start": "2026-03-22T13:00:00-04:00",
+                "end": "2026-03-22T17:00:00-04:00",
+                "sales_open": "2026-01-24T00:00:00-05:00",
+                "sales_close": "2026-03-22T16:59:00-04:00",
+                "doors_open_time": null,
+                "created": "2026-01-11T08:14:17-05:00",
+                "inventory": 12,
+                "category": "Other",
+                "categories": [
+                    "218",
+                    "168",
+                    "161"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/1bd2c114-bc37-42d0-822e-0d6fb4ccf17b_resize.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/1bd2c114-bc37-42d0-822e-0d6fb4ccf17b_resize.png",
+                    "accent_color": "d4336e",
+                    "slug": "catch-u/stagepicture",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/stagepicture",
+                    "id": "840303",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": true,
+                        "datetime": ""
+                    },
+                    "background_color": "090000",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/stagepicture",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-24T16:03:12-05:00",
+                "slug": "catch-u/stagepicture",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2042601",
+                        "start": "2026-03-22 13:00:00",
+                        "end": "2026-03-22 17:00:00",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 12,
+                "tickets_sold": 0,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-03-22"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/2042600/relationships/seller",
+                        "related": "/events/2042600/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/2042600/relationships/venue",
+                        "related": "/events/2042600/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/2042600/relationships/active_price_levels",
+                        "related": "/events/2042600/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/2042600/relationships/scheme",
+                        "related": "/events/2042600/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/2042600/relationships/bundles",
+                        "related": "/events/2042600/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/2042600/relationships/ticket_layout",
+                        "related": "/events/2042600/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/2042600/relationships/listings",
+                        "related": "/events/2042600/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/2042600/relationships/tags",
+                        "related": "/events/2042600/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/2042600/relationships/coupon-offers",
+                        "related": "/events/2042600/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/2042600/relationships/price-levels",
+                        "related": "/events/2042600/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/2042600/relationships/sales",
+                        "related": "/events/2042600/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/2042600/relationships/questions",
+                        "related": "/events/2042600/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/2042600/relationships/fee-configurations",
+                        "related": "/events/2042600/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/2042600/relationships/product-listings",
+                        "related": "/events/2042600/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/2042600/relationships/question-maps",
+                        "related": "/events/2042600/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/2042600/relationships/schedule",
+                        "related": "/events/2042600/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/2042600/relationships/picker-levels",
+                        "related": "/events/2042600/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "2042602",
+            "type": "events",
+            "attributes": {
+                "name": "Make the DAMN Show Workshop",
+                "description": "<p><strong>🎬 Make the Damn Show!</strong></p>\n<p>One-Day Improv & Acting Workshop For Actors & Improvisers</p>\n<p><strong>🔥 Turn your ideas into real, producible shows.</strong></p>\n<p></p>\n<p>This hands-on workshop focuses on transforming concepts into fully realized productions — both scripted and non-scripted. You’ll explore how to move from a spark of an idea to a stage-ready show by learning how to plan, organize, and execute a production while balancing creativity, logistics, and collaboration.</p>\n<p>This session is ideal for artists who are tired of sitting on ideas and are ready to actually build something, structure it, and bring it to life.</p>\n<p></p>\n<p><strong>📘 Course Overview</strong></p>\n<p>In this workshop, you’ll explore the tools needed to develop, shape, and launch a show. You’ll work on:</p>\n<p>💡 Developing and clarifying a show concept</p>\n<p>🗂 Organizing ideas into a producible structure</p>\n<p>🎭 Exploring both scripted and non-scripted formats</p>\n<p>🤝 Collaborating effectively with creative teams</p>\n<p>🛠 Understanding the logistics behind rehearsals, tech, and performance</p>\n<p>🚀 Moving from idea → plan → rehearsal → stage</p>\n<p></p>\n<p><strong>Expect a mix of guided creation, group discussion, hands-on development, and coached exploration as you actively build and refine show ideas.</strong></p>\n<p></p>\n<p><strong>👥 Who Should Join?</strong></p>\n<p>Ideal for actors and improvisers who want to strengthen their physical awareness, deepen their stage presence, and build clearer, more engaging visual scenes.</p>\n<p><strong>Great for performers who feel “stuck in their heads” and want their bodies and environment to do more of the storytelling.</strong></p>\n<p></p>\n<p></p>\n<p><strong>✅ Prerequisites</strong></p>\n<p>• Some prior improv or acting experience recommended</p>\n<p>• Willingness to move, explore space, and try new physical approaches</p>\n<p>• Openness to feedback and experimentation</p>\n<p><strong>If you’re unsure whether this class is right for you, email: dingledrama@gmail.com</strong></p>\n<p></p>\n<p></p>\n<p><strong>🗓 Schedule & Format</strong></p>\n<p><strong>📅 </strong>Date: March 22</p>\n<p>⏰ Time: 12:30–5:00 PM</p>\n<p>📍 Format: In-person intensive workshop</p>\n<p></p>\n<p></p>\n<p><strong>📍 Location</strong></p>\n<p>Comedy Arts Theater of Charlotte</p>\n<p>4128 South Blvd, Suite B</p>\n<p>Charlotte, NC 28209</p>\n<p>Located in the business park with the large 4200 sign. Head to the back right building with the green awning and CATCh sign. Free parking is available throughout the lot.</p>\n<p></p>\n<p><strong>🎓 About Your Instructor - Karla Dingle (she/her)</strong></p>\n<p>Karla Dingle is an internationally recognized teaching artist and performer who has taught and performed across the U.S., Europe, and India. Her training includes Second City, The Groundlings, Hoopla Impro, and Theatrical Intimacy Education. Karla is known for her physically grounded, emotionally driven approach to performance that helps artists create clear, compelling, and honest work on stage.</p>\n<p><strong>🌍 Learn more at dingledrama.com</strong></p>\n<p><strong>🤝 Presented in Partnership With Dingle Drama • Queen City Comedy • Comedy Arts Theater of Charlotte</strong></p>",
+                "ticket_note": "",
+                "start": "2026-04-12T12:30:00-04:00",
+                "end": "2026-04-12T17:00:00-04:00",
+                "sales_open": "2025-11-24T00:00:00-05:00",
+                "sales_close": "2026-04-12T16:59:00-04:00",
+                "doors_open_time": null,
+                "created": "2026-01-11T08:26:50-05:00",
+                "inventory": 12,
+                "category": "Other",
+                "categories": [
+                    "218",
+                    "168",
+                    "161"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/ed7295b0-ee5f-49b8-b59f-ef6933c11efd_resize.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/ed7295b0-ee5f-49b8-b59f-ef6933c11efd_resize.png",
+                    "accent_color": "9470c0",
+                    "slug": "catch-u/damnshow",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/damnshow",
+                    "id": "840304",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": true,
+                        "datetime": ""
+                    },
+                    "background_color": "090000",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/damnshow",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-11T08:32:24-05:00",
+                "slug": "catch-u/damnshow",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2042603",
+                        "start": "2026-04-12 12:30:00",
+                        "end": "2026-04-12 17:00:00",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 12,
+                "tickets_sold": 0,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-04-12"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/2042602/relationships/seller",
+                        "related": "/events/2042602/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/2042602/relationships/venue",
+                        "related": "/events/2042602/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/2042602/relationships/active_price_levels",
+                        "related": "/events/2042602/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/2042602/relationships/scheme",
+                        "related": "/events/2042602/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/2042602/relationships/bundles",
+                        "related": "/events/2042602/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/2042602/relationships/ticket_layout",
+                        "related": "/events/2042602/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/2042602/relationships/listings",
+                        "related": "/events/2042602/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/2042602/relationships/tags",
+                        "related": "/events/2042602/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/2042602/relationships/coupon-offers",
+                        "related": "/events/2042602/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/2042602/relationships/price-levels",
+                        "related": "/events/2042602/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/2042602/relationships/sales",
+                        "related": "/events/2042602/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/2042602/relationships/questions",
+                        "related": "/events/2042602/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/2042602/relationships/fee-configurations",
+                        "related": "/events/2042602/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/2042602/relationships/product-listings",
+                        "related": "/events/2042602/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/2042602/relationships/question-maps",
+                        "related": "/events/2042602/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/2042602/relationships/schedule",
+                        "related": "/events/2042602/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/2042602/relationships/picker-levels",
+                        "related": "/events/2042602/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "2051601",
+            "type": "events",
+            "attributes": {
+                "name": "Monoscene Intensive",
+                "description": "<h3>Invitation Only</h3>",
+                "ticket_note": "",
+                "start": "2026-02-03T19:00:00-05:00",
+                "end": "2026-02-03T19:00:00-05:00",
+                "sales_open": "2026-01-23T00:00:00-05:00",
+                "sales_close": "2026-02-03T18:59:00-05:00",
+                "doors_open_time": null,
+                "created": "2026-01-23T09:11:21-05:00",
+                "inventory": 8,
+                "category": "Other",
+                "categories": [
+                    "168"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/37/2051601/4ab26ad0b14f4f98e6798fdffe1f2d1fafc740c070d9810bda97cf1f5a7e6a18/7fcafdc7-f2ac-494e-8028-eb89b8fea0e7.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 0,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": false,
+                    "private": true,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": true,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": true,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/37/2051601/4ab26ad0b14f4f98e6798fdffe1f2d1fafc740c070d9810bda97cf1f5a7e6a18/7fcafdc7-f2ac-494e-8028-eb89b8fea0e7.png",
+                    "accent_color": "A01EB3",
+                    "slug": "catch-u/monoscene-intensive",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/monoscene-intensive",
+                    "id": "843558",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Tuesdays from Feb 3 - Feb 17"
+                    },
+                    "background_color": "ffffff",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/monoscene-intensive",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-23T09:16:30-05:00",
+                "slug": "catch-u/monoscene-intensive",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2051602",
+                        "start": "2026-02-03 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 8,
+                "tickets_sold": 7,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-02-03"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/2051601/relationships/seller",
+                        "related": "/events/2051601/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/2051601/relationships/venue",
+                        "related": "/events/2051601/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/2051601/relationships/active_price_levels",
+                        "related": "/events/2051601/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/2051601/relationships/scheme",
+                        "related": "/events/2051601/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/2051601/relationships/bundles",
+                        "related": "/events/2051601/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/2051601/relationships/ticket_layout",
+                        "related": "/events/2051601/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/2051601/relationships/listings",
+                        "related": "/events/2051601/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/2051601/relationships/tags",
+                        "related": "/events/2051601/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/2051601/relationships/coupon-offers",
+                        "related": "/events/2051601/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/2051601/relationships/price-levels",
+                        "related": "/events/2051601/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/2051601/relationships/sales",
+                        "related": "/events/2051601/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/2051601/relationships/questions",
+                        "related": "/events/2051601/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/2051601/relationships/fee-configurations",
+                        "related": "/events/2051601/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/2051601/relationships/product-listings",
+                        "related": "/events/2051601/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/2051601/relationships/question-maps",
+                        "related": "/events/2051601/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/2051601/relationships/schedule",
+                        "related": "/events/2051601/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/2051601/relationships/picker-levels",
+                        "related": "/events/2051601/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        },
+        {
+            "id": "2053125",
+            "type": "events",
+            "attributes": {
+                "name": "Spokane Class",
+                "description": "<p>Do you have a love for long-form improv and want to explore a new style? Peter and Annie are excited to teach you the Spokane style also referred to as the Family Guy, Pretty Flower, or the Delicate Flower. </p>\n<p>The Spokane style is a monoscene in chapters, and then broken up by short and entertaining montages. If you’re looking to improve in long-form, discover new fun characters in the mix, while discovering a whole new style, this class is for you. </p>\n<p><strong>Requirements to take this class: </strong>Must have at least completed Performance Track 2</p>",
+                "ticket_note": "",
+                "start": "2026-04-15T19:00:00-04:00",
+                "end": "2026-04-15T19:00:00-04:00",
+                "sales_open": "2026-01-26T00:00:00-05:00",
+                "sales_close": "2026-04-15T18:59:00-04:00",
+                "doors_open_time": null,
+                "created": "2026-01-26T10:52:07-05:00",
+                "inventory": 16,
+                "category": "Other",
+                "categories": [
+                    "168"
+                ],
+                "image": "//tlt-events.s3.amazonaws.com/37/2053125/06435fbd818f2ce2d027ac8cb51f75866d8aebac07e58adf3e1c20c9a719cac2/cdb99590-4392-41f7-921e-730f800c3bb6.png",
+                "url": "",
+                "display_image": null,
+                "age_minimum": "",
+                "buyer_fee_split": 100,
+                "donations": {
+                    "live": false,
+                    "name": ""
+                },
+                "custom_seller_fee": {
+                    "live": false,
+                    "name": "",
+                    "amount": "0.00",
+                    "fee_type": "percentage",
+                    "mode": "all",
+                    "after_discount": false
+                },
+                "status": "active",
+                "settings": {
+                    "transaction_timelimit": 900,
+                    "ticket_transaction_limit": 10,
+                    "manually_arrange_price_levels": true,
+                    "manually_arrange_bundles": false,
+                    "manually_arrange_products": false,
+                    "collect_name_per_ticket": true,
+                    "private": false,
+                    "force_show_on_seller_homepage": false,
+                    "no_index": false,
+                    "show_seating_chart": false,
+                    "seating_version": null,
+                    "venue_seating_chart_id": null,
+                    "bos_buyer_fee_split": 0,
+                    "custom_event_fields": [],
+                    "pyos": true,
+                    "hide_event_in_box_office": false,
+                    "use_event_talent": false,
+                    "custom_get_tickets_button_text": "",
+                    "seatsio_event_id": null,
+                    "chart_id": null,
+                    "question_mode": "all",
+                    "advanced_settings": {
+                        "post_purchase_message": "",
+                        "confirmation_email_text_enabled": false,
+                        "confirmation_page_text_enabled": false,
+                        "custom_event_reminder_text_enabled": false,
+                        "custom_sold_out_message": null,
+                        "receive_email_notifications": "",
+                        "cancel_ticket_on_receipt": false
+                    },
+                    "venue_seating_seatsio_id": null,
+                    "hide_best_available": false,
+                    "allow_orphan_seats": false,
+                    "force_consecutive_seats": false
+                },
+                "listing_settings": {
+                    "background_image": "",
+                    "header_image": "//tlt-events.s3.amazonaws.com/37/2053125/06435fbd818f2ce2d027ac8cb51f75866d8aebac07e58adf3e1c20c9a719cac2/cdb99590-4392-41f7-921e-730f800c3bb6.png",
+                    "accent_color": "A01EB3",
+                    "slug": "catch-u/spokane-class",
+                    "uri": "https://www.ticketleap.events/tickets/catch-u/spokane-class",
+                    "id": "844168",
+                    "listing_type": "standard",
+                    "calendar_type": "calendar-button",
+                    "show_sold_out": true,
+                    "sold_out_message": "SOLD OUT",
+                    "datetime_display": {
+                        "use_event_time": false,
+                        "datetime": "Wednesdays starting Apr 15 (6 week class)"
+                    },
+                    "background_color": "ffffff",
+                    "location": ""
+                },
+                "primary_uri": "https://www.ticketleap.events/tickets/catch-u/spokane-class",
+                "behavior": {
+                    "registration": false,
+                    "series": true,
+                    "package": false,
+                    "seated": false,
+                    "child-event": false,
+                    "seatsioChartUsesLabels": false
+                },
+                "timezone": "America/New_York",
+                "onsale": true,
+                "parent_id": null,
+                "date_modified": "2026-01-26T11:50:04-05:00",
+                "slug": "catch-u/spokane-class",
+                "parent": null,
+                "skip_venue": false,
+                "dates": [
+                    {
+                        "event_id": "2053126",
+                        "start": "2026-04-15 19:00:00",
+                        "end": "",
+                        "status": "active"
+                    }
+                ],
+                "inventory_effective": 16,
+                "tickets_sold": 0,
+                "is_free": false,
+                "code": null,
+                "is_single_series_event": true,
+                "event_dates": [
+                    "2026-04-15"
+                ],
+                "ages": {
+                    "All Ages": "0",
+                    "16 and over": "16",
+                    "17 and over": "17",
+                    "18 and over": "18",
+                    "19 and over": "19",
+                    "21 and over": "21"
+                }
+            },
+            "relationships": {
+                "seller": {
+                    "links": {
+                        "self": "/events/2053125/relationships/seller",
+                        "related": "/events/2053125/seller"
+                    }
+                },
+                "venue": {
+                    "links": {
+                        "self": "/events/2053125/relationships/venue",
+                        "related": "/events/2053125/venue"
+                    }
+                },
+                "active_price_levels": {
+                    "links": {
+                        "self": "/events/2053125/relationships/active_price_levels",
+                        "related": "/events/2053125/active_price_levels"
+                    }
+                },
+                "scheme": {
+                    "links": {
+                        "self": "/events/2053125/relationships/scheme",
+                        "related": "/events/2053125/scheme"
+                    }
+                },
+                "bundles": {
+                    "links": {
+                        "self": "/events/2053125/relationships/bundles",
+                        "related": "/events/2053125/bundles"
+                    }
+                },
+                "ticket_layout": {
+                    "links": {
+                        "self": "/events/2053125/relationships/ticket_layout",
+                        "related": "/events/2053125/ticket_layout"
+                    }
+                },
+                "listings": {
+                    "links": {
+                        "self": "/events/2053125/relationships/listings",
+                        "related": "/events/2053125/listings"
+                    }
+                },
+                "tags": {
+                    "links": {
+                        "self": "/events/2053125/relationships/tags",
+                        "related": "/events/2053125/tags"
+                    }
+                },
+                "coupon-offers": {
+                    "links": {
+                        "self": "/events/2053125/relationships/coupon-offers",
+                        "related": "/events/2053125/coupon-offers"
+                    }
+                },
+                "price-levels": {
+                    "links": {
+                        "self": "/events/2053125/relationships/price-levels",
+                        "related": "/events/2053125/price-levels"
+                    }
+                },
+                "sales": {
+                    "links": {
+                        "self": "/events/2053125/relationships/sales",
+                        "related": "/events/2053125/sales"
+                    }
+                },
+                "questions": {
+                    "links": {
+                        "self": "/events/2053125/relationships/questions",
+                        "related": "/events/2053125/questions"
+                    }
+                },
+                "fee-configurations": {
+                    "links": {
+                        "self": "/events/2053125/relationships/fee-configurations",
+                        "related": "/events/2053125/fee-configurations"
+                    }
+                },
+                "product-listings": {
+                    "links": {
+                        "self": "/events/2053125/relationships/product-listings",
+                        "related": "/events/2053125/product-listings"
+                    }
+                },
+                "question-maps": {
+                    "links": {
+                        "self": "/events/2053125/relationships/question-maps",
+                        "related": "/events/2053125/question-maps"
+                    }
+                },
+                "schedule": {
+                    "links": {
+                        "self": "/events/2053125/relationships/schedule",
+                        "related": "/events/2053125/schedule"
+                    }
+                },
+                "picker-levels": {
+                    "links": {
+                        "self": "/events/2053125/relationships/picker-levels",
+                        "related": "/events/2053125/picker-levels"
+                    }
+                }
+            },
+            "dependents": []
+        }
+    ],
+    "page": {
+        "total_count": 12,
+        "total_pages": 1,
+        "current_page": 1,
+        "per_page": 500
+    }
+}

@@ -89,6 +89,7 @@ export async function getTicketLeapEventListings(
       image: event.attributes.image
         ? `https:${event.attributes.image}`
         : "/images/CATCh-Placeholder.jpg",
+      inventory: event.attributes.inventory,
       date: toDate(listing.start, { timeZone: "America/New_York" }),
       listingUrl: `https://www.ticketleap.events/tickets/${
         event.attributes.slug

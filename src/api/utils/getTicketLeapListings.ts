@@ -11,6 +11,7 @@ export interface TicketLeapEventsResponse {
       image: string | null;
       slug: string;
       onsale: boolean;
+      inventory: number;
       settings: {
         private: boolean;
       };
@@ -119,6 +120,8 @@ export async function getTicketLeapListings(
           id: Number.parseInt(listing.event_id),
           name: event.name,
           image: imageUrl,
+          // TODO: figure me out
+          inventory: event.inventory,
           date: toDate(listing.start, { timeZone: "America/New_York" }),
           listingUrl: `https://www.ticketleap.events/tickets/${
             event.slug

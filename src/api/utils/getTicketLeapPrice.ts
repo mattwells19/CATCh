@@ -28,11 +28,15 @@ const EventPriceSchema = z.array(
 
 export interface TicketLeapEventPrice {
   price: string;
+  inventory: number;
+  ticketsSold: number;
   isSoldOut: boolean;
 }
 
 export const EMPTY_EVENT_PRICE: TicketLeapEventPrice = {
   price: "",
+  inventory: 0,
+  ticketsSold: 0,
   isSoldOut: false,
 };
 
@@ -60,13 +64,18 @@ export async function getTicketLeapPrice(
     .then(EventPriceSchema.parseAsync)
     .then((res) => {
       const priceLevelDetails = res[0].data.attributes;
+      const priceFormatted =
+        priceLevelDetails.price.amount > 0
+          ? priceFormatter.format(priceLevelDetails.price.amount / 100)
+          : "";
+      const inventory = priceLevelDetails.inventory ?? 0;
+      const ticketsSold = priceLevelDetails.tickets_sold ?? 0;
 
       const eventPrice: TicketLeapEventPrice = {
-        price: priceFormatter.format(priceLevelDetails.price.amount / 100),
-        isSoldOut:
-          priceLevelDetails.tickets_sold && priceLevelDetails.inventory
-            ? priceLevelDetails.tickets_sold >= priceLevelDetails.inventory
-            : false,
+        price: priceFormatted,
+        inventory,
+        ticketsSold,
+        isSoldOut: ticketsSold >= inventory,
       };
 
       localCache.set(eventId, eventPrice);
