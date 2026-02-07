@@ -135,7 +135,12 @@ export const volunteer = async (
     .select("id");
 
   if (memberUpsert.error) {
-    throw memberUpsert.error;
+    console.error("Error trying to update member.", memberUpsert.error);
+    throw new ActionError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Error trying to update member.",
+      stack: memberUpsert.error.stack,
+    });
   }
 
   const memberId = memberUpsert.data?.at(0)?.id;
@@ -153,7 +158,12 @@ export const volunteer = async (
   });
 
   if (listingUpsert.error) {
-    throw listingUpsert.error;
+    console.error("Error trying to update listing.", listingUpsert.error);
+    throw new ActionError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Error trying to update listing.",
+      stack: listingUpsert.error.stack,
+    });
   }
 
   const { error: signupError } = await supabase.from("signup").upsert([
@@ -165,7 +175,12 @@ export const volunteer = async (
   ]);
 
   if (signupError) {
-    throw signupError;
+    console.error("Error trying to add signup.", signupError);
+    throw new ActionError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Error trying to add signup.",
+      stack: signupError.stack,
+    });
   }
 
   return getListingVolunteers(listingId);
