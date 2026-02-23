@@ -1,0 +1,225 @@
+---
+import { actions } from "astro:actions";
+import RootLayout from "~/layouts/RootLayout.astro";
+
+const result = Astro.getActionResult(actions.organizations);
+---
+
+<RootLayout title="Organizations" class="md:px-8 lg:px-16 overflow-x-clip">
+  <h1 class="text-primary-purple font-serif font-bold text-5xl lg:text-6xl px-4 pt-8 pb-10 lg:pb-16 bg-shapes">
+    Organizations
+  </h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 px-4 lg:px-0 pb-16">
+
+    <!-- Image with coral blob — first on mobile, top-right on desktop -->
+    <div class="lg:col-start-2 lg:row-start-1 relative pt-10">
+      <div
+        aria-hidden="true"
+        class="absolute -z-10 top-0 left-[-20px] h-3/4 bg-coral rounded-[9999px_0_0_9999px]"
+        style="width: calc(100% + 100vw);"
+      >
+      </div>
+      <img
+        src="/images/team-building-with-catch.png"
+        alt="CATCh improv workshop in action"
+        class="w-full rounded-lg object-cover aspect-[16/9]"
+      />
+    </div>
+
+    <!-- Text content — second on mobile, left column on desktop spanning both rows -->
+    <div class="lg:col-start-1 lg:row-start-1 lg:row-span-2">
+      <p class="text-lg mb-4">
+        Improv refers to any form of spontaneous storytelling or theater, and
+        is quickly gaining recognition as a valuable tool for business
+        training in developing greater mental agility, teamwork, and
+        communication skills.
+      </p>
+      <p class="text-lg mb-6">
+        Organizations from universities to corporations such as Google, Yahoo,
+        McDonald's, and GE Healthcare have integrated improvisation into their
+        training programs.
+      </p>
+
+      <ul class="list-disc pl-6 mb-10 space-y-2 text-lg">
+        <li>Be a better communicator</li>
+        <li>Be a better listener</li>
+        <li>Develop poise under pressure</li>
+        <li>Build confidence in the face of uncertainty and ambiguity</li>
+        <li>Burn calories &amp; have fun</li>
+      </ul>
+
+      <h2 class="text-primary-purple font-serif font-bold text-3xl mb-6">
+        Workshops
+      </h2>
+
+      <div class="flex flex-col gap-6">
+        <div>
+          <h3 class="font-bold text-lg mb-1">
+            🧠 Creative Collaboration
+          </h3>
+          <p>
+            Unlock your team's imagination through fast-paced games that build
+            trust, sharpen listening, and spark innovative thinking together.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-1">
+            💬 Communication &amp; Storytelling
+          </h3>
+          <p>
+            Boost your team's ability to think on their feet and communicate
+            clearly through interactive scene work and narrative exercises.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-1">
+            🤝 Team Building Through Play
+          </h3>
+          <p>
+            Strengthen relationships and break down silos with fun, low-stakes
+            improv activities that encourage laughter, connection, and shared
+            success.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-1">
+            ⚡ Agility &amp; Adaptability
+          </h3>
+          <p>
+            Help your team embrace change and respond to the unexpected with
+            confidence through quick-thinking challenges and dynamic group
+            games.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-lg mb-1">
+            ✨ Custom Workshop
+          </h3>
+          <p>
+            Looking for something unique? We'll collaborate with you to design
+            a tailored improv experience that aligns with your team's goals,
+            culture, and event needs.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact form — last on mobile, bottom-right on desktop -->
+    <div class="lg:col-start-2 lg:row-start-2">
+      <h2 class="text-primary-purple font-serif font-bold text-3xl mb-1">
+        We want to hear from you
+      </h2>
+      <p class="text-sm italic mb-6">* All fields are required</p>
+
+      {
+        result?.error && (
+          <p class="text-red-600 mb-4">
+            Something went wrong. Please try again.
+          </p>
+        )
+      }
+      {
+        result?.data?.success && (
+          <p class="text-green-700 font-medium mb-4">
+            Thanks! We'll be in touch soon.
+          </p>
+        )
+      }
+
+      <form method="POST" action={actions.organizations} class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <div class="flex-1 flex flex-col gap-1">
+            <label for="firstName" class="text-sm font-medium">
+              First name *
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+            />
+          </div>
+          <div class="flex-1 flex flex-col gap-1">
+            <label for="lastName" class="text-sm font-medium">
+              Last name *
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="organizationName" class="text-sm font-medium">
+            Organization name *
+          </label>
+          <input
+            type="text"
+            id="organizationName"
+            name="organizationName"
+            required
+            class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+          />
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-1 flex flex-col gap-1">
+            <label for="phone" class="text-sm font-medium">
+              Phone number *
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+            />
+          </div>
+          <div class="flex-1 flex flex-col gap-1">
+            <label for="email" class="text-sm font-medium">
+              Email address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="message" class="text-sm font-medium">
+            How can we support your organization? *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="4"
+            class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple resize-y"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-coral text-peach font-bold py-3 px-6 rounded hover:bg-[#B7433C] transition-colors mt-2"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+  </div>
+</RootLayout>

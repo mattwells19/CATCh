@@ -46,16 +46,16 @@ export const routes: Record<string, Array<Route>> = {
     //   path: "/workstudy",
     // },
   ],
-  // "Business Services": [
-  //   {
-  //     label: "Organizations",
-  //     path: "/organizations",
-  //   },
-  //   {
-  //     label: "Individuals",
-  //     path: "/uhhh-idk",
-  //   },
-  // ],
+  "Business Services": [
+    {
+      label: "Organizations",
+      path: "/organizations",
+    },
+    // {
+    //   label: "Individuals",
+    //   path: "/uhhh-idk",
+    // },
+  ],
   "Theater Info": [
     {
       label: "Respect",
