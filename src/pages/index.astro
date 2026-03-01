@@ -68,6 +68,29 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     @apply underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto xl:pr-16;
   }
 
+  li.inline-cta {
+    @apply flex items-center justify-center min-w-[200px] flex-shrink-0;
+
+    a {
+      @apply font-serif font-bold text-lg flex gap-2 items-center underline;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    li.inline-cta {
+      display: none;
+    }
+    a.see_all_link {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    a.see_all_link {
+      display: none;
+    }
+  }
+
   ul.card_list {
     @apply flex overflow-x-auto gap-4 pt-2 pb-4 px-4 xl:px-16;
   }
@@ -91,6 +114,11 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
+      <li class="inline-cta">
+        <a href="/shows" class="text-peach">
+          See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
+        </a>
+      </li>
     </ul>
     <a href="/shows" class="see_all_link text-peach">
       See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
@@ -109,6 +137,11 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
+      <li class="inline-cta">
+        <a href="/classes" class="text-primary-purple">
+          See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
+        </a>
+      </li>
     </ul>
     <a href="/classes" class="see_all_link text-primary-purple">
       See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
