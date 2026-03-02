@@ -1,6 +1,8 @@
 ---
 import { actions } from "astro:actions";
+import { Image } from "astro:assets";
 import RootLayout from "~/layouts/RootLayout.astro";
+import teamBuildingImg from "~/images/team-building-with-catch.png";
 
 const result = Astro.getActionResult(actions.organizations);
 ---
@@ -20,8 +22,8 @@ const result = Astro.getActionResult(actions.organizations);
         style="width: calc(100% + 100vw);"
       >
       </div>
-      <img
-        src="/images/team-building-with-catch.png"
+      <Image
+        src={teamBuildingImg}
         alt="CATCh improv workshop in action"
         class="w-full rounded-lg object-cover aspect-[16/9]"
       />
@@ -131,8 +133,8 @@ const result = Astro.getActionResult(actions.organizations);
         )
       }
 
-      <form method="POST" action={actions.organizations} class="flex flex-col gap-4">
-        <div class="flex gap-4">
+      <form method="POST" action={actions.organizations} class="flex flex-col gap-4" id="org-form">
+        <div class="flex flex-col sm:flex-row gap-4">
           <div class="flex-1 flex flex-col gap-1">
             <label for="firstName" class="text-sm font-medium">
               First name *
@@ -142,6 +144,8 @@ const result = Astro.getActionResult(actions.organizations);
               id="firstName"
               name="firstName"
               required
+              autocomplete="given-name"
+              maxlength="35"
               class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
             />
           </div>
@@ -154,6 +158,8 @@ const result = Astro.getActionResult(actions.organizations);
               id="lastName"
               name="lastName"
               required
+              autocomplete="family-name"
+              maxlength="35"
               class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
             />
           </div>
@@ -168,11 +174,13 @@ const result = Astro.getActionResult(actions.organizations);
             id="organizationName"
             name="organizationName"
             required
+            autocomplete="organization"
+            maxlength="100"
             class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
           />
         </div>
 
-        <div class="flex gap-4">
+        <div class="flex flex-col sm:flex-row gap-4">
           <div class="flex-1 flex flex-col gap-1">
             <label for="phone" class="text-sm font-medium">
               Phone number *
@@ -182,6 +190,10 @@ const result = Astro.getActionResult(actions.organizations);
               id="phone"
               name="phone"
               required
+              autocomplete="tel"
+              minlength="10"
+              maxlength="14"
+              placeholder="(555) 555-5555"
               class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
             />
           </div>
@@ -194,6 +206,8 @@ const result = Astro.getActionResult(actions.organizations);
               id="email"
               name="email"
               required
+              autocomplete="email"
+              maxlength="254"
               class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
             />
           </div>
@@ -208,17 +222,40 @@ const result = Astro.getActionResult(actions.organizations);
             name="message"
             required
             rows="4"
+            maxlength="2000"
             class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple resize-y"
           ></textarea>
         </div>
 
         <button
           type="submit"
-          class="w-full bg-coral text-peach font-bold py-3 px-6 rounded hover:bg-[#B7433C] transition-colors mt-2"
+          id="org-submit"
+          class="w-full bg-coral text-peach font-bold py-3 px-6 rounded hover:bg-[#B7433C] transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Submit
         </button>
       </form>
+
+      <script>
+        const form = document.getElementById("org-form") as HTMLFormElement;
+        const btn = document.getElementById("org-submit") as HTMLButtonElement;
+        form.addEventListener("submit", () => {
+          btn.disabled = true;
+          btn.textContent = "Submitting…";
+        });
+
+        const phoneInput = document.getElementById("phone") as HTMLInputElement;
+        phoneInput.addEventListener("input", () => {
+          const digits = phoneInput.value.replace(/\D/g, "").slice(0, 10);
+          if (digits.length <= 3) {
+            phoneInput.value = digits.length ? `(${digits}` : "";
+          } else if (digits.length <= 6) {
+            phoneInput.value = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+          } else {
+            phoneInput.value = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+          }
+        });
+      </script>
     </div>
 
   </div>
