@@ -1,0 +1,32 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
+
+const isHome = Astro.url.pathname === '/';
+---
+
+<RootLayout
+  title="Error"
+  class="max-w-md m-auto flex flex-col gap-8 pt-20 pb-60 px-3"
+>
+  <h1 class="text-primary-purple font-serif font-bold text-4xl">
+    Whoops, we can't load this page right now.
+  </h1>
+  {isHome ? (
+    <p>While we work on getting this fixed check out our shows and classes directly on TicketLeap, our event ticketing provider.</p>
+    <div role="group" class="flex gap-6 flex-col lg:flex-row">
+      <CoralButtonLink href="https://events.ticketleap.com/events/catch" class="min-w-0 w-full lg:w-full">
+        Shows
+      </CoralButtonLink>
+      <CoralButtonLink href="https://events.ticketleap.com/events/catch-u" class="min-w-0 w-full lg:w-full">
+        Classes
+      </CoralButtonLink>
+    </div>
+  ) : (
+    <p>Let's get you back on track.</p>
+    <CoralButtonLink href="/" class="w-fit min-w-none">
+      <RemixIcon icon="home-4" variant="line" /> Go Home
+    </CoralButtonLink>
+  )}
+</RootLayout>
