@@ -21,7 +21,7 @@ export async function getTicketLeapPrice(
   }
 
   return fetch(
-    `https://admin.ticketleap.events/api/v1/events/${eventId}/relationships/price-levels`,
+    `https://admin.ticketleap.com/api/v1/events/${eventId}/relationships/price-levels`,
     {
       headers: {
         "X-API-Token":
