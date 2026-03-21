@@ -1,0 +1,13 @@
+---
+import type { User } from "@supabase/supabase-js";
+import InternalLayout from "~/layouts/InternalLayout.astro";
+
+const user = Astro.locals.user as User;
+---
+
+<InternalLayout title="Scheduler">
+  <form method="get" action="/api/auth/sign-out">
+    <button>SIGN OUT</button>
+  </form>
+  <p>Hello {user.user_metadata.custom_claims.global_name}</p>
+</InternalLayout>

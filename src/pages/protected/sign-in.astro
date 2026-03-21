@@ -1,0 +1,32 @@
+---
+import { actions } from "astro:actions";
+import InternalLayout from "../../layouts/InternalLayout.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/protected/scheduler");
+}
+---
+
+<InternalLayout
+  title="Sign In"
+  class="max-w-md m-auto flex flex-col items-center gap-6"
+>
+  <h1 class="text-3xl font-bold text-center">Sign In</h1>
+  <form action="/api/auth/sign-in" method="post">
+    <button
+      value="discord"
+      name="provider"
+      type="submit"
+      class="flex items-center gap-2 px-3 py-2 bg-[#5865F2] text-white rounded"
+    >
+      <RemixIcon icon="discord" />
+      Sign in with Discord
+    </button>
+  </form>
+</InternalLayout>

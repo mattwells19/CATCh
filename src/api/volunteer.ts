@@ -1,5 +1,5 @@
 import { ActionError } from "astro:actions";
-import { supabase, type Database } from "~/lib/supabase";
+import { supabaseVolunteer, type Database } from "~/lib/supabase/volunteer";
 import { getShowListings } from "./getShowListings";
 
 export const VOLUNTEER_LIMIT = 3;
@@ -17,7 +17,7 @@ export type ListingVolunteers = ReadonlyArray<Readonly<ListingVolunteer>>;
 export const getListingVolunteers = async (
   listingId: number,
 ): Promise<ListingVolunteers> => {
-  const { data } = await supabase
+  const { data } = await supabaseVolunteer
     .from("signup")
     .select(
       `
@@ -51,7 +51,7 @@ export type VolunteerCounts = Readonly<
 export const getVolunteerCounts = async (
   listingIds: Array<number>,
 ): Promise<VolunteerCounts> => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseVolunteer
     .from("signup")
     .select("listing_id, role")
     .in("listing_id", listingIds);
@@ -89,7 +89,7 @@ export const volunteer = async (
   role: Database["public"]["Enums"]["Volunteer Role"],
 ): Promise<ListingVolunteers> => {
   // validate role is available
-  const { count: roleCount } = await supabase
+  const { count: roleCount } = await supabaseVolunteer
     .from("signup")
     .select("role")
     .eq("listing_id", listingId)
@@ -118,13 +118,13 @@ export const volunteer = async (
   }
 
   // update/create member signing up
-  const { data: existingMemberRecord } = await supabase
+  const { data: existingMemberRecord } = await supabaseVolunteer
     .from("member")
     .select("id")
     .eq("email", email);
   const existingMemberId = existingMemberRecord?.at(0)?.id;
 
-  const memberUpsert = await supabase
+  const memberUpsert = await supabaseVolunteer
     .from("member")
     .upsert({
       id: existingMemberId,
@@ -151,7 +151,7 @@ export const volunteer = async (
     });
   }
 
-  const listingUpsert = await supabase.from("listing").upsert({
+  const listingUpsert = await supabaseVolunteer.from("listing").upsert({
     id: listingId,
     name: listingDetails.name,
     show_datetime: listingDetails.date.toISOString(),
@@ -166,7 +166,7 @@ export const volunteer = async (
     });
   }
 
-  const { error: signupError } = await supabase.from("signup").upsert([
+  const { error: signupError } = await supabaseVolunteer.from("signup").upsert([
     {
       member_id: memberId,
       listing_id: listingId,
@@ -190,7 +190,7 @@ export const removeSignUp = async (
   listingId: number,
   email: string,
 ): Promise<ListingVolunteers> => {
-  const { data: memberIdRow } = await supabase
+  const { data: memberIdRow } = await supabaseVolunteer
     .from("member")
     .select("id")
     .eq("email", email);
@@ -202,7 +202,7 @@ export const removeSignUp = async (
     });
   }
 
-  const { data } = await supabase
+  const { data } = await supabaseVolunteer
     .from("signup")
     .delete()
     .eq("listing_id", listingId)
