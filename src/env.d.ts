@@ -7,5 +7,3 @@ declare namespace App {
     user: User;
   }
 }
-
-/// <reference types="astro/client" />

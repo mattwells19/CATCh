@@ -1,0 +1,102 @@
+---
+import { isMatch, parseISO } from "date-fns";
+import InternalLayout from "~/layouts/InternalLayout.astro";
+import { formatEst } from "~/utils/formatEst";
+
+const dateParam = Astro.params.date;
+if (!dateParam || !isMatch(dateParam, "yyyy-MM-dd")) {
+  return Astro.redirect("/protected/scheduler");
+}
+
+const selectedDate = dateParam ? parseISO(dateParam) : null;
+if (!selectedDate) {
+  return Astro.redirect("/protected/scheduler");
+}
+
+const dateDefaultValue = formatEst(dateParam, "yyyy-MM-dd'T'hh:mm");
+---
+
+<script>
+  import { formatDistanceStrict, parseISO } from "date-fns";
+
+  const handleChange = (fromDateValue: string, toDateValue: string) => {
+    const distance = formatDistanceStrict(
+      parseISO(toDateValue),
+      parseISO(fromDateValue),
+    );
+
+    document.getElementById("duration-display")!.innerText = distance;
+  };
+
+  document.getElementById("from-date")?.addEventListener("input", (e) => {
+    const fromDateValue = e.target.value;
+    const toDateValue = document.getElementById("to-date")?.value;
+    handleChange(fromDateValue, toDateValue);
+  });
+
+  document.getElementById("to-date")?.addEventListener("input", (e) => {
+    const toDateValue = e.target.value;
+    const fromDateValue = document.getElementById("from-date")?.value;
+    handleChange(fromDateValue, toDateValue);
+  });
+</script>
+<style>
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    @apply gap-1;
+  }
+
+  .radio-item {
+    display: flex;
+    @apply gap-2 pl-3;
+  }
+</style>
+<InternalLayout title="Scheduler - New event" class="max-w-md m-auto">
+  <h1>New Event</h1>
+
+  <form class="flex flex-col gap-4 mt-8">
+    <div class="field-group">
+      <label for="event-name">Event name</label>
+      <input id="event-name" name="event-name" type="text" />
+    </div>
+    <div class="field-group">
+      <div class="flex gap-4">
+        <div class="field-group">
+          <label for="from-date">From</label>
+          <input
+            id="from-date"
+            name="from-date"
+            type="datetime-local"
+            value={dateDefaultValue}
+          />
+        </div>
+        <div class="field-group">
+          <label for="to-date">To</label>
+          <input
+            id="to-date"
+            name="to-date"
+            type="datetime-local"
+            value={dateDefaultValue}
+          />
+        </div>
+      </div>
+      <p id="duration-display">&nbsp;</p>
+    </div>
+    <fieldset class="field-group">
+      <legend class="pb-2">Location</legend>
+      <div class="radio-item">
+        <input id="main" name="location" type="radio" value="main" />
+        <label for="main">Main Theater</label>
+      </div>
+      <div class="radio-item">
+        <input id="annex" name="location" type="radio" value="annex" />
+        <label for="annex">Annex</label>
+      </div>
+      <div class="radio-item">
+        <input id="office" name="location" type="radio" value="office" />
+        <label for="office">Office</label>
+      </div>
+    </fieldset>
+  </form>
+</InternalLayout>

@@ -1,19 +1,27 @@
 ---
-import { getDaysInMonth, getWeeksInMonth, getDay, isSameDay } from "date-fns";
+import {
+  getDaysInMonth,
+  getWeeksInMonth,
+  getDay,
+  isSameDay,
+  format,
+} from "date-fns";
 import { TZDateMini } from "@date-fns/tz";
 
 import type { ShowListing } from "~/api/getShowListings";
 import { formatEst } from "~/utils/formatEst";
 import { getNow } from "~/utils/getNow";
-import ShowPreview from "../_components/ShowPreview.astro";
+import type { ClassListing } from "~/api/getClassListings";
 
 type Props = {
   visibleMonth: number;
   visibleYear: number;
   upcomingShows: Array<ShowListing>;
+  upcomingClasses: Array<ClassListing>;
 };
 
-const { visibleMonth, visibleYear, upcomingShows } = Astro.props;
+const { visibleMonth, visibleYear, upcomingShows, upcomingClasses } =
+  Astro.props;
 
 const now = getNow();
 
@@ -58,23 +66,6 @@ const calendarDays: Array<Array<number>> = (() => {
   th {
     @apply py-4;
   }
-
-  .hover-card-root {
-    position: relative;
-  }
-
-  .hover-card-content {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    z-index: 10;
-    transform: translateY(-50%);
-  }
-
-  .hover-card-root:hover .hover-card-content,
-  .hover-card-trigger:focus + .hover-card-content {
-    visibility: visible;
-  }
 </style>
 
 <table class="w-full table-fixed">
@@ -100,20 +91,23 @@ const calendarDays: Array<Array<number>> = (() => {
               dayInWeek,
               "America/New_York",
             );
-            const dayListings = upcomingShows.filter((show) =>
-              isSameDay(dayDate, show.date),
+            const dayListings = [...upcomingShows, ...upcomingClasses].filter(
+              (show) => isSameDay(dayDate, show.date),
             );
-            const dayOfWeek = getDay(dayDate);
 
             return dayInWeek === -1 ? (
               <td />
             ) : (
               <td
-                class="w-[14%] h-40 align-top p-2 border"
+                class="w-[14%] h-40 align-top p-2 border relative"
                 class:list={{
                   "bg-violet-100": isSameDay(dayDate, now),
                 }}
               >
+                <a
+                  href={`/protected/scheduler/${format(dayDate, "yyyy-MM-dd")}`}
+                  class="absolute inset-0"
+                />
                 <span
                   title={formatEst(dayDate, "MMMM do, yyyy")}
                   class:list={{
@@ -131,16 +125,6 @@ const calendarDays: Array<Array<number>> = (() => {
                       >
                         {listing.name} ({formatEst(listing.date, "h:mm a")})
                       </a>
-                      <div
-                        class="hover-card-content"
-                        class:list={{
-                          // 4 = Wednesday
-                          "left-full": dayOfWeek < 4,
-                          "right-full": dayOfWeek >= 4,
-                        }}
-                      >
-                        <ShowPreview showListing={listing} />
-                      </div>
                     </li>
                   ))}
                 </ul>

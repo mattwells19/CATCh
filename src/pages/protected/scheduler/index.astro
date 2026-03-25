@@ -1,13 +1,123 @@
 ---
 import type { User } from "@supabase/supabase-js";
+import {
+  addMonths,
+  format,
+  isMatch,
+  isSameMonth,
+  parseISO,
+  setDate,
+  subMonths,
+} from "date-fns";
+import { getClassListings } from "~/api/getClassListings";
+import { getShowListings } from "~/api/getShowListings";
+import RemixIcon from "~/components/RemixIcon.astro";
+import CalendarIcon from "~/icons/calendar.svg";
 import InternalLayout from "~/layouts/InternalLayout.astro";
+import { getNow } from "~/utils/getNow";
+import Calendar from "./_components/Calendar.astro";
 
 const user = Astro.locals.user as User;
+
+const fromDateParam = Astro.url.searchParams.get("from");
+
+if (fromDateParam && !isMatch(fromDateParam, "yyyy-MM-dd")) {
+  return Astro.redirect("/protected/scheduler");
+}
+
+const now = getNow();
+
+const fromDate: Date = (() => {
+  const startDate = fromDateParam ? parseISO(fromDateParam) : null;
+  if (startDate) {
+    return startDate;
+  } else {
+    return setDate(now, 1);
+  }
+})();
+
+const toDate = setDate(addMonths(fromDate, 1), 1);
+
+const upcomingShows = await getShowListings({
+  start: fromDate,
+  end: toDate,
+});
+const upcomingClasses = await getClassListings({
+  start: fromDate,
+  end: toDate,
+});
+
+const prevMonth: Date | null = (() => {
+  const lastMonth = subMonths(fromDate, 1);
+  if (lastMonth < now) {
+    return null;
+  } else {
+    return lastMonth;
+  }
+})();
+
+const prevMonthHref: URL = (() => {
+  const destinationUrl = new URL(Astro.url);
+  if (prevMonth) {
+    destinationUrl.searchParams.set("from", format(prevMonth, "yyyy-MM-dd"));
+  } else {
+    destinationUrl.searchParams.delete("from");
+  }
+  return destinationUrl;
+})();
+
+const nextMonth = addMonths(fromDate, 1);
+const nextMonthHref: URL = (() => {
+  const destinationUrl = new URL(Astro.url);
+  destinationUrl.searchParams.set("from", format(nextMonth, "yyyy-MM-dd"));
+  return destinationUrl;
+})();
 ---
 
 <InternalLayout title="Scheduler">
-  <form method="get" action="/api/auth/sign-out">
-    <button>SIGN OUT</button>
-  </form>
-  <p>Hello {user.user_metadata.custom_claims.global_name}</p>
+  <div class="flex gap-4 ml-auto">
+    <p>{user.user_metadata.custom_claims.global_name}</p>
+    <form method="get" action="/api/auth/sign-out">
+      <button>SIGN OUT</button>
+    </form>
+  </div>
+
+  <nav class="pb-12 px-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      {
+        isSameMonth(fromDate, now) ? null : (
+          <a
+            href={prevMonthHref}
+            aria-label="Last month"
+            class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+          >
+            <RemixIcon icon="arrow-left-s" variant="line" />
+          </a>
+        )
+      }
+      <h3
+        class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
+      >
+        <CalendarIcon name="calendar" class="size-9" />
+        <span>
+          {format(fromDate, "MMMM")}
+        </span>
+      </h3>
+      <a
+        name="from"
+        href={nextMonthHref}
+        aria-label="Next month"
+        class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
+      >
+        <RemixIcon icon="arrow-right-s" variant="line" />
+      </a>
+    </div>
+  </nav>
+
+  <Calendar
+    visibleMonth={fromDate.getMonth()}
+    visibleYear={fromDate.getFullYear()}
+    upcomingShows={upcomingShows}
+    upcomingClasses={upcomingClasses}
+  />
 </InternalLayout>
