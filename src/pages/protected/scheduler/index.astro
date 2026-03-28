@@ -11,11 +11,12 @@ import {
 } from "date-fns";
 import { getClassListings } from "~/api/getClassListings";
 import { getShowListings } from "~/api/getShowListings";
-import RemixIcon from "~/components/RemixIcon.astro";
-import CalendarIcon from "~/icons/calendar.svg";
 import InternalLayout from "~/layouts/InternalLayout.astro";
 import { getNow } from "~/utils/getNow";
-import Calendar from "./_components/Calendar.astro";
+import { Calendar } from "./_components/Calendar.tsx";
+import { Header } from "./_components/Header";
+
+import "./_styles/common.css";
 
 const user = Astro.locals.user as User;
 
@@ -75,46 +76,16 @@ const nextMonthHref: URL = (() => {
 ---
 
 <InternalLayout title="Scheduler">
-  <div class="flex gap-4 ml-auto">
-    <p>{user.user_metadata.custom_claims.global_name}</p>
-    <form method="get" action="/api/auth/sign-out">
-      <button>SIGN OUT</button>
-    </form>
-  </div>
-
-  <nav class="pb-12 px-4 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      {
-        isSameMonth(fromDate, now) ? null : (
-          <a
-            href={prevMonthHref}
-            aria-label="Last month"
-            class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
-          >
-            <RemixIcon icon="arrow-left-s" variant="line" />
-          </a>
-        )
-      }
-      <h3
-        class="text-primary-purple text-4xl font-serif font-bold flex items-center gap-2"
-      >
-        <CalendarIcon name="calendar" class="size-9" />
-        <span>
-          {format(fromDate, "MMMM")}
-        </span>
-      </h3>
-      <a
-        name="from"
-        href={nextMonthHref}
-        aria-label="Next month"
-        class="hover:bg-purple-400/20 transition-colors rounded-md p-1"
-      >
-        <RemixIcon icon="arrow-right-s" variant="line" />
-      </a>
-    </div>
-  </nav>
+  <Header
+    client:load
+    userName={user.user_metadata.custom_claims.global_name}
+    currentMonth={format(fromDate, "MMMM")}
+    prevMonthHref={isSameMonth(fromDate, now) ? null : prevMonthHref}
+    nextMonthHref={nextMonthHref}
+  />
 
   <Calendar
+    client:load
     visibleMonth={fromDate.getMonth()}
     visibleYear={fromDate.getFullYear()}
     upcomingShows={upcomingShows}

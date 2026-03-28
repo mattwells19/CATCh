@@ -1,0 +1,20 @@
+.field-group {
+  @apply flex flex-col gap-1;
+}
+
+.new-event input[type="text"],
+.new-event input[type="time"] {
+  @apply block rounded px-3 py-2 border-2 border-primary-purple w-full;
+}
+
+.radio-item {
+  @apply flex gap-2 ml-3;
+
+  input[type="radio"] {
+    accent-color: var(--coral);
+  }
+}
+
+th {
+  @apply py-2 lg:py-4;
+}

@@ -24,6 +24,7 @@
     "@supabase/supabase-js": "^2.94.0",
     "astro": "^5.17.1",
     "astro-seo-metadata": "^0.6.0",
+    "classnames": "^2.5.1",
     "contentful": "^11.10.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

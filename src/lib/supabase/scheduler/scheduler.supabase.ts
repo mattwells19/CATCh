@@ -18,5 +18,6 @@ export const getSupabaseSchedulerClient = (
           cookiesToSet.forEach(({ name, value }) => cookies.set(name, value));
         },
       },
+      auth: { flowType: "pkce" },
     },
   );
