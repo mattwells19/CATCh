@@ -8,9 +8,7 @@ import {
 } from "date-fns";
 import { TZDateMini } from "@date-fns/tz";
 import classnames from "classnames";
-
-import type { ShowListing } from "~/api/getShowListings";
-import type { ClassListing } from "~/api/getClassListings";
+import type { Database as SchedulerDatabase } from "~/lib/supabase/scheduler";
 import { formatEst } from "~/utils/formatEst";
 import { getNow } from "~/utils/getNow";
 import { RemixIcon } from "~/components/RemixIcon";
@@ -19,15 +17,13 @@ import { NewEvent } from "./NewEvent";
 interface CalendarProps {
   visibleMonth: number;
   visibleYear: number;
-  upcomingShows: Array<ShowListing>;
-  upcomingClasses: Array<ClassListing>;
+  events: Array<SchedulerDatabase["public"]["Tables"]["events"]["Row"]>;
 }
 
 export const Calendar = ({
-  upcomingClasses,
-  upcomingShows,
   visibleMonth,
   visibleYear,
+  events,
 }: CalendarProps) => {
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
@@ -106,10 +102,9 @@ export const Calendar = ({
                   dayInWeek,
                   "America/New_York",
                 );
-                const dayListings = [
-                  ...upcomingShows,
-                  ...upcomingClasses,
-                ].filter((show) => isSameDay(dayDate, show.date));
+                const dayListings = events.filter((event) =>
+                  isSameDay(dayDate, event.start),
+                );
                 const dayDateIsToday = isSameDay(dayDate, now);
 
                 return dayInWeek === -1 ? (
@@ -131,13 +126,16 @@ export const Calendar = ({
                     </span>
                     <ul>
                       {dayListings.map((listing) => (
-                        <li key={listing.id}>
-                          <a
-                            href={listing.listingUrl}
-                            className="block bg-primary-purple text-white py-0.5 px-1 rounded my-1"
-                          >
-                            {listing.name} ({formatEst(listing.date, "h:mm a")})
-                          </a>
+                        <li
+                          key={listing.id}
+                          className="block bg-primary-purple text-white py-0.5 px-1 rounded my-1"
+                        >
+                          <p>{listing.name}</p>
+                          <p>
+                            {formatEst(listing.start, "h:mm a")} -{" "}
+                            {formatEst(listing.end, "h:mm a")}
+                          </p>
+                          <p>{listing.location}</p>
                         </li>
                       ))}
                       {dayDateIsToday || isAfter(dayDate, now) ? (
@@ -163,8 +161,8 @@ export const Calendar = ({
         <NewEvent
           selectedDate={selectedDay}
           onCancel={() => setSelectedDay(null)}
-          selectedDayEvents={[...upcomingShows, ...upcomingClasses].filter(
-            (show) => isSameDay(selectedDay, show.date),
+          selectedDayEvents={events.filter((event) =>
+            isSameDay(selectedDay, event.start),
           )}
         />
       ) : null}

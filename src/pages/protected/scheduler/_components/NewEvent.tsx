@@ -1,12 +1,15 @@
 import React, { useMemo, useState } from "react";
+import { actions } from "astro:actions";
 import { TZDateMini } from "@date-fns/tz";
-import { format, formatDistanceStrict } from "date-fns";
-import type { TicketLeapListing } from "~/api/utils/getTicketLeapListings";
+import { format, formatDistanceStrict, formatISO } from "date-fns";
+import type { Database as SchedulerDatabase } from "~/lib/supabase/scheduler";
 import { RemixIcon } from "~/components/RemixIcon";
 
 interface NewEventProps {
   selectedDate: Date;
-  selectedDayEvents: Array<TicketLeapListing>;
+  selectedDayEvents: Array<
+    SchedulerDatabase["public"]["Tables"]["events"]["Row"]
+  >;
   onCancel: () => void;
 }
 
@@ -77,18 +80,23 @@ export const NewEvent = ({
         .
       </p>
 
-      <form className="new-event flex flex-col gap-4">
+      <form className="new-event flex flex-col gap-4" action={actions.newEvent}>
+        <input
+          type="hidden"
+          name="date"
+          value={formatISO(selectedDate, { representation: "date" })}
+        />
         <div className="field-group">
-          <label htmlFor="event-name">Event name</label>
-          <input id="event-name" name="event-name" type="text" required />
+          <label htmlFor="name">Event name</label>
+          <input id="name" name="name" type="text" required />
         </div>
         <div className="field-group">
           <div className="flex gap-4 flex-wrap">
             <div className="field-group flex-1">
-              <label htmlFor="from-date">From</label>
+              <label htmlFor="start">From</label>
               <input
-                id="from-date"
-                name="from-date"
+                id="start"
+                name="start"
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
@@ -96,10 +104,10 @@ export const NewEvent = ({
               />
             </div>
             <div className="field-group flex-1">
-              <label htmlFor="to-date">To</label>
+              <label htmlFor="end">To</label>
               <input
-                id="to-date"
-                name="to-date"
+                id="end"
+                name="end"
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
@@ -117,20 +125,20 @@ export const NewEvent = ({
           <legend className="pb-1">Location</legend>
           <div className="radio-item">
             <input
-              id="main"
+              id="theater"
               name="location"
               type="radio"
-              value="main"
+              value="Theater"
               defaultChecked
             />
-            <label htmlFor="main">Main Theater</label>
+            <label htmlFor="theater">Main Theater</label>
           </div>
           <div className="radio-item">
-            <input id="annex" name="location" type="radio" value="annex" />
+            <input id="annex" name="location" type="radio" value="Annex" />
             <label htmlFor="annex">Annex</label>
           </div>
           <div className="radio-item">
-            <input id="office" name="location" type="radio" value="office" />
+            <input id="office" name="location" type="radio" value="Office" />
             <label htmlFor="office">Office</label>
           </div>
         </fieldset>

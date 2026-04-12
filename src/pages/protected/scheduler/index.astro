@@ -3,14 +3,14 @@ import type { User } from "@supabase/supabase-js";
 import {
   addMonths,
   format,
+  formatISO,
   isMatch,
   isSameMonth,
   parseISO,
   setDate,
   subMonths,
 } from "date-fns";
-import { getClassListings } from "~/api/getClassListings";
-import { getShowListings } from "~/api/getShowListings";
+import { supabaseScheduler } from "~/lib/supabase/scheduler";
 import InternalLayout from "~/layouts/InternalLayout.astro";
 import { getNow } from "~/utils/getNow";
 import { Calendar } from "./_components/Calendar.tsx";
@@ -39,14 +39,13 @@ const fromDate: Date = (() => {
 
 const toDate = setDate(addMonths(fromDate, 1), 1);
 
-const upcomingShows = await getShowListings({
-  start: fromDate,
-  end: toDate,
-});
-const upcomingClasses = await getClassListings({
-  start: fromDate,
-  end: toDate,
-});
+const monthEvents = await supabaseScheduler
+  .from("events")
+  .select("*")
+  .gt("start", formatISO(fromDate))
+  .lt("start", formatISO(toDate));
+
+console.log(user);
 
 const prevMonth: Date | null = (() => {
   const lastMonth = subMonths(fromDate, 1);
@@ -88,7 +87,6 @@ const nextMonthHref: URL = (() => {
     client:load
     visibleMonth={fromDate.getMonth()}
     visibleYear={fromDate.getFullYear()}
-    upcomingShows={upcomingShows}
-    upcomingClasses={upcomingClasses}
+    events={monthEvents.data ?? []}
   />
 </InternalLayout>

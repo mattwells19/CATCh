@@ -14,7 +14,65 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      calendar: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          calendar_id: number | null
+          created_at: string
+          created_by: string | null
+          end: string
+          id: number
+          location: Database["public"]["Enums"]["SPACES"]
+          name: string
+          start: string
+        }
+        Insert: {
+          calendar_id?: number | null
+          created_at?: string
+          created_by?: string | null
+          end: string
+          id?: number
+          location?: Database["public"]["Enums"]["SPACES"]
+          name: string
+          start: string
+        }
+        Update: {
+          calendar_id?: number | null
+          created_at?: string
+          created_by?: string | null
+          end?: string
+          id?: number
+          location?: Database["public"]["Enums"]["SPACES"]
+          name?: string
+          start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_calendar_id_fkey"
+            columns: ["calendar_id"]
+            isOneToOne: false
+            referencedRelation: "calendar"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +81,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      SPACES: "Theater" | "Annex" | "Office"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +208,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      SPACES: ["Theater", "Annex", "Office"],
+    },
   },
 } as const

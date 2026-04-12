@@ -1,6 +1,7 @@
 import { createServerClient, parseCookieHeader } from "@supabase/ssr";
 import type { Database } from "./scheduler.types";
 import type { AstroCookies } from "astro";
+import { createClient } from "@supabase/supabase-js";
 
 export const getSupabaseSchedulerClient = (
   request: Request,
@@ -21,3 +22,8 @@ export const getSupabaseSchedulerClient = (
       auth: { flowType: "pkce" },
     },
   );
+
+export const supabaseScheduler = createClient<Database>(
+  import.meta.env.SUPABASE_SCHEDULER_URL,
+  import.meta.env.SUPABASE_SCHEDULER_KEY,
+);
