@@ -1,19 +1,57 @@
 ---
-import { actions } from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 import { Image } from "astro:assets";
 import RootLayout from "~/layouts/RootLayout.astro";
 import teamBuildingImg from "~/images/team-building-with-catch.png";
 
-const result = Astro.getActionResult(actions.organizations);
+// actionResult is defined if the form was just submitted
+const actionResult = Astro.getActionResult(actions.organizations);
+if (actionResult) {
+  const errorMessages: Array<string> | null = (() => {
+    if (!actionResult.error) {
+      return null;
+    }
+
+    if (isInputError(actionResult.error)) {
+      const fields = actionResult.error.fields;
+      return Object.keys(fields).map((field) =>
+        fields[field as keyof typeof fields]!.join(", "),
+      );
+    }
+
+    return [actionResult.error.message];
+  })();
+
+  const redirectUrl = new URL(Astro.url.pathname, Astro.url.origin);
+
+  if (errorMessages) {
+    errorMessages.forEach((errMsg) => {
+      redirectUrl.searchParams.append("error", errMsg);
+    });
+  } else {
+    redirectUrl.searchParams.append("success", "true");
+  }
+
+  return Astro.redirect(redirectUrl.toString());
+}
+
+const searchParams = Astro.url.searchParams;
+const success = searchParams.has("success");
+const errorMessages = searchParams.has("error")
+  ? searchParams.getAll("error")
+  : null;
 ---
 
-<RootLayout title="Organizations" class="md:px-8 lg:px-16 overflow-x-clip">
-  <h1 class="text-primary-purple font-serif font-bold text-5xl lg:text-6xl px-4 pt-8 pb-10 lg:pb-16 bg-shapes">
+<RootLayout title="Organizations" class="md:px-8 lg:px-16">
+  <h1
+    class="text-primary-purple font-serif font-bold text-5xl lg:text-6xl px-4 pt-8 pb-10 lg:pb-16 bg-shapes"
+  >
     Organizations
   </h1>
 
-  <div class="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 px-4 lg:px-0 pb-16">
-
+  <div
+    class="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 px-4 lg:px-0 pb-16"
+  >
     <!-- Image with coral blob — first on mobile, top-right on desktop -->
     <div class="lg:col-start-2 lg:row-start-1 relative pt-10">
       <div
@@ -32,10 +70,9 @@ const result = Astro.getActionResult(actions.organizations);
     <!-- Text content — second on mobile, left column on desktop spanning both rows -->
     <div class="lg:col-start-1 lg:row-start-1 lg:row-span-2">
       <p class="text-lg mb-4">
-        Improv refers to any form of spontaneous storytelling or theater, and
-        is quickly gaining recognition as a valuable tool for business
-        training in developing greater mental agility, teamwork, and
-        communication skills.
+        Improv refers to any form of spontaneous storytelling or theater, and is
+        quickly gaining recognition as a valuable tool for business training in
+        developing greater mental agility, teamwork, and communication skills.
       </p>
       <p class="text-lg mb-6">
         Organizations from universities to corporations such as Google, Yahoo,
@@ -57,9 +94,7 @@ const result = Astro.getActionResult(actions.organizations);
 
       <div class="flex flex-col gap-6">
         <div>
-          <h3 class="font-bold text-lg mb-1">
-            🧠 Creative Collaboration
-          </h3>
+          <h3 class="font-bold text-lg mb-1">🧠 Creative Collaboration</h3>
           <p>
             Unlock your team's imagination through fast-paced games that build
             trust, sharpen listening, and spark innovative thinking together.
@@ -77,9 +112,7 @@ const result = Astro.getActionResult(actions.organizations);
         </div>
 
         <div>
-          <h3 class="font-bold text-lg mb-1">
-            🤝 Team Building Through Play
-          </h3>
+          <h3 class="font-bold text-lg mb-1">🤝 Team Building Through Play</h3>
           <p>
             Strengthen relationships and break down silos with fun, low-stakes
             improv activities that encourage laughter, connection, and shared
@@ -88,9 +121,7 @@ const result = Astro.getActionResult(actions.organizations);
         </div>
 
         <div>
-          <h3 class="font-bold text-lg mb-1">
-            ⚡ Agility &amp; Adaptability
-          </h3>
+          <h3 class="font-bold text-lg mb-1">⚡ Agility &amp; Adaptability</h3>
           <p>
             Help your team embrace change and respond to the unexpected with
             confidence through quick-thinking challenges and dynamic group
@@ -99,12 +130,10 @@ const result = Astro.getActionResult(actions.organizations);
         </div>
 
         <div>
-          <h3 class="font-bold text-lg mb-1">
-            ✨ Custom Workshop
-          </h3>
+          <h3 class="font-bold text-lg mb-1">✨ Custom Workshop</h3>
           <p>
-            Looking for something unique? We'll collaborate with you to design
-            a tailored improv experience that aligns with your team's goals,
+            Looking for something unique? We'll collaborate with you to design a
+            tailored improv experience that aligns with your team's goals,
             culture, and event needs.
           </p>
         </div>
@@ -119,23 +148,25 @@ const result = Astro.getActionResult(actions.organizations);
       <p class="text-sm italic mb-6">* All fields are required</p>
 
       {
-        result?.error && (
-          <p class="text-red-600 mb-4">
-            Something went wrong. Please try again.
-          </p>
-        )
+        errorMessages?.map((errorMsg) => (
+          <p class="text-red-600 mb-4">{errorMsg}</p>
+        ))
       }
       {
-        result?.data?.success && (
+        success ? (
           <p class="text-green-700 font-medium mb-4">
-            Thanks! We'll be in touch soon.
+            We have received your request. We'll be in touch soon!
           </p>
-        )
+        ) : null
       }
 
-      <form method="POST" action={actions.organizations} class="flex flex-col gap-4" id="org-form">
+      <form
+        method="POST"
+        action={actions.organizations}
+        class="flex flex-col gap-4"
+      >
         <div class="flex flex-col sm:flex-row gap-4">
-          <div class="flex-1 flex flex-col gap-1">
+          <div class="flex flex-col gap-1 w-full">
             <label for="firstName" class="text-sm font-medium">
               First name *
             </label>
@@ -146,10 +177,10 @@ const result = Astro.getActionResult(actions.organizations);
               required
               autocomplete="given-name"
               maxlength="35"
-              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple w-full"
             />
           </div>
-          <div class="flex-1 flex flex-col gap-1">
+          <div class="flex flex-col gap-1 w-full">
             <label for="lastName" class="text-sm font-medium">
               Last name *
             </label>
@@ -160,7 +191,7 @@ const result = Astro.getActionResult(actions.organizations);
               required
               autocomplete="family-name"
               maxlength="35"
-              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple w-full"
             />
           </div>
         </div>
@@ -176,12 +207,12 @@ const result = Astro.getActionResult(actions.organizations);
             required
             autocomplete="organization"
             maxlength="100"
-            class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+            class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple w-full"
           />
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">
-          <div class="flex-1 flex flex-col gap-1">
+          <div class="flex flex-col gap-1 w-full">
             <label for="phone" class="text-sm font-medium">
               Phone number *
             </label>
@@ -194,10 +225,10 @@ const result = Astro.getActionResult(actions.organizations);
               minlength="10"
               maxlength="14"
               placeholder="(555) 555-5555"
-              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple w-full"
             />
           </div>
-          <div class="flex-1 flex flex-col gap-1">
+          <div class="flex flex-col gap-1 w-full">
             <label for="email" class="text-sm font-medium">
               Email address *
             </label>
@@ -208,7 +239,7 @@ const result = Astro.getActionResult(actions.organizations);
               required
               autocomplete="email"
               maxlength="254"
-              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple"
+              class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple w-full"
             />
           </div>
         </div>
@@ -225,11 +256,11 @@ const result = Astro.getActionResult(actions.organizations);
             maxlength="2000"
             class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple resize-y"
           ></textarea>
+          <p class="text-sm text-gray-600">Maximum 2,000 characters.</p>
         </div>
 
         <button
           type="submit"
-          id="org-submit"
           class="w-full bg-coral text-peach font-bold py-3 px-6 rounded hover:bg-[#B7433C] transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Submit
@@ -237,13 +268,6 @@ const result = Astro.getActionResult(actions.organizations);
       </form>
 
       <script>
-        const form = document.getElementById("org-form") as HTMLFormElement;
-        const btn = document.getElementById("org-submit") as HTMLButtonElement;
-        form.addEventListener("submit", () => {
-          btn.disabled = true;
-          btn.textContent = "Submitting…";
-        });
-
         const phoneInput = document.getElementById("phone") as HTMLInputElement;
         phoneInput.addEventListener("input", () => {
           const digits = phoneInput.value.replace(/\D/g, "").slice(0, 10);
@@ -257,6 +281,5 @@ const result = Astro.getActionResult(actions.organizations);
         });
       </script>
     </div>
-
   </div>
 </RootLayout>
