@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { submitOrgRequest } from "~/api/organizations";
 
 export const organizations = {
   organizations: defineAction({
@@ -37,49 +38,6 @@ export const organizations = {
         .min(1, "Please tell us how we can support your organization.")
         .max(2000, "Message cannot exceed 2,000 characters."),
     }),
-    handler: async (input) => {
-      const res = await fetch(
-        `${import.meta.env.DISCORD_BUSINESS_REQUEST_WEBHOOK_URL}?wait=true`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            thread_name: `New business request for information from ${input.organizationName}!`,
-            embeds: [
-              {
-                title: input.organizationName,
-                description: input.message,
-                fields: [
-                  {
-                    name: "Name",
-                    value: `${input.firstName} ${input.lastName}`,
-                    inline: true,
-                  },
-                  {
-                    name: "Phone number",
-                    value: input.phone,
-                    inline: true,
-                  },
-                  {
-                    name: "Email",
-                    value: input.email,
-                    inline: true,
-                  },
-                ],
-              },
-            ],
-          }),
-        },
-      );
-
-      if (res.ok) {
-        return { success: true };
-      } else {
-        const resBody = await res.json();
-        throw new Error(resBody.message);
-      }
-    },
+    handler: submitOrgRequest,
   }),
 };
