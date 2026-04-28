@@ -49,7 +49,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     transform: scaleY(-1);
   }
 
-  @media (width <= 1024px) {
+  @media (width > 1024px) {
     #upcoming-shows::after {
       clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
     }
