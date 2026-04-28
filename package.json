@@ -11,32 +11,31 @@
     "supatypes": "supabase gen types typescript --project-id lpnthtldjubiyszueuwp --schema public > ./src/lib/supabase/database.types.ts"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/tailwind": "^6.0.2",
-    "@astrojs/vercel": "^9.0.4",
-    "@contentful/rich-text-from-markdown": "^16.1.8",
-    "@contentful/rich-text-html-renderer": "^17.1.6",
+    "@astrojs/react": "^5.0.4",
+    "@astrojs/vercel": "^10.0.6",
+    "@contentful/rich-text-from-markdown": "^16.2.1",
+    "@contentful/rich-text-html-renderer": "^17.2.2",
     "@date-fns/tz": "^1.4.1",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-navigation-menu": "^1.2.14",
-    "@supabase/supabase-js": "^2.94.0",
-    "astro": "^5.17.1",
+    "@supabase/supabase-js": "^2.105.1",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.1.10",
     "astro-seo-metadata": "^0.6.0",
-    "contentful": "^11.10.3",
+    "contentful": "^11.12.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "quick-lru": "^7.3.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "sharp": "^0.34.5",
-    "tailwindcss": "^3.4.19",
-    "zod": "3.25.76"
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
-    "@contentful/rich-text-types": "^17.2.5",
-    "@types/react": "^19.2.13",
+    "@contentful/rich-text-types": "^17.2.7",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "sass": "^1.97.3",
-    "supabase": "^2.76.3"
+    "sass": "^1.99.0",
+    "supabase": "^2.95.6"
   }
 }

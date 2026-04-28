@@ -10,7 +10,7 @@ import {
 import { routeCategories, routes } from "./routes.ts";
 
 import FullLogo from "~/images/CATCh-big-tagline.webp";
-import "../../styles/desktop-nav.scss";
+import "../../styles/desktop-nav.css";
 
 export const DesktopNav = (): ReactElement => {
   return (

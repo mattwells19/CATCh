@@ -1,16 +1,14 @@
-:root {
+@import "tailwindcss";
 
-  --peach: #fff9f3;
-  --primary-purple: #440067;
-  --light-purple: #9470dc;
-  --coral: #f0594f;
-  --yellow: #f2b63f;
-  --black: #262626;
+@theme {
+  --color-peach: #fff9f3;
+  --color-primary-purple: #440067;
+  --color-light-purple: #9470dc;
+  --color-coral: #f0594f;
+  --color-yellow: #f2b63f;
+  --color-black: #262626;
 
   --font-serif: Fraunces;
-  --font-sm: 16px;
-  --font-md: 20px;
-  --font-lg: 30px;
-  --font-xl: 40px;
-  --font-xxl: 60px;
+
+  --shapes: url(/svgs/shapes-bg.svg);
 }

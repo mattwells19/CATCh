@@ -34,7 +34,9 @@ export function formatClassDateRange(classListing: ClassListing) {
     classListing.classLengthValue !== null
   ) {
     const endDate = add(classStartDate, {
-      [classListing.classLengthUnits]: classListing.classLengthValue,
+      // subtract 1 to include the first week.
+      // if a class starts on January 1st and goes for 6 weeks, we only need to add 5 weeks to get the final week.
+      [classListing.classLengthUnits]: classListing.classLengthValue - 1,
     });
     return `${dayOfTheWeek}s, ${formatEst(
       classStartDate,

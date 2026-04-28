@@ -14,9 +14,11 @@ const respectSection = respectSections.find(
 if (!respectSection) return Astro.redirect("/respect");
 ---
 
-<style lang="scss">
+<style>
+  @reference '~/styles/variables.css';
+
   aside {
-    @apply flex flex-col max-w-screen-md m-auto gap-3 mt-4 md:flex-row;
+    @apply flex flex-col max-w-3xl m-auto gap-3 mt-4 md:flex-row;
 
     & > section {
       @apply bg-violet-200 p-3 rounded border border-violet-600 whitespace-normal;
