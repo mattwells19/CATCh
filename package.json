@@ -35,7 +35,6 @@
     "@contentful/rich-text-types": "^17.2.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "sass": "^1.99.0",
     "supabase": "^2.95.6"
   }
 }
