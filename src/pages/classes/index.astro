@@ -7,8 +7,7 @@ import StandupImg from "~/images/class-pathways/standup.png";
 import OtherClassesImg from "~/images/class-pathways/other-classes.png";
 ---
 
-<style lang="scss">
-  // the purple blob behind the show section
+<style>
   #interested-in-header::after {
     content: "";
     position: absolute;
@@ -19,7 +18,6 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
     transition: clip-path ease-in-out 300ms;
   }
 
-  // the yellow blob behind the classes section
   #pathway-cards::after {
     content: "";
     position: absolute;
@@ -30,9 +28,7 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
     transition: clip-path ease-in-out 300ms;
   }
 
-  // lg tailwind viewport
-  // reference: https://tailwindcss.com/docs/responsive-design
-  @media (min-width: 1024px) {
+  @media (width > 1024px) {
     #interested-in-header::after {
       clip-path: inset(0 0 0 0 round 0px 200px 200px 0px);
       inset: 0% 50% -200% -4rem;
@@ -46,7 +42,7 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
 
 <RootLayout title="Classes" class="md:px-8 lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-10 lg:pb-24 bg-shapes"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-10 lg:pb-24 bg-(image:--shapes)"
   >
     Catch a class
   </h1>
@@ -68,7 +64,8 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
         href="/classes/unlocking-the-self"
       >
         <Fragment slot="description">
-          Growing my personal skills and meeting people through improv with <span class="font-semibold">Unlocking the Self</span>
+          Growing my personal skills and meeting people through improv with
+          <span class="font-semibold">Unlocking the Self</span>
         </Fragment>
       </PathwayCard>
     </li>
@@ -80,7 +77,8 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
         href="/classes/performance-track"
       >
         <Fragment slot="description">
-          Get stage ready and learn how to perform improv comedy with our <span class="font-semibold">Performance Track</span>
+          Get stage ready and learn how to perform improv comedy with our
+          <span class="font-semibold">Performance Track</span>
         </Fragment>
       </PathwayCard>
     </li>
@@ -92,7 +90,8 @@ import OtherClassesImg from "~/images/class-pathways/other-classes.png";
         href="/classes/standup"
       >
         <Fragment slot="description">
-          Learning how to create and deliver <span class="font-semibold">stand-up comedy</span>
+          Learning how to create and deliver
+          <span class="font-semibold">stand-up comedy</span>
         </Fragment>
       </PathwayCard>
     </li>

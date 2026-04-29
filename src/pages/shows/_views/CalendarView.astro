@@ -56,6 +56,8 @@ const calendarDays: Array<Array<number>> = (() => {
 ---
 
 <style>
+  @reference '~/styles/variables.css';
+
   th {
     @apply py-4;
   }
@@ -110,7 +112,7 @@ const calendarDays: Array<Array<number>> = (() => {
               <td />
             ) : (
               <td
-                class="w-[14%] h-40 align-top p-2 border"
+                class="w-[14%] h-40 align-top p-2 border border-gray-200"
                 class:list={{
                   "bg-violet-100": isSameDay(dayDate, now),
                 }}

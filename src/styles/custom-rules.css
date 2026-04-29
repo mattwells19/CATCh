@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 /* Register your custom font family and tell the browser where to find it. */
 @font-face {
   font-family: Fraunces;
@@ -35,7 +37,7 @@
 }
 
 body {
-  background: var(--peach);
+  background: var(--color-peach);
 }
 
 svg {

@@ -16,7 +16,7 @@ const { showListing } = Astro.props;
   class="rounded overflow-hidden shadow-xl p-2 bg-peach flex flex-col gap-4 flex-1 min-w-[315px] max-w-[500px]"
 >
   <!-- Borrowed from LinkedImage.astro -->
-  <div class="block group relative bg-black bg-opacity-10 w-full">
+  <div class="block group relative bg-black w-full">
     <span
       class="text-center absolute z-10 inset-0 h-fit m-auto px-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
     >
@@ -27,6 +27,7 @@ const { showListing } = Astro.props;
       alt={showListing.name}
       width={724}
       height={407}
+      layout="full-width"
       class="group-hover:opacity-20 transition-opacity w-full"
     />
   </div>

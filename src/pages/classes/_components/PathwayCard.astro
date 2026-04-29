@@ -21,7 +21,8 @@ const { href, image, imageAlt, linkText } = Astro.props;
       alt={imageAlt}
       width={724}
       height={407}
-      class="group-hover:opacity-20 transition-opacity w-full"
+      layout="fixed"
+      class="w-full"
     />
     <p class="p-4 pt-6">
       <slot name="description" />

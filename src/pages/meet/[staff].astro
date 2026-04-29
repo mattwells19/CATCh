@@ -11,8 +11,7 @@ if (!staffMember) return Astro.redirect("/");
 ---
 
 <RootLayout title={staffMember.name}>
-  <div class="absolute left-0 top-0 w-full h-72 bg-slate-600 bg-opacity-10">
-  </div>
+  <div class="absolute left-0 top-0 w-full h-72 bg-slate-600/10"></div>
   <div class="relative">
     <Headshot src={staffMember.headshot.path} name={staffMember.name} />
     <div class="mt-4 mb-8">

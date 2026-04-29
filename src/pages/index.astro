@@ -24,19 +24,19 @@ const [upcomingShows, upcomingClasses] = await Promise.all([
 const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
 ---
 
-<style lang="scss">
-  // the purple blob behind the show section
+<style>
+  @reference '~/styles/variables.css';
+
   #upcoming-shows::after {
     content: "";
     position: absolute;
     z-index: -9;
     inset: 0;
-    background-color: var(--primary-purple);
+    background-color: var(--color-primary-purple);
     clip-path: xywh(0 0px 120% 100% round 0 0 100% 0);
     transform: scaleX(-1);
   }
 
-  // the yellow blob behind the classes section
   #upcoming-classes::after {
     content: "";
     position: absolute;
@@ -49,9 +49,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     transform: scaleY(-1);
   }
 
-  // lg tailwind viewport
-  // reference: https://tailwindcss.com/docs/responsive-design
-  @media (min-width: 1024px) {
+  @media (width > 1024px) {
     #upcoming-shows::after {
       clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
     }
@@ -69,7 +67,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   }
 
   li.inline-cta {
-    @apply items-center justify-center min-w-[200px] flex-shrink-0;
+    @apply items-center justify-center min-w-50 shrink-0;
 
     a {
       @apply font-serif font-bold text-lg flex gap-2 items-center underline;
