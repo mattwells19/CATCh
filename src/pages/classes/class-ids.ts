@@ -3,5 +3,5 @@ export const ClassIDs = {
   PT1: 853,
   PT2: 1222,
   PT3: 14769,
-  Standup: 1629007,
+  Standup: 2129576,
 } as const;
