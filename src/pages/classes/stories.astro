@@ -1,0 +1,90 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import YoutubeVideoEmbed from "~/components/YoutubeVideoEmbed.astro";
+import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+import { stories } from "./_data/stories";
+import Testimonial from "./_components/Testimonial.astro";
+import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
+import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
+import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
+import styles from "./_styles/stories.module.css";
+---
+
+<RootLayout title="Stories of Awesomeness - Classes" class={styles.layout}>
+  <div class="px-6 lg:px-0">
+    <ClassBreadcrumbs>Stories of Awesomeness</ClassBreadcrumbs>
+  </div>
+
+  <h1
+    class="text-primary-purple text-6xl font-serif font-bold bg-shapes pt-12 px-6 lg:px-0"
+  >
+    Stories of Awesomeness
+  </h1>
+
+  <section class={`${styles.awesomeness} px-6 lg:px-0`}>
+    {
+      stories.map((story, index) => {
+        const video = (
+          <YoutubeVideoEmbed
+            title={`${story.name}'s Story — CATCh Improv Classes`}
+            videoId={story.videoId}
+          />
+        );
+        const text = (
+          <div class={styles.awesomeness_text_container}>
+            <h3>
+              {story.name}: {story.topic}
+            </h3>
+            <blockquote>{story.fullQuote}</blockquote>
+            {story.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        );
+
+        // Alternate which side the video sits on for visual rhythm.
+        return (
+          <div class={`${styles.two_col} flex-col`}>
+            {index % 2 === 0 ? video : text}
+            {index % 2 === 0 ? text : video}
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <section class="px-6 lg:px-0">
+    <h2 class={styles.testimonials_heading}>What students are saying</h2>
+    <ul
+      class={styles.testimonials}
+      tabindex="0"
+      aria-label="Student testimonials, scroll horizontally to read more"
+    >
+      <li>
+        <Testimonial name="Kristin" image={KristinHeadshot}>
+          “From Day 1, the class taught me not to be fearful and speak up; I felt
+          comfortable being my authentic self.”
+        </Testimonial>
+      </li>
+      <li>
+        <Testimonial name="Kelly" image={KellyHeadshot}>
+          <p>
+            “I'm 4 weeks into my improv class and I am loving it. I have always
+            enjoyed watching improv shows, and would always say 'I could never
+            do that.'
+          </p>
+          <p>Well, here I am, doing it. And it's fun and freeing and motivating.”</p>
+        </Testimonial>
+      </li>
+      <li>
+        <Testimonial name="Jess" image={JessHeadshot}>
+          “Of course I learned a lot about improv and how to work with a scene
+          partner. What I didn't realize was that I would walk away after 6
+          weeks having learned more about myself: how to be open and present to
+          what's in front of you, and to take life, and myself, a little less
+          seriously.”
+        </Testimonial>
+      </li>
+    </ul>
+  </section>
+</RootLayout>
