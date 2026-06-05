@@ -1,0 +1,92 @@
+/* Page layout — matched to the parent class page
+   (unlocking-the-self.module.css .layout) so the "Stories of Awesomeness"
+   carousel and this "see all" destination read as one continuous page:
+   centered, max-width-capped column with a consistent vertical rhythm and a
+   desktop gutter that the breadcrumb/h1/section's `px-6 lg:px-0` utilities
+   rely on. Keep in sync with unlocking-the-self until a shared layout
+   component is extracted. */
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 1264px;
+}
+
+@media (width >=1024px) {
+  .layout {
+    padding: 0px 1rem;
+    margin: auto;
+  }
+}
+
+/* Video story section: two alternating video/text blocks.
+   Stacked on mobile (the `flex-col` utility in the markup overrides the row
+   direction); a 2-up grid at lg+. Vertical gutter between the two blocks lives
+   here; the page-level horizontal gutter is supplied by the section's
+   `px-6 lg:px-0` utilities + the .layout `<main>` padding, NOT by this section
+   (so gutters match the breadcrumb/h1/testimonials and don't double-pad). */
+.awesomeness {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.two_col {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (width >=1024px) {
+  .two_col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+}
+
+.awesomeness_text_container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.awesomeness_text_container > h3 {
+  font-family: var(--font-serif);
+  font-size: var(--font-md);
+  font-weight: bold;
+  color: var(--primary-purple);
+}
+
+.awesomeness_text_container > blockquote {
+  font-style: italic;
+}
+
+/* Sub-label so the text testimonials read as a distinct group below the
+   video stories. Matches the site's serif/purple heading treatment rather
+   than introducing a new separator style. */
+.testimonials_heading {
+  font-family: var(--font-serif);
+  font-size: var(--font-lg);
+  font-weight: bold;
+  color: var(--primary-purple);
+  margin-bottom: 1.5rem;
+}
+
+/* Horizontally scrollable row of headshot testimonials. Scrolls on narrow
+   viewports; spaced out on desktop. The markup adds tabindex="0" + aria-label
+   so keyboard users can scroll the region (a bare overflow scroller has no
+   focusable stop); the focus-visible rule below makes that stop visible. */
+.testimonials {
+  display: flex;
+  justify-content: space-around;
+  padding: 1.5rem;
+  gap: 2.5rem;
+  overflow-x: auto;
+}
+
+.testimonials:focus-visible {
+  outline: 2px solid var(--primary-purple);
+  outline-offset: 2px;
+}
