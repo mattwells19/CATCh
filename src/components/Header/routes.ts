@@ -34,6 +34,10 @@ export const routes: Record<string, Array<Route>> = {
       path: "/classes",
     },
     {
+      label: "Stories of Awesomeness",
+      path: "/classes/stories",
+    },
+    {
       label: "Policies",
       path: "/policies/class-policies",
     },

@@ -8,18 +8,61 @@ import { ClassIDs } from "./class-ids";
 import UtSHero from "./_images/UtSHero.png";
 import UpcomingClassItem from "./_components/UpcomingClassItem.astro";
 import YoutubeVideoEmbed from "~/components/YoutubeVideoEmbed.astro";
-import Testimonial from "./_components/Testimonial.astro";
-
-import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
-import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
-import JessHeadshot from "./_images/testimonial-headshots/Jess.png";
+import ArrowRightIcon from "~/icons/arrow-right.svg";
 import styles from "./_styles/unlocking-the-self.module.css";
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+import { stories } from "./_data/stories";
 
 const utsClasses = await getClassListings({
   eventId: ClassIDs.UnlockingTheSelf,
+}).catch((err) => {
+  // don't let a class-listing API failure crash the whole page
+  console.error("getClassListings failed for UnlockingTheSelf", err);
+  return [];
 });
 ---
+
+<style>
+  /* Carousel pattern matched to the homepage (src/pages/index.astro) so the
+     three card carousels — Upcoming shows, Upcoming classes, and these stories
+     — read as one component family. Keep these values in sync with index.astro
+     until the shared-component refactor lands. */
+  ul.card_list {
+    @apply flex overflow-x-auto gap-4 pt-2 pb-4 px-4 xl:px-16;
+  }
+
+  a.see_all_link {
+    @apply underline font-serif font-bold gap-2 items-center m-4 w-fit ml-auto xl:pr-16;
+  }
+
+  li.inline-cta {
+    @apply items-center justify-center min-w-[200px] flex-shrink-0;
+
+    a {
+      @apply font-serif font-bold text-lg flex gap-2 items-center underline;
+    }
+  }
+
+  /* Page-specific a11y affordances (not on the homepage): the scroller is a
+     focusable region, so it needs a visible focus ring; the see-all link too. */
+  ul.card_list:focus-visible {
+    @apply rounded-lg;
+    outline: 2px solid var(--primary-purple);
+    outline-offset: 2px;
+  }
+
+  a.see_all_link:focus-visible {
+    @apply rounded;
+    outline: 2px solid var(--primary-purple);
+    outline-offset: 3px;
+  }
+
+  li.inline-cta a:focus-visible {
+    @apply rounded;
+    outline: 2px solid var(--primary-purple);
+    outline-offset: 3px;
+  }
+</style>
 
 <RootLayout title="Unlocking the Self - Classes" class={styles.layout}>
   <div class="px-6 lg:px-0">
@@ -60,6 +103,42 @@ const utsClasses = await getClassListings({
       class=""
     />
   </section>
+  <section class={styles.stories} aria-labelledby="stories-heading">
+    <h2
+      id="stories-heading"
+      class="font-serif text-primary-purple text-xl px-6 lg:px-0"
+    >
+      Stories of Awesomeness
+    </h2>
+    <ul
+      class="card_list"
+      tabindex="0"
+      aria-label="Student stories, scroll to see more"
+    >
+      {
+        stories.map((story) => (
+          <li class={styles.story_card}>
+            <YoutubeVideoEmbed
+              title={`${story.name}'s Story — CATCh Improv Classes`}
+              videoId={story.videoId}
+            />
+            <h3 class={styles.story_name}>
+              {story.name}: {story.topic}
+            </h3>
+            <blockquote class={styles.story_quote}>{story.quote}</blockquote>
+          </li>
+        ))
+      }
+      <li class="inline-cta flex lg:hidden">
+        <a href="/classes/stories" class="text-primary-purple">
+          See all stories <ArrowRightIcon name="arrow-right" class="size-5" />
+        </a>
+      </li>
+    </ul>
+    <a href="/classes/stories" class="see_all_link text-primary-purple hidden lg:flex">
+      See all stories <ArrowRightIcon name="arrow-right" class="size-5" />
+    </a>
+  </section>
   <section>
     <h2 class="font-serif text-primary-purple text-xl px-6 lg:px-0">
       Upcoming Classes
@@ -77,95 +156,6 @@ const utsClasses = await getClassListings({
           </li>
         ))
       }
-    </ul>
-  </section>
-  <section class={styles.awesomeness}>
-    <h2 class="font-serif font-bold text-2xl">Stories of Awesomeness</h2>
-    <div class={`${styles.two_col} flex-col`}>
-      <YoutubeVideoEmbed
-        title="Clarissa's Story — CATCh Improv Classes"
-        videoId="JivQSqJrKIw"
-      />
-      <div class={styles.awesomeness_text_container}>
-        <h3>Clarissa: Confidence</h3>
-        <blockquote>
-          “That first moment is scary, but then it always turns out fun. That's
-          one of the things you really learn: whatever you say, that's what the
-          scene is. It really helps you with yourself, with how your mind works,
-          and interacting with other people.”
-        </blockquote>
-        <p>
-          "I want to feel more confident" is a goal we hear frequently on Day 1
-          of Improv Fundamentals class. Your beginning improv class is a safe,
-          supportive, energizing, and hilarious space to find your confidence.
-        </p>
-        <p>
-          In each 2.5 hour class, students will learn the foundations of improv
-          such as; saying “yes, and…,” active listening, staying present in the
-          moment, collaboration, and empowering the self. In this class, there
-          are no mistakes and everything is a gift as we reinvigorate our sense
-          of play!
-        </p>
-        <p>
-          Join the fun today! In addition to 6 weeks of class, your tuition also
-          gives you FREE tickets to come see our shows. That's right, FREE shows
-          for you to any of our non-sold-out performances while you're a
-          student.
-        </p>
-      </div>
-    </div>
-    <div class={`${styles.two_col} flex-col`}>
-      <div class={styles.awesomeness_text_container}>
-        <h3>Hillary: Saying Yes</h3>
-        <blockquote>
-          “It's about saying "yes" to yourself, to shedding your fears and
-          leaving them at the door.”
-        </blockquote>
-        <p>
-          How often do you find yourself saying "no,"" or "maybe" instead of
-          saying "Yes"? In today's world, it can be easy to get caught up in
-          social media, the news, and our daily grind. It's important to carve
-          out time to say yes to ourselves and do something that challenges us.
-          The classes at CATCh are all about creating an encouraging environment
-          to students looking to develop the "self," as they express their
-          creativity in a new way.
-        </p>
-      </div>
-      <YoutubeVideoEmbed
-        title="Hillary's Story - CATCh Improv Class"
-        videoId="hDXuUbfYwSU"
-      />
-    </div>
-  </section>
-  <section>
-    <ul class={styles.testimonials}>
-      <li>
-        <Testimonial name="Kristin" image={KristinHeadshot}>
-          “From Day 1, the class taught me not to be fearful and speak up; I
-          felt comfortable being my authentic self.”
-        </Testimonial>
-      </li>
-      <li>
-        <Testimonial name="Kelly" image={KellyHeadshot}>
-          <p>
-            “I'm 4 weeks into my improv class and I am loving it. I have always
-            enjoyed watching improv shows, and would always say 'I could never
-            do that.'
-          </p>
-          <p>
-            Well, here I am, doing it. And it's fun and freeing and motivating.”
-          </p>
-        </Testimonial>
-      </li>
-      <li>
-        <Testimonial name="Jess" image={JessHeadshot}>
-          “Of course I learned a lot about improv and how to work with a scene
-          partner. What I didn't realize was that I would walk away after 6
-          weeks having learned more about myself: how to be open and present to
-          what's in front of you, and to take life, and myself, a little less
-          seriously.”
-        </Testimonial>
-      </li>
     </ul>
   </section>
 </RootLayout>
