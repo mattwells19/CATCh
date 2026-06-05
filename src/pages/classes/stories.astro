@@ -2,6 +2,7 @@
 import RootLayout from "~/layouts/RootLayout.astro";
 import YoutubeVideoEmbed from "~/components/YoutubeVideoEmbed.astro";
 import ClassBreadcrumbs from "./_components/ClassBreadcrumbs.astro";
+import { stories } from "./_data/stories";
 import Testimonial from "./_components/Testimonial.astro";
 import KristinHeadshot from "./_images/testimonial-headshots/Kristin.png";
 import KellyHeadshot from "./_images/testimonial-headshots/Kelly.png";
@@ -21,61 +22,35 @@ import styles from "./_styles/stories.module.css";
   </h1>
 
   <section class={`${styles.awesomeness} px-6 lg:px-0`}>
-    <div class={`${styles.two_col} flex-col`}>
-      <YoutubeVideoEmbed
-        title="Clarissa's Story — CATCh Improv Classes"
-        videoId="JivQSqJrKIw"
-      />
-      <div class={styles.awesomeness_text_container}>
-        <h3>Clarissa: Confidence</h3>
-        <blockquote>
-          “That first moment is scary, but then it always turns out fun. That's
-          one of the things you really learn: whatever you say, that's what the
-          scene is. It really helps you with yourself, with how your mind works,
-          and interacting with other people.”
-        </blockquote>
-        <p>
-          "I want to feel more confident" is a goal we hear frequently on Day 1
-          of Improv Fundamentals class. Your beginning improv class is a safe,
-          supportive, energizing, and hilarious space to find your confidence.
-        </p>
-        <p>
-          In each 2.5 hour class, students will learn the foundations of improv
-          such as; saying “yes, and…,” active listening, staying present in the
-          moment, collaboration, and empowering the self. In this class, there
-          are no mistakes and everything is a gift as we reinvigorate our sense
-          of play!
-        </p>
-        <p>
-          Join the fun today! In addition to 6 weeks of class, your tuition also
-          gives you FREE tickets to come see our shows. That's right, FREE shows
-          for you to any of our non-sold-out performances while you're a
-          student.
-        </p>
-      </div>
-    </div>
-    <div class={`${styles.two_col} flex-col`}>
-      <div class={styles.awesomeness_text_container}>
-        <h3>Hillary: Saying Yes</h3>
-        <blockquote>
-          “It's about saying "yes" to yourself, to shedding your fears and
-          leaving them at the door.”
-        </blockquote>
-        <p>
-          How often do you find yourself saying "no," or "maybe" instead of
-          saying "Yes"? In today's world, it can be easy to get caught up in
-          social media, the news, and our daily grind. It's important to carve
-          out time to say yes to ourselves and do something that challenges us.
-          The classes at CATCh are all about creating an encouraging environment
-          to students looking to develop the "self," as they express their
-          creativity in a new way.
-        </p>
-      </div>
-      <YoutubeVideoEmbed
-        title="Hillary's Story - CATCh Improv Class"
-        videoId="hDXuUbfYwSU"
-      />
-    </div>
+    {
+      stories.map((story, index) => {
+        const video = (
+          <YoutubeVideoEmbed
+            title={`${story.name}'s Story — CATCh Improv Classes`}
+            videoId={story.videoId}
+          />
+        );
+        const text = (
+          <div class={styles.awesomeness_text_container}>
+            <h3>
+              {story.name}: {story.topic}
+            </h3>
+            <blockquote>{story.fullQuote}</blockquote>
+            {story.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        );
+
+        // Alternate which side the video sits on for visual rhythm.
+        return (
+          <div class={`${styles.two_col} flex-col`}>
+            {index % 2 === 0 ? video : text}
+            {index % 2 === 0 ? text : video}
+          </div>
+        );
+      })
+    }
   </section>
 
   <section class="px-6 lg:px-0">
