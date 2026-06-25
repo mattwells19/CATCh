@@ -60,15 +60,19 @@ svg {
   }
 
   h1 {
-    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+    @apply text-3xl font-bold pb-1 mt-3;
   }
 
   h2 {
-    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+    @apply text-2xl font-bold border-b border-b-slate-300 pb-1 mt-3;
   }
 
   h3 {
     @apply text-lg font-semibold;
+  }
+
+  h4 {
+    @apply font-semibold;
   }
 
   ul {
