@@ -1,0 +1,74 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import AuditionForm from "~/components/AuditionForm/AuditionForm";
+---
+
+<style is:global>
+  @keyframes audition-pop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .audition-pop {
+    animation: audition-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .audition-pop {
+      animation: none;
+    }
+  }
+</style>
+
+<RootLayout title="Auditions" class="flex flex-col">
+  <!-- ===== hero ===== -->
+  <header class="bg-(image:--shapes) pt-12 pb-8">
+    <div class="mx-auto w-full max-w-3xl px-6 lg:px-0">
+      <p
+        class="w-fit rounded-sm bg-primary-purple px-3 py-1 text-sm font-bold tracking-wide text-peach"
+      >
+        Auditions · August 2026
+      </p>
+      <h1
+        class="mt-4 font-serif text-6xl font-bold text-primary-purple"
+      >
+        Join a CATCh team
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-black">
+        Be bold, say yes. Tell us a bit about you and what you're itching to play.
+        It takes about three minutes and there's nothing to prepare.
+      </p>
+      <ul class="mt-6 flex flex-wrap gap-3">
+        <li
+          class="rounded-sm border border-light-purple bg-peach px-4 py-2 font-bold text-primary-purple"
+        >
+          Sat, Aug 22
+        </li>
+        <li
+          class="rounded-sm border border-light-purple bg-peach px-4 py-2 font-bold text-primary-purple"
+        >
+          4–6 PM
+        </li>
+        <li
+          class="rounded-sm border border-light-purple bg-peach px-4 py-2 font-bold text-primary-purple"
+        >
+          The Annex
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="mx-auto w-full max-w-3xl px-6 pb-20 lg:px-0">
+    <!-- ===== interactive form island ===== -->
+    <div class="mt-12">
+      <AuditionForm client:load />
+    </div>
+  </div>
+</RootLayout>
