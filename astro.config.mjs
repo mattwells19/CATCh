@@ -23,6 +23,9 @@ export default defineConfig({
         "https://catch.theater/classes/other",
         "https://catch.theater/organizations",
         "https://catch.theater/respect",
+        "https://catch.theater/policies/class-policies",
+        "https://catch.theater/faqs/classes",
+        "https://catch.theater/faqs/shows",
       ],
     }),
   ],
@@ -37,8 +40,6 @@ export default defineConfig({
     "/classes/improv-performance-track-2": "/classes/performance-track",
     "/classes/improv-performance-track-3": "/classes/performance-track",
     "/improv-classes/improv-performance-track-1": "/classes/performance-track",
-    "/about-catch/meet/[staff]": "/meet/[staff]",
-    "/shows/teams/[team]": "/teams/[team]",
   },
   image: {
     domains: ["tlt-events.s3.amazonaws.com", "catch.theater"],
