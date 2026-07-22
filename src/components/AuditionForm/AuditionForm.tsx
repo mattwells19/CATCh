@@ -94,6 +94,16 @@ const AVAILABILITY: DayRow[] = [
  * Component
  * ------------------------------------------------------------------ */
 
+// Progressive US phone formatting: (704) 555-0123
+function formatPhone(input: string) {
+  let digits = input.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("1")) digits = digits.slice(1);
+  digits = digits.slice(0, 10);
+  if (digits.length < 4) return digits;
+  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
 export default function AuditionForm() {
   // Accordions
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
@@ -123,6 +133,20 @@ export default function AuditionForm() {
     }
   }, [submitted]);
 
+  // Validation for the button-group sections (native `required` can't reach them).
+  const [interestsError, setInterestsError] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState(false);
+  const interestsErrorRef = useRef<HTMLParagraphElement>(null);
+  const availabilityErrorRef = useRef<HTMLParagraphElement>(null);
+
+  // Clear each section's error the moment its requirement is met.
+  useEffect(() => {
+    if (selectedTeams.length + selectedVibes.length > 0) setInterestsError(false);
+  }, [selectedTeams, selectedVibes]);
+  useEffect(() => {
+    if (selectedSlots.length > 0) setAvailabilityError(false);
+  }, [selectedSlots]);
+
   const toggle = (
     value: string,
     list: string[],
@@ -130,22 +154,6 @@ export default function AuditionForm() {
   ) => {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
-
-  // Success-summary derivations
-  const interestLabels = [
-    ...TEAMS.filter((t) => selectedTeams.includes(t.id)).map((t) => t.name),
-    ...selectedVibes,
-  ];
-  const interestSummary =
-    interestLabels.length > 0
-      ? interestLabels.join(" · ")
-      : "Open to wherever you need me";
-
-  const slotCount = selectedSlots.length;
-  const availabilitySummary =
-    slotCount > 0
-      ? `${slotCount} slot${slotCount === 1 ? "" : "s"} selected`
-      : "Flexible, no specific slots picked";
 
   /* -------------------------------- success state -------------------------------- */
   if (submitted) {
@@ -183,32 +191,35 @@ export default function AuditionForm() {
           . Come ready to play; there's nothing to prepare.
         </p>
 
-        <div className="mt-8 rounded border border-light-purple bg-peach p-6 text-left shadow-lg">
-          <dl className="flex flex-col gap-5">
-            <div>
-              <dt className="text-xs font-bold uppercase tracking-widest text-primary-purple">
-                Your interests
-              </dt>
-              <dd className="mt-1 text-black">{interestSummary}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-bold uppercase tracking-widest text-primary-purple">
-                Availability
-              </dt>
-              <dd className="mt-1 text-black">{availabilitySummary}</dd>
-            </div>
-          </dl>
-        </div>
-
         <div className="mt-8 flex flex-col items-center gap-4">
-          <a
-            href="https://www.google.com/calendar/render?action=TEMPLATE&text=CATCh+Auditions&dates=20260822T160000/20260822T180000&location=The+Annex"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-3 rounded-sm border-2 border-primary-purple px-5 py-3 font-serif font-bold text-primary-purple transition-colors hover:bg-primary-purple hover:text-peach focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-purple lg:w-fit lg:min-w-65 lg:text-xl"
-          >
-            <span aria-hidden="true">📅</span> Add Aug 22 to my calendar
-          </a>
+          <details className="group w-full lg:w-fit">
+            <summary className="flex w-full cursor-pointer list-none items-center justify-center gap-3 rounded-sm border-2 border-primary-purple px-5 py-3 font-serif font-bold text-primary-purple transition-colors hover:bg-primary-purple hover:text-peach focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-purple lg:min-w-65 lg:text-xl [&::-webkit-details-marker]:hidden">
+              <span aria-hidden="true">📅</span> Add Aug 22 to my calendar
+              <span
+                aria-hidden="true"
+                className="text-base leading-none transition-transform duration-200 group-open:rotate-180"
+              >
+                ▾
+              </span>
+            </summary>
+            <div className="mt-2 flex flex-col overflow-hidden rounded-sm border-2 border-primary-purple">
+              <a
+                href="https://www.google.com/calendar/render?action=TEMPLATE&text=CATCh+Auditions&dates=20260822T200000Z/20260822T220000Z&location=The+Annex"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 text-center font-serif font-bold text-primary-purple transition-colors hover:bg-primary-purple hover:text-peach focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary-purple"
+              >
+                Google Calendar
+              </a>
+              <a
+                href="/catch-auditions-2026.ics"
+                download
+                className="border-t-2 border-primary-purple px-5 py-3 text-center font-serif font-bold text-primary-purple transition-colors hover:bg-primary-purple hover:text-peach focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary-purple"
+              >
+                Download .ics (Apple, Outlook)
+              </a>
+            </div>
+          </details>
           <button
             type="button"
             onClick={() => setSubmitted(false)}
@@ -278,6 +289,19 @@ export default function AuditionForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          const hasInterest = selectedTeams.length + selectedVibes.length > 0;
+          const hasAvailability = selectedSlots.length > 0;
+          setInterestsError(!hasInterest);
+          setAvailabilityError(!hasAvailability);
+          if (!hasInterest || !hasAvailability) {
+            setTimeout(() => {
+              (!hasInterest
+                ? interestsErrorRef
+                : availabilityErrorRef
+              ).current?.focus();
+            }, 0);
+            return;
+          }
           setSubmitted(true);
         }}
         className="flex flex-col gap-12"
@@ -299,7 +323,6 @@ export default function AuditionForm() {
                 required
                 autoComplete="name"
                 maxLength={70}
-                placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={inputClass}
@@ -311,6 +334,9 @@ export default function AuditionForm() {
                 <label htmlFor="email" className="text-sm font-medium">
                   Email *
                 </label>
+                <p id="email-hint" className="text-sm text-black/70">
+                  For example, you@email.com
+                </p>
                 <input
                   id="email"
                   type="email"
@@ -318,7 +344,7 @@ export default function AuditionForm() {
                   autoComplete="email"
                   inputMode="email"
                   maxLength={254}
-                  placeholder="you@email.com"
+                  aria-describedby="email-hint"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={inputClass}
@@ -328,16 +354,18 @@ export default function AuditionForm() {
                 <label htmlFor="phone" className="text-sm font-medium">
                   Phone *
                 </label>
+                <p id="phone-hint" className="text-sm text-black/70">
+                  For example, (704) 555-0123
+                </p>
                 <input
                   id="phone"
                   type="tel"
                   required
                   autoComplete="tel"
                   inputMode="tel"
-                  maxLength={14}
-                  placeholder="(704) 555-0123"
+                  aria-describedby="phone-hint"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
                   className={inputClass}
                 />
               </div>
@@ -347,7 +375,7 @@ export default function AuditionForm() {
               <label htmlFor="experience" className="text-sm font-medium">
                 Improv experience *
               </label>
-              <p id="experience-help" className="text-sm text-primary-purple">
+              <p id="experience-help" className="text-sm text-black/70">
                 Please select the HIGHEST level of experience you currently have. If your experience is partially or wholly away from CATCh, please describe below. Exclude High School and College improv classes / performance experience when selecting below, but include in the notes.
               </p>
               <select
@@ -374,11 +402,18 @@ export default function AuditionForm() {
                   (optional)
                 </span>
               </label>
+              <p
+                id="experience-notes-hint"
+                className="text-sm text-black/70"
+              >
+                Classes you've taken, theaters you've played, anything else about
+                your background.
+              </p>
               <textarea
                 id="experience-notes"
                 rows={3}
                 maxLength={2000}
-                placeholder="Classes you've taken, theaters you've played, anything else about your background…"
+                aria-describedby="experience-notes-hint"
                 value={experienceNotes}
                 onChange={(e) => setExperienceNotes(e.target.value)}
                 className={`${inputClass} resize-y`}
@@ -388,14 +423,28 @@ export default function AuditionForm() {
         </fieldset>
 
         {/* ---------- Which teams interest you? ---------- */}
-        <fieldset>
+        <fieldset
+          aria-describedby={interestsError ? "interests-error" : undefined}
+        >
           <legend className="text-xs font-bold uppercase tracking-widest text-primary-purple">
-            Which teams interest you?
+            Which teams interest you?{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </legend>
           <p className="mt-3 text-black">
-            Tap any opening. Pick as many as you like. These teams are actively
-            casting this cycle.
+            Tap any opening. Pick at least one; choose as many as you like. These
+            teams are actively casting this cycle.
           </p>
+          {interestsError && (
+            <p
+              id="interests-error"
+              ref={interestsErrorRef}
+              tabIndex={-1}
+              className="mt-3 rounded text-sm font-bold text-[#B7433C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7433C]"
+            >
+              Please pick at least one team or option.
+            </p>
+          )}
           <ul className="mt-5 flex flex-col gap-4">
             {TEAMS.map((team) => {
               const isSelected = selectedTeams.includes(team.id);
@@ -534,16 +583,31 @@ export default function AuditionForm() {
         </fieldset>
 
         {/* ---------- Your availability ---------- */}
-        <fieldset className="min-w-0">
+        <fieldset
+          className="min-w-0"
+          aria-describedby={availabilityError ? "availability-error" : undefined}
+        >
           <legend className="text-xs font-bold uppercase tracking-widest text-primary-purple">
-            Your availability
+            Your availability{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">(required)</span>
           </legend>
           <p className="mt-3 text-black">
             Teams commit to a regular practice night for at least six months. The single biggest issue is members who can't make
             most practices and shows, so this part matters. Tap every slot you
-            could reliably commit to. Mornings and afternoons are weekend-only;
-            grey slots aren't offered.
+            could reliably commit to (at least one). Mornings and afternoons are
+            weekend-only; grey slots aren't offered.
           </p>
+          {availabilityError && (
+            <p
+              id="availability-error"
+              ref={availabilityErrorRef}
+              tabIndex={-1}
+              className="mt-3 rounded text-sm font-bold text-[#B7433C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7433C]"
+            >
+              Please select at least one time slot you can commit to.
+            </p>
+          )}
 
           <div className="mt-5 max-w-full overflow-x-auto">
             <table className="table-fixed border-collapse">
@@ -622,11 +686,14 @@ export default function AuditionForm() {
               Scheduling notes{" "}
               <span className="font-normal text-primary-purple">(optional)</span>
             </label>
+            <p id="notes-hint" className="text-sm text-black/70">
+              Standing conflicts, travel, anything we should know.
+            </p>
             <textarea
               id="notes"
               rows={3}
               maxLength={2000}
-              placeholder="Standing conflicts, travel, anything we should know…"
+              aria-describedby="notes-hint"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className={`${inputClass} resize-y`}
@@ -638,7 +705,7 @@ export default function AuditionForm() {
         <div className="flex flex-col items-center gap-3">
           <button
             type="submit"
-            className="flex w-full items-center justify-center gap-3 rounded bg-coral px-5 py-3 font-serif font-bold text-peach shadow-md transition-colors hover:bg-[#B7433C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-purple lg:w-fit lg:min-w-65 lg:text-xl"
+            className="flex w-full items-center justify-center gap-3 rounded-sm bg-coral px-5 py-3 font-serif font-bold text-peach shadow-md transition-colors hover:bg-[#B7433C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-purple lg:w-fit lg:min-w-65 lg:text-xl"
           >
             Submit registration
           </button>
