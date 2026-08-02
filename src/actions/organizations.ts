@@ -1,11 +1,14 @@
 import { defineAction } from "astro:actions";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { submitOrgRequest } from "~/api/organizations";
 
 export const organizations = {
   organizations: defineAction({
     accept: "form",
     input: z.object({
+      "cf-turnstile-response": z.string({
+        message: "Please complete the CAPTCHA validation.",
+      }),
       firstName: z
         .string()
         .trim()

@@ -1,4 +1,8 @@
+import { ActionError } from "astro:actions";
+import { validateTurnstileToken } from "./cloudflare";
+
 interface OrgRequestInput {
+  "cf-turnstile-response": string;
   message: string;
   firstName: string;
   lastName: string;
@@ -8,6 +12,14 @@ interface OrgRequestInput {
 }
 
 export const submitOrgRequest = async (input: OrgRequestInput) => {
+  const isValid = await validateTurnstileToken(input["cf-turnstile-response"]);
+  if (!isValid) {
+    throw new ActionError({
+      code: "PRECONDITION_FAILED",
+      message: "Failed to validate CAPTCHA. Please try again.",
+    });
+  }
+
   const res = await fetch(
     `${import.meta.env.DISCORD_BUSINESS_REQUEST_WEBHOOK_URL}?wait=true`,
     {
