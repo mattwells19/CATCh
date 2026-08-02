@@ -1,0 +1,21 @@
+---
+import CoralButtonLink from "~/components/CoralButtonLink.astro";
+import RemixIcon from "~/components/RemixIcon.astro";
+import InternalLayout from "~/layouts/InternalLayout.astro";
+---
+
+<InternalLayout
+  title="Volunteer"
+  class="max-w-md m-auto flex flex-col gap-8 pt-20 pb-60 px-3 items-center text-center"
+>
+  <h1 class="text-primary-purple font-serif font-bold text-4xl">
+    This page has moved.
+  </h1>
+  <p>Volunteering is now handled on Venvy!</p>
+  <CoralButtonLink
+    href="https://www.venvyapp.com/public/volunteer"
+    class="w-fit min-w-none"
+  >
+    <RemixIcon icon="external-link" variant="line" /> Take me to Venvy
+  </CoralButtonLink>
+</InternalLayout>

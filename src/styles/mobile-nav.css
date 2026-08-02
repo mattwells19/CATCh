@@ -42,7 +42,8 @@ dialog.drawer {
   animation: slide-out 150ms ease-in-out;
 
   &::backdrop {
-    @apply bg-slate-950 bg-opacity-40;
+    background-color: var(--color-slate-950);
+    opacity: 40%;
     animation: fade-out 150ms ease-in-out;
   }
 

@@ -1,15 +1,16 @@
+@import "./variables.css";
+
 /* Register your custom font family and tell the browser where to find it. */
 @font-face {
   font-family: Fraunces;
-  src: url("/fonts/Fraunces/Fraunces-Italic-VariableFont_SOFT,WONK,opsz,wght.ttf")
-    format("truetype");
+  src: url("/fonts/Fraunces/Fraunces-Italic-VariableFont_SOFT,WONK,opsz,wght.ttf") format("truetype");
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
   font-family: Fraunces;
-  src: url("/fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf")
-    format("truetype");
+  src: url("/fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf") format("truetype");
   font-style: normal;
   font-display: swap;
 }
@@ -35,7 +36,7 @@
 }
 
 body {
-  background: var(--peach);
+  background: var(--color-peach);
 }
 
 svg {
@@ -58,15 +59,19 @@ svg {
   }
 
   h1 {
-    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+    @apply text-3xl font-bold pb-1 mt-3;
   }
 
   h2 {
-    @apply text-xl font-bold border-b border-b-slate-300 pb-1 mt-3;
+    @apply text-2xl font-bold border-b border-b-slate-300 pb-1 mt-3;
   }
 
   h3 {
     @apply text-lg font-semibold;
+  }
+
+  h4 {
+    @apply font-semibold;
   }
 
   ul {
@@ -78,6 +83,16 @@ svg {
 
     p {
       @apply whitespace-pre-line;
+    }
+  }
+
+  table {
+
+    th,
+    td {
+      border: 1px solid var(--color-slate-300);
+      padding: 6px;
+      font-size: var(--text-sm);
     }
   }
 }

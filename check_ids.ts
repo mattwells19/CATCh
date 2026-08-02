@@ -2,7 +2,7 @@
 import type { TicketLeapEventsResponse } from "~/api/utils/getTicketLeapListings";
 
 const upcomingClasses = await fetch(
-  "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+  "https://admin.ticketleap.com/api/v1/events?filter=upcoming=true",
   {
     headers: {
       "X-API-Token": Deno.env.get("TICKETLEAP_CLASSES_TOKEN")!,
@@ -19,7 +19,7 @@ const upcomingClasses = await fetch(
   });
 
 const upcomingShows = await fetch(
-  "https://admin.ticketleap.events/api/v1/events?filter=upcoming=true",
+  "https://admin.ticketleap.com/api/v1/events?filter=upcoming=true",
   {
     headers: {
       "X-API-Token": Deno.env.get("TICKETLEAP_SHOWS_TOKEN")!,

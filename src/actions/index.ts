@@ -1,5 +1,5 @@
-import { volunteer } from "./volunteer";
+import { organizations } from "./organizations";
 
 export const server = {
-  ...volunteer,
+  ...organizations,
 };

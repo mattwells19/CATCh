@@ -58,8 +58,10 @@ const faqCategory = faqSlug[0].toUpperCase() + faqSlug.slice(1);
   }
 </script>
 
-<style lang="scss">
-  @media (min-width: 1024px) {
+<style>
+  @reference '~/styles/variables.css';
+
+  @media (width > 1024px) {
     .answer-body {
       transition: grid-template-rows ease 500ms;
     }
@@ -98,7 +100,7 @@ const faqCategory = faqSlug[0].toUpperCase() + faqSlug.slice(1);
 
 <RootLayout title={`${faqCategory} FAQs`} class="lg:px-16">
   <h1
-    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-shapes"
+    class="text-primary-purple text-6xl font-serif font-bold px-4 pt-8 pb-12 lg:pt-32 lg:border-b-2 border-light-purple bg-(image:--shapes)"
   >
     {faqCategory} FAQs
   </h1>

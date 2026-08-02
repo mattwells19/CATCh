@@ -27,7 +27,7 @@ const fetchWithCache = async (
 
   const res = await fetch(
     // https://technically.showclix.com/events.html
-    `https://admin.ticketleap.events/api/v1/events/${eventId}?filter=upcoming=true`,
+    `https://admin.ticketleap.com/api/v1/events/${eventId}?filter=upcoming=true`,
     {
       headers: {
         "X-API-Token":
@@ -90,7 +90,7 @@ export async function getTicketLeapEventListings(
         ? `https:${event.attributes.image}`
         : "/images/CATCh-Placeholder.jpg",
       date: toDate(listing.start, { timeZone: "America/New_York" }),
-      listingUrl: `https://www.ticketleap.events/tickets/${
+      listingUrl: `https://events.ticketleap.com/tickets/${
         event.attributes.slug
       }?date=${Date.parse(listing.start) / 1000}`,
     }));

@@ -23,7 +23,7 @@ const {
 <a
   href={href}
   aria-label={`Learn more about ${listingTitle}`}
-  class="block group relative bg-black bg-opacity-10"
+  class="block group relative bg-black"
   class:list={className}
 >
   <span
@@ -36,6 +36,7 @@ const {
     alt={listingTitle}
     width={width}
     height={height}
-    class="group-hover:opacity-20 transition-opacity w-full"
+    layout="full-width"
+    class="group-hover:opacity-20 transition-opacity"
   />
 </a>

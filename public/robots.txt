@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /internal/
+
+Sitemap: https://catch.theater/sitemap-index.xml

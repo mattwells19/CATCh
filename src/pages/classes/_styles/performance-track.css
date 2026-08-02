@@ -44,7 +44,7 @@
 .pt-accordions {
   border: 2px solid black;
   margin: 0rem 1rem;
-  background-color: var(--peach);
+  background-color: var(--color-peach);
 }
 
 .pt-accordion-item:not(:last-child) {
@@ -59,8 +59,8 @@
   padding: 0.5rem;
   text-align: left;
 
-  color: var(--primary-purple);
-  font: bold var(--font-lg) var(--font-serif);
+  color: var(--color-primary-purple);
+  font: bold var(--text-3xl) var(--font-serif);
 
   > svg {
     rotate: 180deg;
@@ -74,7 +74,7 @@
 
 @media (width >=1024px) {
   .pt-accordion-header button {
-    font-size: var(--font-xl);
+    font-size: 40px;
   }
 }
 
@@ -107,7 +107,7 @@
 
   > h2 {
     font-family: var(--font-serif);
-    color: var(--primary-purple);
+    color: var(--color-primary-purple);
   }
 }
 

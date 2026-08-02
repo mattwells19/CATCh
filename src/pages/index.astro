@@ -24,19 +24,19 @@ const [upcomingShows, upcomingClasses] = await Promise.all([
 const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
 ---
 
-<style lang="scss">
-  // the purple blob behind the show section
+<style>
+  @reference '~/styles/variables.css';
+
   #upcoming-shows::after {
     content: "";
     position: absolute;
     z-index: -9;
     inset: 0;
-    background-color: var(--primary-purple);
+    background-color: var(--color-primary-purple);
     clip-path: xywh(0 0px 120% 100% round 0 0 100% 0);
     transform: scaleX(-1);
   }
 
-  // the yellow blob behind the classes section
   #upcoming-classes::after {
     content: "";
     position: absolute;
@@ -49,9 +49,7 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
     transform: scaleY(-1);
   }
 
-  // lg tailwind viewport
-  // reference: https://tailwindcss.com/docs/responsive-design
-  @media (min-width: 1024px) {
+  @media (width > 1024px) {
     #upcoming-shows::after {
       clip-path: xywh(0 0px 100% 100% round 0 0 40% 0);
     }
@@ -65,7 +63,15 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   }
 
   a.see_all_link {
-    @apply underline font-serif font-bold flex gap-2 items-center m-4 w-fit ml-auto xl:pr-16;
+    @apply underline font-serif font-bold gap-2 items-center m-4 w-fit ml-auto xl:pr-16;
+  }
+
+  li.inline-cta {
+    @apply items-center justify-center min-w-50 shrink-0;
+
+    a {
+      @apply font-serif font-bold text-lg flex gap-2 items-center underline;
+    }
   }
 
   ul.card_list {
@@ -91,8 +97,13 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
+      <li class="inline-cta flex lg:hidden">
+        <a href="/shows" class="text-peach">
+          See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
+        </a>
+      </li>
     </ul>
-    <a href="/shows" class="see_all_link text-peach">
+    <a href="/shows" class="see_all_link text-peach hidden lg:flex">
       See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
     </a>
   </section>
@@ -109,8 +120,13 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
           </li>
         ))
       }
+      <li class="inline-cta flex lg:hidden">
+        <a href="/classes" class="text-primary-purple">
+          See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
+        </a>
+      </li>
     </ul>
-    <a href="/classes" class="see_all_link text-primary-purple">
+    <a href="/classes" class="see_all_link text-primary-purple hidden lg:flex">
       See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
     </a>
   </section>

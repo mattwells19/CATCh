@@ -5,7 +5,7 @@ import RemixIcon from "../RemixIcon.astro";
 import FullLogo from "~/images/CATCh-big-tagline.webp";
 import { socialMediaLinkList } from "~/utils/socialMediaLinkList.ts";
 import { routeCategories, routes } from "./routes.ts";
-import "~/styles/mobile-nav.scss";
+import "~/styles/mobile-nav.css";
 
 const activePath = Astro.url.pathname;
 ---
@@ -51,7 +51,7 @@ const activePath = Astro.url.pathname;
   <button
     id="drawer-trigger"
     type="button"
-    class="pb-2 pt-3 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md flex flex-col items-center text-primary-purple"
+    class="pb-2 pt-3 px-3 hover:bg-purple-400/20 transition-colors rounded-md flex flex-col items-center text-primary-purple"
   >
     <svg
       width="40"
@@ -76,7 +76,7 @@ const activePath = Astro.url.pathname;
     <button
       id="drawer-close"
       type="button"
-      class="py-2 px-3 hover:bg-purple-400 hover:bg-opacity-20 transition-colors rounded-md m-2 ml-auto text-peach flex flex-col items-center"
+      class="py-2 px-3 hover:bg-purple-400/20 transition-colors rounded-md m-2 ml-auto text-peach flex flex-col items-center"
     >
       <RemixIcon icon="close" height="36" width="36" />
       <span class="text-sm font-bold -mt-1">Close</span>
@@ -132,7 +132,7 @@ const activePath = Astro.url.pathname;
               <span class="sr-only">{socialLink.label}</span>
               <RemixIcon
                 icon={socialLink.remixIcon}
-                fill="var(--light-purple)"
+                fill="var(--color-light-purple)"
                 width="36"
                 height="36"
               />
