@@ -42,6 +42,12 @@ const errorMessages = searchParams.has("error")
   : null;
 ---
 
+<script
+  is:inline
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer></script>
+
 <RootLayout title="Organizations" class="md:px-8 lg:px-16 overflow-x-clip">
   <h1
     class="text-primary-purple font-serif font-bold text-5xl lg:text-6xl px-4 pt-8 pb-10 lg:pb-16 bg-(image:--shapes)"
@@ -56,14 +62,14 @@ const errorMessages = searchParams.has("error")
     <div class="lg:col-start-2 lg:row-start-1 relative pt-10">
       <div
         aria-hidden="true"
-        class="absolute -z-10 top-0 left-[-20px] h-3/4 bg-coral rounded-[9999px_0_0_9999px]"
+        class="absolute -z-10 top-0 left-5 h-3/4 bg-coral rounded-[9999px_0_0_9999px]"
         style="width: calc(100% + 100vw);"
       >
       </div>
       <Image
         src={teamBuildingImg}
         alt="CATCh improv workshop in action"
-        class="w-full rounded-lg object-cover aspect-[16/9]"
+        class="w-full rounded-lg object-cover aspect-video"
       />
     </div>
 
@@ -257,6 +263,14 @@ const errorMessages = searchParams.has("error")
             class="border-2 border-light-purple rounded px-3 py-2 bg-white focus:outline-none focus:border-primary-purple resize-y"
           ></textarea>
           <p class="text-sm text-gray-600">Maximum 2,000 characters.</p>
+        </div>
+
+        <div
+          class="cf-turnstile"
+          data-sitekey={import.meta.env.TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-appearance="interaction-only"
+        >
         </div>
 
         <button
