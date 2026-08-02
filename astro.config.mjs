@@ -40,10 +40,6 @@ export default defineConfig({
     "/classes/improv-performance-track-2": "/classes/performance-track",
     "/classes/improv-performance-track-3": "/classes/performance-track",
     "/improv-classes/improv-performance-track-1": "/classes/performance-track",
-    "/internal/volunteer": {
-      status: 301,
-      destination: "https://www.venvyapp.com/public/volunteer",
-    },
   },
   image: {
     domains: ["tlt-events.s3.amazonaws.com", "catch.theater"],
