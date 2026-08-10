@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
 
 type Props = {
   image: ImageMetadata;
@@ -29,8 +28,8 @@ const { href, image, imageAlt, linkText } = Astro.props;
     </p>
   </div>
   <div class="p-4">
-    <CoralButtonLink href={href} class="w-full min-w-full py-5">
+    <a class="coral_btn_link w-full min-w-full py-5" href={href}>
       {linkText}
-    </CoralButtonLink>
+    </a>
   </div>
 </div>

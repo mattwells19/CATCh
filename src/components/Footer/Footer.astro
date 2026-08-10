@@ -6,7 +6,21 @@ import NglccCertifiedImg from "../../images/nglcc-certified.png";
 import FooterSection from "./FooterSection.astro";
 ---
 
-<footer class="mt-24 px-4 lg:px-14 m-auto max-w-7xl">
+<style>
+  footer {
+    margin: calc(var(--spacing) * 24) auto auto auto;
+    padding: 0px calc(var(--spacing) * 4);
+    max-width: var(--container-7xl);
+  }
+
+  @media (width >= 1024px) {
+    footer {
+      padding: 0px calc(var(--spacing) * 14);
+    }
+  }
+</style>
+
+<footer>
   <div class="flex gap-12 justify-evenly flex-col md:flex-row">
     <FooterSection title="Community policy">
       <div class="flex flex-col gap-8">

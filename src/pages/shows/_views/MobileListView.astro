@@ -1,6 +1,5 @@
 ---
 import type { ShowListing } from "~/api/getShowListings";
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import LinkedImage from "~/components/LinkedImage.astro";
 import ShowDateTime from "~/components/ShowDateTime.astro";
 import TicketIcon from "~/icons/ticket.svg";
@@ -32,10 +31,10 @@ const { upcomingShows } = Astro.props;
           {show.price}
         </p>
         <div class="w-4/5">
-          <CoralButtonLink href={show.listingUrl}>
+          <a class="coral_btn_link" href={show.listingUrl}>
             <TicketIcon name="ticket" />
             Get Tickets
-          </CoralButtonLink>
+          </a>
         </div>
       </li>
     ))

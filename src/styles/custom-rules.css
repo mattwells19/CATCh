@@ -1,4 +1,5 @@
 @import "./variables.css";
+@import "./components.css" layer(components);
 
 /* Register your custom font family and tell the browser where to find it. */
 @font-face {

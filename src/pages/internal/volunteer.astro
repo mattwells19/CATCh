@@ -1,5 +1,4 @@
 ---
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
 import InternalLayout from "~/layouts/InternalLayout.astro";
 ---
@@ -12,10 +11,10 @@ import InternalLayout from "~/layouts/InternalLayout.astro";
     This page has moved.
   </h1>
   <p>Volunteering is now handled on Venvy!</p>
-  <CoralButtonLink
+  <a
+    class="coral_btn_link w-fit min-w-none"
     href="https://www.venvyapp.com/public/volunteer"
-    class="w-fit min-w-none"
   >
     <RemixIcon icon="external-link" variant="line" /> Take me to Venvy
-  </CoralButtonLink>
+  </a>
 </InternalLayout>

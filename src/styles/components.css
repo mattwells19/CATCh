@@ -1,0 +1,34 @@
+/* CoralButtonLink */
+
+a.coral_btn_link {
+  width: 100%;
+  min-width: calc(var(--spacing) * 65);
+
+  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 5);
+  border-radius: var(--radius-sm);
+
+  background-color: var(--color-coral);
+  color: var(--color-peach);
+  box-shadow: var(--shadow-md);
+
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-serif);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 3);
+
+  transition: background-color var(--default-transition-timing-function) var(--default-transition-duration);
+}
+
+@media (width >=64rem) {
+  a.coral_btn_link {
+    width: fit-content;
+    font-size: var(--text-xl);
+  }
+}
+
+a.coral_btn_link:hover {
+  background-color: #b7433c;
+}

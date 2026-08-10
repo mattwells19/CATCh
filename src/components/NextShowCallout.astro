@@ -4,7 +4,6 @@ import { formatShowTime } from "~/utils/formatShowTime";
 
 import CalendarIcon from "../icons/calendar.svg";
 import TicketIcon from "../icons/ticket.svg";
-import CoralButtonLink from "./CoralButtonLink.astro";
 import LinkedImage from "./LinkedImage.astro";
 
 type Props = {
@@ -40,9 +39,9 @@ const showDateFormatted = formatShowTime(nextShow.date);
       ) : null
     }
 
-    <CoralButtonLink href={nextShow.listingUrl}>
+    <a class="coral_btn_link" href={nextShow.listingUrl}>
       <TicketIcon name="ticket" class="size-5" />Get Tickets
-    </CoralButtonLink>
+    </a>
   </div>
 
   <LinkedImage

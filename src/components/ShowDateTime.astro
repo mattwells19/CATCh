@@ -13,13 +13,29 @@ const { showDate, class: className } = Astro.props;
 const showDateFormatted = formatShowTime(showDate);
 ---
 
-<div
-  class="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple"
-  class:list={className}
->
-  <CalendarIcon name="calendar" class="size-5" />
+<style>
+  .show_date_time {
+    display: flex;
+    gap: calc(var(--spacing) * 2);
+    align-items: center;
 
-  <p class="font-serif font-semibold">
-    {showDateFormatted}
-  </p>
+    border-bottom: 2px solid var(--color-light-purple);
+    color: var(--color-primary-purple);
+    width: fit-content;
+    padding: calc(var(--spacing) * 4) 0px;
+  }
+
+  p {
+    font-family: var(--font-serif);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .icon {
+    size: calc(var(--spacing) * 5);
+  }
+</style>
+
+<div class="show_date_time" class:list={className}>
+  <CalendarIcon name="calendar" class="icon" />
+  <p>{showDateFormatted}</p>
 </div>

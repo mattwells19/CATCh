@@ -3,7 +3,6 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 import type { ClassListing } from "~/api/getClassListings";
 
-import CoralButtonLink from "./CoralButtonLink.astro";
 import LinkedImage from "./LinkedImage.astro";
 import { formatClassDateRange } from "~/utils/formatClassTime";
 import CalendarIcon from "../icons/calendar.svg";
@@ -18,49 +17,102 @@ const { classListing, class: className } = Astro.props;
 const formattedClassDate = formatClassDateRange(classListing);
 ---
 
-<div
-  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-78.75 max-w-125"
-  class:list={className}
->
+<style>
+  .upcoming_class_card {
+    min-width: calc(var(--spacing) * 78.75);
+    max-width: calc(var(--spacing) * 125);
+    overflow: hidden;
+
+    border-radius: 0.25rem;
+    padding: calc(var(--spacing) * 2);
+
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-peach);
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+    flex: 1;
+  }
+
+  .class_description {
+    max-height: calc(var(--spacing) * 125);
+
+    font-size: var(--text-lg);
+    padding: 0px calc(var(--spacing) * 2);
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+  }
+
+  .show_date_time {
+    width: fit-content;
+    margin-right: auto;
+    padding: calc(var(--spacing) * 4) 0px;
+
+    border-bottom: 2px solid var(--color-light-purple);
+    color: var(--color-primary-purple);
+
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing) * 2);
+
+    .icon {
+      size: calc(var(--spacing) * 5);
+    }
+
+    p {
+      font-family: var(--font-serif);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  .class_header {
+    font: var(--font-weight-bold) var(--text-xl) var(--font-serif);
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+
+  .wysiwyg {
+    overflow: auto;
+  }
+
+  .coral_btn_link {
+    width: 100%;
+    min-width: 100%;
+  }
+</style>
+
+<div class="upcoming_class_card" class:list={className}>
   <LinkedImage
     listingImageSrc={classListing.image}
     listingTitle={classListing.name}
     href={classListing.listingUrl}
     width={724}
     height={407}
-    class="w-full"
   />
 
-  <div class="flex flex-col gap-4 px-2 text-lg max-h-125">
-    <div
-      class="flex items-center gap-2 border-b-2 border-light-purple text-primary-purple w-fit mr-auto py-4"
-    >
-      <CalendarIcon name="calendar" class="size-5" />
-
-      <p class="font-serif font-semibold">
-        {formattedClassDate}
-      </p>
+  <div class="class_description">
+    <div class="show_date_time">
+      <CalendarIcon name="calendar" class="icon" />
+      <p>{formattedClassDate}</p>
     </div>
 
     {
       classListing.classHeader ? (
-        <p class="font-serif font-bold text-xl mb-2">
-          {classListing.classHeader}
-        </p>
+        <p class="class_header">{classListing.classHeader}</p>
       ) : null
     }
 
     {
       classListing.classDescription ? (
         <div
-          class="wysiwyg overflow-auto"
+          class="wysiwyg"
           set:html={documentToHtmlString(classListing.classDescription)}
         />
       ) : null
     }
   </div>
 
-  <CoralButtonLink href={classListing.listingUrl} class="w-full min-w-full">
-    Learn More
-  </CoralButtonLink>
+  <a class="coral_btn_link" href={classListing.listingUrl}>Learn More</a>
 </div>

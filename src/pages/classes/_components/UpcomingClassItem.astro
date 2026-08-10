@@ -1,6 +1,5 @@
 ---
 import type { ClassListing } from "~/api/getClassListings";
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import { formatClassDateRange } from "~/utils/formatClassTime";
 import CalendarIcon from "~/icons/calendar.svg";
 
@@ -28,8 +27,6 @@ const formattedClassDate = formatClassDateRange(classListing);
       {classListing.price}
     </p>
 
-    <CoralButtonLink href={classListing.listingUrl} class="w-full">
-      Enroll
-    </CoralButtonLink>
+    <a class="coral_btn_link w-full" href={classListing.listingUrl}>Enroll</a>
   </div>
 </div>

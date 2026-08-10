@@ -1,0 +1,37 @@
+---
+type Props = astroHTML.JSX.AnchorHTMLAttributes;
+
+const isCurrentPage = Astro.url.pathname === Astro.props.href;
+---
+
+<style>
+  a {
+    font-size: var(--text-sm);
+    border-radius: 0.25rem;
+    padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
+
+    cursor: pointer;
+
+    transition: background-color var(--default-transition-timing-function)
+      var(--default-transition-duration);
+
+    &:hover {
+      background-color: var(--color-violet-100);
+    }
+
+    &[aria-current="page"] {
+      background-color: var(--color-violet-200);
+    }
+  }
+
+  @media (width >= 48rem) {
+    a {
+      white-space: nowrap;
+      font-size: var(--text-base);
+    }
+  }
+</style>
+
+<a aria-current={isCurrentPage ? "page" : undefined} {...Astro.props}>
+  <slot />
+</a>

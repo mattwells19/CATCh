@@ -3,7 +3,6 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 import type { ShowListing } from "~/api/getShowListings";
 
-import CoralButtonLink from "./CoralButtonLink.astro";
 import ShowDateTime from "./ShowDateTime.astro";
 import LinkedImage from "./LinkedImage.astro";
 import TicketIcon from "../icons/ticket.svg";
@@ -15,36 +14,87 @@ type Props = {
 const { showListing } = Astro.props;
 ---
 
-<div
-  class="rounded overflow-hidden shadow-lg p-2 bg-peach flex flex-col gap-4 flex-1 min-w-78.75 max-w-125"
->
+<style>
+  .upcoming_show_card {
+    min-width: calc(var(--spacing) * 78.75);
+    max-width: calc(var(--spacing) * 125);
+    overflow: hidden;
+
+    border-radius: 0.25rem;
+    padding: calc(var(--spacing) * 2);
+
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-peach);
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+    flex: 1;
+  }
+
+  .show_description {
+    max-height: calc(var(--spacing) * 125);
+
+    font-size: var(--text-lg);
+    padding: 0px calc(var(--spacing) * 2);
+
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+  }
+
+  .show_date_time {
+    width: fit-content;
+    margin-right: auto;
+    padding: calc(var(--spacing) * 4) 0px;
+  }
+
+  .show_price {
+    font-weight: var(--font-weight-bold);
+    padding: 0px calc(var(--spacing) * 2);
+  }
+
+  .icon {
+    size: calc(var(--spacing) * 5);
+  }
+
+  .wysiwyg {
+    overflow: auto;
+  }
+
+  .coral_btn_link {
+    width: 100%;
+    min-width: 100%;
+  }
+</style>
+
+<div class="upcoming_show_card">
   <LinkedImage
     listingImageSrc={showListing.image}
     listingTitle={showListing.name}
     href={showListing.listingUrl}
     width={724}
     height={407}
-    class="w-full"
   />
 
-  <div class="flex flex-col gap-4 px-2 text-lg max-h-125">
-    <ShowDateTime showDate={showListing.date} class="w-fit mr-auto py-4" />
+  <div class="show_description">
+    <ShowDateTime showDate={showListing.date} class="show_date_time" />
 
     {
       showListing.showDescription ? (
         <div
-          class="wysiwyg overflow-auto"
+          class="wysiwyg"
           set:html={documentToHtmlString(showListing.showDescription)}
         />
       ) : null
     }
   </div>
 
-  <p class="font-bold px-2">
+  <p class="show_price">
     {showListing.price}
   </p>
 
-  <CoralButtonLink href={showListing.listingUrl} class="w-full min-w-full">
-    <TicketIcon name="ticket" class="size-5" />Get Tickets
-  </CoralButtonLink>
+  <a class="coral_btn_link" href={showListing.listingUrl}>
+    <TicketIcon name="ticket" class="icon" />Get Tickets
+  </a>
 </div>

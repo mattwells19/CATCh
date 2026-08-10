@@ -1,8 +1,7 @@
 ---
 import RootLayout from "~/layouts/RootLayout.astro";
 import { getPolicies } from "~/api/getPolicies";
-import PageSubNavList from "~/components/PageSubNav/PageSubNavList.astro";
-import PageSubNavItem from "~/components/PageSubNav/PageSubNavItem.astro";
+import PageSubNavItem from "~/components/PageSubNavItem.astro";
 
 const { policy: policySlug } = Astro.params;
 if (!policySlug) return Astro.redirect("/");
@@ -13,8 +12,18 @@ const policy = allPolicies.find((p) => p.slug === policySlug);
 if (!policy) return Astro.redirect("/");
 ---
 
+<style>
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--spacing) * 4);
+    overflow-x: auto;
+  }
+</style>
+
 <RootLayout title="Policies" class="flex flex-col gap-6 justify-center p-4">
-  <PageSubNavList>
+  <nav>
     {
       allPolicies.map((policyEntry) => (
         <PageSubNavItem href={`/policies/${policyEntry.slug}`}>
@@ -22,7 +31,7 @@ if (!policy) return Astro.redirect("/");
         </PageSubNavItem>
       ))
     }
-  </PageSubNavList>
+  </nav>
 
   <div class="flex flex-col gap-6 max-w-3xl m-auto px-2">
     <h1 class="text-gradient text-3xl font-bold m-auto">{policy.name}</h1>

@@ -6,7 +6,20 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<section class="flex-1">
-  <h2 class="text-2xl font-serif text-primary-purple mb-5">{title}</h2>
+<style>
+  section {
+    flex: 1;
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+    font-style: var(--font-serif);
+    color: var(--color-primary-purple);
+    margin-bottm: calc(var(--spacing) * 5);
+  }
+</style>
+
+<section>
+  <h2>{title}</h2>
   <slot />
 </section>

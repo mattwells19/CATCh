@@ -1,6 +1,5 @@
 ---
 import RootLayout from "~/layouts/RootLayout.astro";
-import CoralButtonLink from "~/components/CoralButtonLink.astro";
 import RemixIcon from "~/components/RemixIcon.astro";
 
 const isHome = Astro.url.pathname === '/';
@@ -16,16 +15,16 @@ const isHome = Astro.url.pathname === '/';
   {isHome ? (
     <p>While we work on getting this fixed check out our shows and classes directly on TicketLeap, our event ticketing provider.</p>
     <div role="group" class="flex gap-6 flex-col lg:flex-row">
-      <CoralButtonLink href="https://events.ticketleap.com/events/catch" class="min-w-0 w-full lg:w-full">
+      <a class="coral_btn_link min-w-0 w-full lg:w-full" href="https://events.ticketleap.com/events/catch">
         Shows
       </CoralButtonLink>
-      <CoralButtonLink href="https://events.ticketleap.com/events/catch-u" class="min-w-0 w-full lg:w-full">
+      <a class="coral_btn_link min-w-0 w-full lg:w-full" href="https://events.ticketleap.com/events/catch-u">
         Classes
       </CoralButtonLink>
     </div>
   ) : (
     <p>Let's get you back on track.</p>
-    <CoralButtonLink href="/" class="w-fit min-w-none">
+    <a class="coral_btn_link w-fit min-w-none" href="/">
       <RemixIcon icon="home-4" variant="line" /> Go Home
     </CoralButtonLink>
   )}
