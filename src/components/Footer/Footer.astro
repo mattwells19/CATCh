@@ -18,40 +18,128 @@ import FooterSection from "./FooterSection.astro";
       padding: 0px calc(var(--spacing) * 14);
     }
   }
+
+  .top_row {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 12);
+    justify-content: space-evenly;
+  }
+
+  @media (width >= 48rem) {
+    .top_row {
+      flex-direction: row;
+    }
+  }
+
+  .community_policy {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 8);
+
+    img {
+      max-width: calc(var(--spacing) * 57.5);
+    }
+  }
+
+  .contact_us {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 5);
+
+    a[href^="mailto:"] {
+      color: var(--color-primary-purple);
+    }
+  }
+
+  .connect {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 8);
+
+    form > div {
+      display: flex;
+      gap: calc(var(--spacing) * 2);
+      flex: 1;
+    }
+
+    label {
+      margin-bottom: calc(var(--spacing) * 1);
+
+      > span {
+        color: var(--color-red-600);
+      }
+    }
+
+    input {
+      display: block;
+      border-radius: 0.25rem;
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+      border: 2px solid var(--color-primary-purple);
+      background-color: var(--color-white);
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      padding: 0px calc(var(--spacing) * 3);
+      background-color: var(--color-coral);
+      transition: background-color var(--default-transition-timing-function)
+        var(--default-transition-duration);
+      color: var(--color-peach);
+      font-family: var(--font-serif);
+      border-radius: 0.25rem;
+      width: fit-content;
+
+      &:hover {
+        background-color: #b7433c;
+      }
+    }
+
+    ul {
+      display: flex;
+      justify-content: space-evenly;
+      gap: calc(var(--spacing) * 3);
+      width: fit-content;
+    }
+  }
+
+  .rights_reserved {
+    text-align: center;
+    margin-top: calc(var(--spacing) * 16);
+  }
+
+  .made_with_love {
+    text-align: center;
+    margin: calc(var(--spacing) * 4) 0px calc(var(--spacing) * 16) 0px;
+  }
 </style>
 
 <footer>
-  <div class="flex gap-12 justify-evenly flex-col md:flex-row">
+  <div class="top_row">
     <FooterSection title="Community policy">
-      <div class="flex flex-col gap-8">
+      <div class="community_policy">
         <p>
           Our mission is to create an open, inclusive space that meets the needs
           of improvisers and improv teams.
         </p>
-        <Image
-          src={NglccCertifiedImg}
-          alt="NGLCC Certified LGBTBE"
-          class="max-w-57.5"
-        />
+        <Image src={NglccCertifiedImg} alt="NGLCC Certified LGBTBE" />
       </div>
     </FooterSection>
     <FooterSection title="Contact us">
-      <div class="flex flex-col gap-5">
+      <div class="contact_us">
         <a href="tel:(980) 522-8241">
           (980) 5-CATCh-1
           <br />
           (980) 522-8241
         </a>
-        <a href="mailto:info@CATCh.theater" class="text-primary-purple">
-          info@CATCh.theater
-        </a>
+        <a href="mailto:info@CATCh.theater"> info@CATCh.theater </a>
         <a href="https://maps.google.com?q=Comedy Arts Theater of Charlotte">
           4128 South Blvd.<br />Suite A3<br />Charlotte, NC 28209
         </a>
       </div>
     </FooterSection>
     <FooterSection title="Connect with the CATCh community">
-      <div class="flex flex-col gap-8">
+      <div class="connect">
         <p>
           Subscribe to our newsletter for new course offerings, show
           announcements, and community events!
@@ -61,28 +149,22 @@ import FooterSection from "./FooterSection.astro";
           action="https://theater.us7.list-manage.com/subscribe/post?u=0aff844d3bdd9abb3086f5836&id=4de87ca1ca"
           target="_blank"
         >
-          <label class="mb-1" for="EMAIL">
-            Email address <span class="text-red-600">*</span>
+          <label for="EMAIL">
+            Email address <span>*</span>
           </label>
-          <div class="flex gap-2 flex-1">
+          <div>
             <input
               type="email"
               id="EMAIL"
               name="EMAIL"
               required
-              class="block rounded px-3 py-2 border-2 border-primary-purple bg-white w-full"
               placeholder="iloveimprov@gmail.com"
               autocomplete="email"
             />
-            <button
-              type="submit"
-              class="px-3 bg-coral hover:bg-[#B7433C] transition-colors text-peach font-serif rounded w-fit"
-            >
-              Subscribe
-            </button>
+            <button type="submit"> Subscribe </button>
           </div>
         </form>
-        <ul class="flex justify-evenly gap-3 w-fit">
+        <ul>
           {
             socialMediaLinkList.map((socialLink) => (
               <li>
@@ -102,11 +184,9 @@ import FooterSection from "./FooterSection.astro";
       </div>
     </FooterSection>
   </div>
-  <p class="text-center mt-16">
+  <p class="rights_reserved">
     © The Comedy Arts Theater of Charlotte, LLC 2017 and beyond. All Rights
     Reserved.
   </p>
-  <p class="text-center mt-4 mb-16">
-    Website made with 💖 by the CATCh community.
-  </p>
+  <p class="made_with_love">Website made with 💖 by the CATCh community.</p>
 </footer>

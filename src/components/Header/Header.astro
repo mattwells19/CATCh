@@ -3,11 +3,39 @@ import { DesktopNav } from "./DesktopNav.tsx";
 import MobileNav from "./MobileNav.astro";
 ---
 
-<header class="w-full sticky top-0 z-50 bg-peach">
-  <div class="hidden lg:block">
+<style>
+  header {
+    width: 100%;
+    position: sticky;
+    top: 0px;
+    z-index: 50;
+    background-color: var(--color-peach);
+  }
+
+  .desktop_nav {
+    display: none;
+  }
+
+  .mobile_nav {
+    display: block;
+    overflow: hidden;
+  }
+
+  @media (width >= 1024px) {
+    .desktop_nav {
+      display: block;
+    }
+    .mobile_nav {
+      display: none;
+    }
+  }
+</style>
+
+<header>
+  <div class="desktop_nav">
     <DesktopNav client:visible />
   </div>
-  <div class="block lg:hidden overflow-hidden">
+  <div class="mobile_nav">
     <MobileNav />
   </div>
 </header>

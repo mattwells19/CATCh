@@ -5,40 +5,47 @@ import RemixIcon from "../RemixIcon.astro";
 import FullLogo from "~/images/CATCh-big-tagline.webp";
 import { socialMediaLinkList } from "~/utils/socialMediaLinkList.ts";
 import { routeCategories, routes } from "./routes.ts";
-import "~/styles/mobile-nav.css";
 
 const activePath = Astro.url.pathname;
 ---
 
-<script>
-  const drawer = document.getElementById("nav-drawer") as HTMLDialogElement;
-  const drawerTrigger = document.getElementById(
-    "drawer-trigger",
-  ) as HTMLButtonElement;
-  const drawerClose = document.getElementById(
-    "drawer-close",
-  ) as HTMLButtonElement;
+<style>
+  dialog[open] {
+    transform: translateX(0%);
 
-  drawer.addEventListener("click", (e) => {
-    const drawerDimensions = drawer.getBoundingClientRect();
-    if (
-      e.clientX < drawerDimensions.left ||
-      e.clientX > drawerDimensions.right ||
-      e.clientY < drawerDimensions.top ||
-      e.clientY > drawerDimensions.bottom
-    ) {
-      drawer.close();
+    &::backdrop {
+      opacity: 40%;
     }
-  });
+  }
 
-  drawerTrigger.addEventListener("click", () => {
-    drawer.showModal();
-  });
+  dialog {
+    transform: translateX(100%);
+    transition:
+      transform 150ms ease-in-out,
+      overlay 150ms ease-in-out allow-discrete,
+      display 150ms ease-in-out allow-discrete;
 
-  drawerClose.addEventListener("click", () => {
-    drawer.close();
-  });
-</script>
+    &::backdrop {
+      opacity: 0%;
+      background-color: var(--color-slate-950);
+      transition:
+        opacity 150ms ease-in-out,
+        overlay 150ms ease-in-out allow-discrete,
+        display 150ms ease-in-out allow-discrete;
+    }
+  }
+
+  @starting-style {
+    dialog[open] {
+      transform: translateX(100%);
+
+      &::backdrop {
+        opacity: 0%;
+        background-color: var(--color-slate-950);
+      }
+    }
+  }
+</style>
 
 <nav class="flex justify-between items-center p-2">
   <a href="/" class="shrink-0" aria-label="Home">
@@ -49,8 +56,9 @@ const activePath = Astro.url.pathname;
     />
   </a>
   <button
-    id="drawer-trigger"
     type="button"
+    command="show-modal"
+    commandfor="nav-drawer"
     class="pb-2 pt-3 px-3 hover:bg-purple-400/20 transition-colors rounded-md flex flex-col items-center text-primary-purple"
   >
     <svg
@@ -71,11 +79,13 @@ const activePath = Astro.url.pathname;
   </button>
   <dialog
     id="nav-drawer"
-    class="drawer m-0 fixed right-0 ml-auto h-screen max-h-none bg-primary-purple overflow-auto"
+    closedby="any"
+    class="m-0 fixed right-0 ml-auto h-screen max-h-none bg-primary-purple overflow-auto"
   >
     <button
-      id="drawer-close"
       type="button"
+      command="close"
+      commandfor="nav-drawer"
       class="py-2 px-3 hover:bg-purple-400/20 transition-colors rounded-md m-2 ml-auto text-peach flex flex-col items-center"
     >
       <RemixIcon icon="close" height="36" width="36" />
