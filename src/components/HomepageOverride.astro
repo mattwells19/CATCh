@@ -1,0 +1,38 @@
+---
+import type { HomepageOverride } from "~/api/getHomepageOverride";
+import LinkedImage from "./LinkedImage.astro";
+
+import CoralButtonLink from "./CoralButtonLink.astro";
+import { RemixIcon } from "./RemixIcon";
+type Props = {
+  data: HomepageOverride;
+};
+
+const { data } = Astro.props;
+---
+
+<section class="relative flex flex-col-reverse items-center gap-4 bg-(image:--shapes) lg:flex lg:flex-row lg:gap-12 lg:justify-around lg:px-16 lg:py-12">
+  <div class="flex flex-col gap-8 px-4 lg:px-0">
+    <h1 class="text-primary-purple font-bold font-serif text-4xl lg:text-6xl">
+      {data.title}
+    </h1>
+
+    {data.description ? (
+      <div class="wysiwyg text-black lg:text-xl" set:html={data.description} />
+    ) : null}
+
+    <CoralButtonLink href={data.link}>
+      <RemixIcon icon="external-link" />
+      Learn More
+    </CoralButtonLink>
+  </div>
+
+  <LinkedImage
+    href={data.link}
+    listingTitle={data.title}
+    listingImageSrc={data.image}
+    width={1134}
+    height={638}
+    class="lg:w-1/2 lg:min-w-162.5"
+  />
+</section>

@@ -1,6 +1,7 @@
 ---
 import { getShowListings } from "~/api/getShowListings";
 import { getClassListings } from "~/api/getClassListings";
+import { getHomepageOverride } from "~/api/getHomepageOverride";
 
 import RootLayout from "../layouts/RootLayout.astro";
 
@@ -8,6 +9,7 @@ import ArrowRightIcon from "../icons/arrow-right.svg";
 import UpcomingClassCard from "~/components/UpcomingClassCard.astro";
 import NextShowCallout from "~/components/NextShowCallout.astro";
 import UpcomingShowCard from "~/components/UpcomingShowCard.astro";
+import HomepageOverride from "~/components/HomepageOverride.astro";
 
 const upcomingShowsPromise = getShowListings({
   limit: 5,
@@ -16,12 +18,13 @@ const upcomingClassesPromise = getClassListings({
   limit: 4,
 });
 
-const [upcomingShows, upcomingClasses] = await Promise.all([
+const [upcomingShows, upcomingClasses, homepageOverride] = await Promise.all([
   upcomingShowsPromise,
   upcomingClassesPromise,
+  getHomepageOverride(),
 ]);
 
-const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
+const [nextShow, ...otherShows] = upcomingShows;
 ---
 
 <style>
@@ -83,20 +86,25 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   title="Improv Shows & Classes in Charlotte"
   class="flex flex-col overflow-x-hidden"
 >
-  <NextShowCallout nextShow={nextShow} />
+  {homepageOverride ? (
+    <HomepageOverride data={homepageOverride} />
+  ) : (
+    <NextShowCallout nextShow={nextShow} />
+  )}
   <section
     id="upcoming-shows"
     class="relative pt-12 pb-4 w-full overflow-y-visible mt-16"
   >
     <h2 class="section_header text-peach">Upcoming shows</h2>
     <ul class="card_list">
-      {
-        otherShows.map((showListing) => (
+      <!-- if there is an override, make sure we show the "nextShow" in the list of upcoming shows -->
+      {(homepageOverride ? upcomingShows.slice(0, 4) : otherShows).map(
+        (showListing) => (
           <li class="flex-1 max-w-fit">
             <UpcomingShowCard showListing={showListing} />
           </li>
-        ))
-      }
+        ),
+      )}
       <li class="inline-cta flex lg:hidden">
         <a href="/shows" class="text-peach">
           See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
@@ -113,13 +121,11 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   >
     <h2 class="section_header text-primary-purple">Upcoming classes</h2>
     <ul class="card_list">
-      {
-        upcomingClasses.map((classListing) => (
-          <li class="flex-1 max-w-fit">
-            <UpcomingClassCard classListing={classListing} />
-          </li>
-        ))
-      }
+      {upcomingClasses.map((classListing) => (
+        <li class="flex-1 max-w-fit">
+          <UpcomingClassCard classListing={classListing} />
+        </li>
+      ))}
       <li class="inline-cta flex lg:hidden">
         <a href="/classes" class="text-primary-purple">
           See all classes <ArrowRightIcon name="arrow-right" class="size-5" />
