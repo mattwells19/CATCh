@@ -24,7 +24,7 @@ const [upcomingShows, upcomingClasses, homepageOverride] = await Promise.all([
   getHomepageOverride(),
 ]);
 
-const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
+const [nextShow, ...otherShows] = upcomingShows;
 ---
 
 <style>
@@ -97,11 +97,14 @@ const [nextShow, ...otherShows] = upcomingShows.slice(0, 5);
   >
     <h2 class="section_header text-peach">Upcoming shows</h2>
     <ul class="card_list">
-      {otherShows.map((showListing) => (
-        <li class="flex-1 max-w-fit">
-          <UpcomingShowCard showListing={showListing} />
-        </li>
-      ))}
+      <!-- if there is an override, make sure we show the "nextShow" in the list of upcoming shows -->
+      {(homepageOverride ? upcomingShows.slice(0, 4) : otherShows).map(
+        (showListing) => (
+          <li class="flex-1 max-w-fit">
+            <UpcomingShowCard showListing={showListing} />
+          </li>
+        ),
+      )}
       <li class="inline-cta flex lg:hidden">
         <a href="/shows" class="text-peach">
           See all shows <ArrowRightIcon name="arrow-right" class="size-5" />
